@@ -7,7 +7,7 @@ Evinced SDKs will always require a **USER ID** and a **SECRET** of some kind. A 
 
 Use your local Environment variables or whatever current secret management system your team must conform to.
 
-## Node JS Environment
+## NodeJS Environment (JavaScript SDKs)
 ### Playwright JS/TS
 [js-playwright/global.settings.js](https://github.com/GetEvinced/examples/tree/main/js-playwright/global.settings.js)
 ```javascript
@@ -58,3 +58,15 @@ Use your local Environment variables or whatever current secret management syste
 
 
 {{#include ./snippets/official_docs.md}}
+
+
+# Offline Authentication
+If there is a strict network or blocked calls then try using Offline Authentication and disabling any outbound Evinced network calls.
+
+## JavaScript frameworks
+
+```javascript
+await setOfflineCredentials({
+            serviceId: process.env.EVINCED_SERVICE_ID,
+            token: process.env.EVINCED_AUTH_TOKEN,
+        });```
