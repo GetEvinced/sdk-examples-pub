@@ -604,6 +604,7 @@
 					summary: string;
 					elements: { componentId: string; selector: string; domSnippet: string }[];
 					knowledgeBaseLink: string;
+					customKnowledgeBaseLinks?: { url: string, displayName: string }[];
 					severityName: string;
 					tags: {
 						id: string;
@@ -646,7 +647,48 @@
         return ''
       }
 
-      const jsonData = {"issues":[{"issueIndex":"1","pageUrl":"https://demo.evinced.com/","pageTitle":"Home | Evinced, Demo site","typeName":"Interactable role","summary":"Interactive elements, such as buttons, links, and inputs, must convey that they can be interacted with by using the proper semantics.","elements":[{"componentId":"ce13d0bb","selector":".block-dropdown:nth-child(1) > .dropholder > .dropdown.line","domSnippet":"&#60;div class&#61;&#34;dropdown line&#34;&#62;&#60;p&#62;Select&#60;&#47;p&#62;&#60;&#47;div&#62;","boundingBox":{"x":301,"y":610.9375,"height":23.9375,"width":398,"top":610.9375,"left":301,"right":699,"bottom":634.875}}],"knowledgeBaseLink":"https://knowledge.evinced.com/system-validations/interactable-role","severityName":"Critical","tags":[{"id":"WCAG-4.1.2","description":"4.1.2 Name, Role, Value  (Level A)","link":"https://www.w3.org/WAI/WCAG21/Understanding/name-role-value.html"},{"id":"WCAG-A"},{"id":"WCAG2.0"}],"cause":"Screen readers are unable to identify that the element is interactive due to missing or incorrect semantics.","effect":"Screen reader users may not find the content or may not realize that the the content is interactive.","howToFix":"Use native HTML interactive elements such as `&lt;*button*&gt;`, `&lt;*a*&gt;`, `&lt;*select*&gt;`, `&lt;*input*&gt;`. Alternatively, add the appropriate ARIA role that corresponds to the content purpose."},{"issueIndex":"2","pageUrl":"https://demo.evinced.com/","pageTitle":"Home | Evinced, Demo site","typeName":"Keyboard accessible","summary":"Keyboard users must be able to navigate to all the interactive elements on the page.","elements":[{"componentId":"ce13d0bb","selector":".block-dropdown:nth-child(1) > .dropholder > .dropdown.line","domSnippet":"&#60;div class&#61;&#34;dropdown line&#34;&#62;&#60;p&#62;Select&#60;&#47;p&#62;&#60;&#47;div&#62;","boundingBox":{"x":301,"y":610.9375,"height":23.9375,"width":398,"top":610.9375,"left":301,"right":699,"bottom":634.875}}],"knowledgeBaseLink":"https://knowledge.evinced.com/system-validations/keyboard-accessible","severityName":"Critical","tags":[{"id":"WCAG-2.1.1","description":"2.1.1 Keyboard  (Level A)","link":"https://www.w3.org/WAI/WCAG21/Understanding/keyboard.html"},{"id":"WCAG-A"},{"id":"WCAG2.0"}],"cause":"The element is missing the right tags or has incorrect tags.","effect":"The element is excluded from the keyboard tab sequence and is therefore inaccessible to keyboard users.","howToFix":"Use one of these approaches: \n* Approach 1 (recommended): Add a tag that shows the element&#039;s purpose. Interactive elements don&#039;t need anything extra because they are focusable by nature. \n* Approach 2: Add a `tabindex` attribute with the value of `0` to the element."},{"issueIndex":"3","pageUrl":"https://demo.evinced.com/","pageTitle":"Home | Evinced, Demo site","typeName":"Interactable role","summary":"Interactive elements, such as buttons, links, and inputs, must convey that they can be interacted with by using the proper semantics.","elements":[{"componentId":"ce13d0bb","selector":".block-dropdown:nth-child(2) > .dropholder > .dropdown.line","domSnippet":"&#60;div class&#61;&#34;dropdown line&#34;&#62;&#60;p&#62;Select&#60;&#47;p&#62;&#60;&#47;div&#62;","boundingBox":{"x":301,"y":715.9375,"height":23.9375,"width":398,"top":715.9375,"left":301,"right":699,"bottom":739.875}}],"knowledgeBaseLink":"https://knowledge.evinced.com/system-validations/interactable-role","severityName":"Critical","tags":[{"id":"WCAG-4.1.2","description":"4.1.2 Name, Role, Value  (Level A)","link":"https://www.w3.org/WAI/WCAG21/Understanding/name-role-value.html"},{"id":"WCAG-A"},{"id":"WCAG2.0"}],"cause":"Screen readers are unable to identify that the element is interactive due to missing or incorrect semantics.","effect":"Screen reader users may not find the content or may not realize that the the content is interactive.","howToFix":"Use native HTML interactive elements such as `&lt;*button*&gt;`, `&lt;*a*&gt;`, `&lt;*select*&gt;`, `&lt;*input*&gt;`. Alternatively, add the appropriate ARIA role that corresponds to the content purpose."},{"issueIndex":"4","pageUrl":"https://demo.evinced.com/","pageTitle":"Home | Evinced, Demo site","typeName":"Keyboard accessible","summary":"Keyboard users must be able to navigate to all the interactive elements on the page.","elements":[{"componentId":"ce13d0bb","selector":".block-dropdown:nth-child(2) > .dropholder > .dropdown.line","domSnippet":"&#60;div class&#61;&#34;dropdown line&#34;&#62;&#60;p&#62;Select&#60;&#47;p&#62;&#60;&#47;div&#62;","boundingBox":{"x":301,"y":715.9375,"height":23.9375,"width":398,"top":715.9375,"left":301,"right":699,"bottom":739.875}}],"knowledgeBaseLink":"https://knowledge.evinced.com/system-validations/keyboard-accessible","severityName":"Critical","tags":[{"id":"WCAG-2.1.1","description":"2.1.1 Keyboard  (Level A)","link":"https://www.w3.org/WAI/WCAG21/Understanding/keyboard.html"},{"id":"WCAG-A"},{"id":"WCAG2.0"}],"cause":"The element is missing the right tags or has incorrect tags.","effect":"The element is excluded from the keyboard tab sequence and is therefore inaccessible to keyboard users.","howToFix":"Use one of these approaches: \n* Approach 1 (recommended): Add a tag that shows the element&#039;s purpose. Interactive elements don&#039;t need anything extra because they are focusable by nature. \n* Approach 2: Add a `tabindex` attribute with the value of `0` to the element."},{"issueIndex":"5","pageUrl":"https://demo.evinced.com/","pageTitle":"Home | Evinced, Demo site","typeName":"Anchor without `href` attribute","summary":"Anchor elements (`&lt;a&gt;`) must have an `href` attribute to be recognized as a link.","elements":[{"componentId":"a2d2a84e","selector":".search-btn","domSnippet":"&#60;a class&#61;&#34;search&#45;btn&#34;&#62;Search&#60;&#47;a&#62;","boundingBox":{"x":290,"y":930,"height":85,"width":420,"top":930,"left":290,"right":710,"bottom":1015}}],"knowledgeBaseLink":"https://knowledge.evinced.com/system-validations/anchor-without-href","severityName":"Critical","tags":[{"id":"WCAG-4.1.2","description":"4.1.2 Name, Role, Value  (Level A)","link":"https://www.w3.org/WAI/WCAG21/Understanding/name-role-value.html"},{"id":"WCAG-A"},{"id":"WCAG2.0"}],"cause":"The `&lt;a&gt;` (anchor) element does not have an `href` attribute.","effect":"Screen readers on Windows will read the element as plain text without indicating it is a link. On Mac OS, VoiceOver will still read the anchor as a link, even if it&#039;s not. The element won&#039;t be included in the page&#039;s tab sequence by default, making it inaccessible using a keyboard.","howToFix":"* If the element should act as a link, add an `href` attribute that points to itself (`&lt;a href=&quot;#&quot;&gt;`) \n* If the element is not meant to be a link, change it to something more appropriate, like a button"},{"issueIndex":"6","pageUrl":"https://demo.evinced.com/","pageTitle":"Home | Evinced, Demo site","typeName":"Keyboard accessible","summary":"Keyboard users must be able to navigate to all the interactive elements on the page.","elements":[{"componentId":"a2d2a84e","selector":".search-btn","domSnippet":"&#60;a class&#61;&#34;search&#45;btn&#34;&#62;Search&#60;&#47;a&#62;","boundingBox":{"x":290,"y":930,"height":85,"width":420,"top":930,"left":290,"right":710,"bottom":1015}}],"knowledgeBaseLink":"https://knowledge.evinced.com/system-validations/keyboard-accessible","severityName":"Critical","tags":[{"id":"WCAG-2.1.1","description":"2.1.1 Keyboard  (Level A)","link":"https://www.w3.org/WAI/WCAG21/Understanding/keyboard.html"},{"id":"WCAG-A"},{"id":"WCAG2.0"}],"cause":"The element is missing the right tags or has incorrect tags.","effect":"The element is excluded from the keyboard tab sequence and is therefore inaccessible to keyboard users.","howToFix":"Use one of these approaches: \n* Approach 1 (recommended): Add a tag that shows the element&#039;s purpose. Interactive elements don&#039;t need anything extra because they are focusable by nature. \n* Approach 2: Add a `tabindex` attribute with the value of `0` to the element."},{"issueIndex":"7","pageUrl":"https://demo.evinced.com/","pageTitle":"Home | Evinced, Demo site","typeName":"Interactable role","summary":"Interactive elements, such as buttons, links, and inputs, must convey that they can be interacted with by using the proper semantics.","elements":[{"componentId":"0683cd54","selector":".block-dropdown:nth-child(1) > .dropholder > ul","domSnippet":"&#60;ul class&#61;&#34;dropdownMenu active&#34;&#62;&#60;li&#62;Caravan&#60;&#47;li&#62;&#60;li&#62;Tiny House&#60;&#47;li&#62;&#60;li&#62;Treehouse&#60;&#47;li&#62;&#60;li&#62;Tent&#60;&#47;li&#62;&#60;li&#62;Backyard&#60;&#47;li&#62;&#60;&#47;ul&#62;","boundingBox":{"x":301,"y":654,"height":225,"width":398,"top":654,"left":301,"right":699,"bottom":879}}],"knowledgeBaseLink":"https://knowledge.evinced.com/system-validations/interactable-role","severityName":"Critical","tags":[{"id":"WCAG-4.1.2","description":"4.1.2 Name, Role, Value  (Level A)","link":"https://www.w3.org/WAI/WCAG21/Understanding/name-role-value.html"},{"id":"WCAG-A"},{"id":"WCAG2.0"}],"cause":"Screen readers are unable to identify that the element is interactive due to missing or incorrect semantics.","effect":"Screen reader users may not find the content or may not realize that the the content is interactive.","howToFix":"Use native HTML interactive elements such as `&lt;*button*&gt;`, `&lt;*a*&gt;`, `&lt;*select*&gt;`, `&lt;*input*&gt;`. Alternatively, add the appropriate ARIA role that corresponds to the content purpose."},{"issueIndex":"8","pageUrl":"https://demo.evinced.com/","pageTitle":"Home | Evinced, Demo site","typeName":"Keyboard accessible","summary":"Keyboard users must be able to navigate to all the interactive elements on the page.","elements":[{"componentId":"0683cd54","selector":".block-dropdown:nth-child(1) > .dropholder > ul","domSnippet":"&#60;ul class&#61;&#34;dropdownMenu active&#34;&#62;&#60;li&#62;Caravan&#60;&#47;li&#62;&#60;li&#62;Tiny House&#60;&#47;li&#62;&#60;li&#62;Treehouse&#60;&#47;li&#62;&#60;li&#62;Tent&#60;&#47;li&#62;&#60;li&#62;Backyard&#60;&#47;li&#62;&#60;&#47;ul&#62;","boundingBox":{"x":301,"y":654,"height":225,"width":398,"top":654,"left":301,"right":699,"bottom":879}}],"knowledgeBaseLink":"https://knowledge.evinced.com/system-validations/keyboard-accessible","severityName":"Critical","tags":[{"id":"WCAG-2.1.1","description":"2.1.1 Keyboard  (Level A)","link":"https://www.w3.org/WAI/WCAG21/Understanding/keyboard.html"},{"id":"WCAG-A"},{"id":"WCAG2.0"}],"cause":"The element is missing the right tags or has incorrect tags.","effect":"The element is excluded from the keyboard tab sequence and is therefore inaccessible to keyboard users.","howToFix":"Use one of these approaches: \n* Approach 1 (recommended): Add a tag that shows the element&#039;s purpose. Interactive elements don&#039;t need anything extra because they are focusable by nature. \n* Approach 2: Add a `tabindex` attribute with the value of `0` to the element."},{"issueIndex":"9","pageUrl":"https://demo.evinced.com/","pageTitle":"Home | Evinced, Demo site","typeName":"Scrollable-region-focusable","summary":"Scrollable region must have keyboard access","elements":[{"componentId":"0683cd54","selector":".block-dropdown:nth-child(1) > .dropholder > ul","domSnippet":"&#60;ul class&#61;&#34;dropdownMenu active&#34;&#62;&#60;li&#62;Caravan&#60;&#47;li&#62;&#60;li&#62;Tiny House&#60;&#47;li&#62;&#60;li&#62;Treehouse&#60;&#47;li&#62;&#60;li&#62;Tent&#60;&#47;li&#62;&#60;li&#62;Backyard&#60;&#47;li&#62;&#60;&#47;ul&#62;","boundingBox":{"x":301,"y":654,"height":225,"width":398,"top":654,"left":301,"right":699,"bottom":879}}],"knowledgeBaseLink":"https://knowledge.evinced.com/system-validations/scrollable-region-focusable","severityName":"Serious","tags":[{"id":"WCAG-2.1.1","description":"2.1.1 Keyboard  (Level A)","link":"https://www.w3.org/WAI/WCAG21/Understanding/keyboard.html"},{"id":"WCAG-2.1.3","description":"2.1.3 Keyboard (No Exception)  (Level AAA)","link":"https://www.w3.org/WAI/WCAG21/Understanding/keyboard-no-exception.html"},{"id":"WCAG-A"},{"id":"WCAG-AAA"},{"id":"WCAG2.0"},{"id":"axe-EN-301-549"},{"id":"axe-EN-9.2.1.1"},{"id":"axe-EN-9.2.1.3"},{"id":"axe-TT4.a"},{"id":"axe-TTv5"},{"id":"axe-cat.keyboard"},{"id":"axe-wcag211"},{"id":"axe-wcag213"},{"id":"axe-wcag2a"}],"cause":"","effect":"","howToFix":"Fix at least one (1) of the following\n* Element should have focusable content,* Element should be focusable"}],"reportTimestampInMs":1756913180054,"sdkVersion":"Evinced SDK for Cypress 4.16.1","screenshotsMap":{},"scale":0.5}
+      function generateKnowledgeBaseLinks(issue) {
+        // Start the list
+        let linksHtml = '<ul style="margin: 0; list-style: none">'
+
+        // Add the main knowledge base link if it exists
+        if (issue.knowledgeBaseLink) {
+          linksHtml += `
+            <li>
+              <a
+                href="${issue.knowledgeBaseLink}"
+                target="_blank"
+                rel="noopener noreferrer">
+                Read more in Evinced Knowledge Base
+              </a>
+            </li>
+          `
+        }
+
+        // Add custom knowledge base links if they exist
+        if (issue.customKnowledgeBaseLinks?.length) {
+          issue.customKnowledgeBaseLinks.forEach(link => {
+            linksHtml += `
+              <li>
+                <a
+                  href="${link.url}"
+                  target="_blank"
+                  rel="noopener noreferrer">
+                  ${link.displayName}
+                </a>
+              </li>
+            `
+          })
+        }
+
+        // Close the list
+        linksHtml += '</ul>'
+
+        // Return the list HTML if there are any links, otherwise return an empty string
+        return issue.knowledgeBaseLink || issue.customKnowledgeBaseLinks?.length ? linksHtml : ''
+      }
+
+      const jsonData = {"issues":[{"issueIndex":"1","pageUrl":"https://demo.evinced.com/","pageTitle":"Home | Evinced, Demo site","typeName":"Interactable role","summary":"Interactive elements, such as buttons, links, and inputs, must convey that they can be interacted with by using the proper semantics.","elements":[{"componentId":"ce13d0bb","selector":".block-dropdown:nth-child(1) > .dropholder > .dropdown.line","domSnippet":"&#60;div class&#61;&#34;dropdown line&#34;&#62;&#60;p&#62;Select&#60;&#47;p&#62;&#60;&#47;div&#62;","boundingBox":{"x":301,"y":610.9375,"height":23.9375,"width":398,"top":610.9375,"left":301,"right":699,"bottom":634.875}}],"knowledgeBaseLink":"https://knowledge.evinced.com/system-validations/interactable-role","severityName":"Critical","tags":[{"id":"WCAG-4.1.2","description":"4.1.2 Name, Role, Value  (Level A)","link":"https://www.w3.org/WAI/WCAG21/Understanding/name-role-value.html"},{"id":"WCAG-A"},{"id":"WCAG2.0"}],"cause":"Screen readers are unable to identify that the element is interactive due to missing or incorrect semantics.","effect":"Screen reader users may not find the content or may not realize that the the content is interactive.","howToFix":"Use native HTML interactive elements such as &lt;*button*&gt;, &lt;*a*&gt;, &lt;*select*&gt;, &lt;*input*&gt;. Alternatively, add the appropriate ARIA role that corresponds to the content purpose."},{"issueIndex":"2","pageUrl":"https://demo.evinced.com/","pageTitle":"Home | Evinced, Demo site","typeName":"Keyboard accessible","summary":"Keyboard users must be able to navigate to all the interactive elements on the page.","elements":[{"componentId":"ce13d0bb","selector":".block-dropdown:nth-child(1) > .dropholder > .dropdown.line","domSnippet":"&#60;div class&#61;&#34;dropdown line&#34;&#62;&#60;p&#62;Select&#60;&#47;p&#62;&#60;&#47;div&#62;","boundingBox":{"x":301,"y":610.9375,"height":23.9375,"width":398,"top":610.9375,"left":301,"right":699,"bottom":634.875}}],"knowledgeBaseLink":"https://knowledge.evinced.com/system-validations/keyboard-accessible","severityName":"Critical","tags":[{"id":"WCAG-2.1.1","description":"2.1.1 Keyboard  (Level A)","link":"https://www.w3.org/WAI/WCAG21/Understanding/keyboard.html"},{"id":"WCAG-A"},{"id":"WCAG2.0"}],"cause":"The element is missing the right tags or has incorrect tags.","effect":"The element is excluded from the keyboard tab sequence and is therefore inaccessible to keyboard users.","howToFix":"Use one of these approaches: \n* Approach 1 (recommended): Add a tag that shows the element&#039;s purpose. Interactive elements don&#039;t need anything extra because they are focusable by nature. \n* Approach 2: Add a `tabindex` attribute with the value of `0` to the element."},{"issueIndex":"3","pageUrl":"https://demo.evinced.com/","pageTitle":"Home | Evinced, Demo site","typeName":"Interactable role","summary":"Interactive elements, such as buttons, links, and inputs, must convey that they can be interacted with by using the proper semantics.","elements":[{"componentId":"ce13d0bb","selector":".block-dropdown:nth-child(2) > .dropholder > .dropdown.line","domSnippet":"&#60;div class&#61;&#34;dropdown line&#34;&#62;&#60;p&#62;Select&#60;&#47;p&#62;&#60;&#47;div&#62;","boundingBox":{"x":301,"y":715.9375,"height":23.9375,"width":398,"top":715.9375,"left":301,"right":699,"bottom":739.875}}],"knowledgeBaseLink":"https://knowledge.evinced.com/system-validations/interactable-role","severityName":"Critical","tags":[{"id":"WCAG-4.1.2","description":"4.1.2 Name, Role, Value  (Level A)","link":"https://www.w3.org/WAI/WCAG21/Understanding/name-role-value.html"},{"id":"WCAG-A"},{"id":"WCAG2.0"}],"cause":"Screen readers are unable to identify that the element is interactive due to missing or incorrect semantics.","effect":"Screen reader users may not find the content or may not realize that the the content is interactive.","howToFix":"Use native HTML interactive elements such as &lt;*button*&gt;, &lt;*a*&gt;, &lt;*select*&gt;, &lt;*input*&gt;. Alternatively, add the appropriate ARIA role that corresponds to the content purpose."},{"issueIndex":"4","pageUrl":"https://demo.evinced.com/","pageTitle":"Home | Evinced, Demo site","typeName":"Keyboard accessible","summary":"Keyboard users must be able to navigate to all the interactive elements on the page.","elements":[{"componentId":"ce13d0bb","selector":".block-dropdown:nth-child(2) > .dropholder > .dropdown.line","domSnippet":"&#60;div class&#61;&#34;dropdown line&#34;&#62;&#60;p&#62;Select&#60;&#47;p&#62;&#60;&#47;div&#62;","boundingBox":{"x":301,"y":715.9375,"height":23.9375,"width":398,"top":715.9375,"left":301,"right":699,"bottom":739.875}}],"knowledgeBaseLink":"https://knowledge.evinced.com/system-validations/keyboard-accessible","severityName":"Critical","tags":[{"id":"WCAG-2.1.1","description":"2.1.1 Keyboard  (Level A)","link":"https://www.w3.org/WAI/WCAG21/Understanding/keyboard.html"},{"id":"WCAG-A"},{"id":"WCAG2.0"}],"cause":"The element is missing the right tags or has incorrect tags.","effect":"The element is excluded from the keyboard tab sequence and is therefore inaccessible to keyboard users.","howToFix":"Use one of these approaches: \n* Approach 1 (recommended): Add a tag that shows the element&#039;s purpose. Interactive elements don&#039;t need anything extra because they are focusable by nature. \n* Approach 2: Add a `tabindex` attribute with the value of `0` to the element."},{"issueIndex":"5","pageUrl":"https://demo.evinced.com/","pageTitle":"Home | Evinced, Demo site","typeName":"Anchor without `href` attribute","summary":"Anchor elements (&lt;a&gt;) must have an `href` attribute to be recognized as a link.","elements":[{"componentId":"a2d2a84e","selector":".search-btn","domSnippet":"&#60;a class&#61;&#34;search&#45;btn&#34;&#62;Search&#60;&#47;a&#62;","boundingBox":{"x":290,"y":930,"height":85,"width":420,"top":930,"left":290,"right":710,"bottom":1015}}],"knowledgeBaseLink":"https://knowledge.evinced.com/system-validations/anchor-without-href","severityName":"Critical","tags":[{"id":"WCAG-4.1.2","description":"4.1.2 Name, Role, Value  (Level A)","link":"https://www.w3.org/WAI/WCAG21/Understanding/name-role-value.html"},{"id":"WCAG-A"},{"id":"WCAG2.0"}],"cause":"The &lt;a&gt; (anchor) element does not have an `href` attribute.","effect":"Screen readers on Windows will read the element as plain text without indicating it is a link. On Mac OS, VoiceOver will still read the anchor as a link, even if it&#039;s not. The element won&#039;t be included in the page&#039;s tab sequence by default, making it inaccessible using a keyboard.","howToFix":"* If the element should act as a link, add an `href` attribute that points to itself (&lt;a href=&quot;#&quot;&gt;) \n* If the element is not meant to be a link, change it to something more appropriate, like a button"},{"issueIndex":"6","pageUrl":"https://demo.evinced.com/","pageTitle":"Home | Evinced, Demo site","typeName":"Keyboard accessible","summary":"Keyboard users must be able to navigate to all the interactive elements on the page.","elements":[{"componentId":"a2d2a84e","selector":".search-btn","domSnippet":"&#60;a class&#61;&#34;search&#45;btn&#34;&#62;Search&#60;&#47;a&#62;","boundingBox":{"x":290,"y":930,"height":85,"width":420,"top":930,"left":290,"right":710,"bottom":1015}}],"knowledgeBaseLink":"https://knowledge.evinced.com/system-validations/keyboard-accessible","severityName":"Critical","tags":[{"id":"WCAG-2.1.1","description":"2.1.1 Keyboard  (Level A)","link":"https://www.w3.org/WAI/WCAG21/Understanding/keyboard.html"},{"id":"WCAG-A"},{"id":"WCAG2.0"}],"cause":"The element is missing the right tags or has incorrect tags.","effect":"The element is excluded from the keyboard tab sequence and is therefore inaccessible to keyboard users.","howToFix":"Use one of these approaches: \n* Approach 1 (recommended): Add a tag that shows the element&#039;s purpose. Interactive elements don&#039;t need anything extra because they are focusable by nature. \n* Approach 2: Add a `tabindex` attribute with the value of `0` to the element."}],"reportTimestampInMs":1764244916875,"sdkVersion":"Evinced SDK for Cypress 5.2.2","scale":0.5,"hideNotes":false}
 
       let focusAfterClosed
       /**
@@ -654,7 +696,7 @@
 				screenshotsMap? - Map<string,string>,
 				restoreFocusTo - DomElement
 			 **/
-      async function openIssueDetailsModal(issue, screenshotsMap, restoreFocusTo) {
+      async function openIssueDetailsModal(issue, screenshotsMap, restoreFocusTo, hideNotes) {
         focusAfterClosed = restoreFocusTo
         const modalBody = document.querySelector('#modalBody div')
         const newModalBody = document.createElement('div')
@@ -730,7 +772,7 @@
                 isOtherIssueType(issue)
                   ? ''
                   : `<div class="modalComponentItem">
-									<a href="${issue.knowledgeBaseLink}" target="_blank" rel="noopener noreferrer">Read more in Evinced Knowledge Base</a>
+									${generateKnowledgeBaseLinks(issue)}
 									</div>`
               }
 						</div>
@@ -746,16 +788,17 @@
 						</div>
 					</div>
 				`
-        const notesContainer = document.createElement('div')
-        notesContainer.innerHTML = `
-					<label id="issue-notes" class="boldAttribute">Notes:</label>
-					<textarea rows=5 title="Notes" aria-labelledby="issue-notes" readonly>${issue.note || ''}</textarea>
-				`
-        notesContainer.style = 'display: flex; flex-direction: column; margin-bottom: 20px;'
         newModalBody.appendChild(componentsContainer)
         newModalBody.appendChild(dualContainer)
-        newModalBody.appendChild(notesContainer)
-
+        if (!hideNotes) {
+          const notesContainer = document.createElement('div')
+          notesContainer.innerHTML = `
+				  	<label id="issue-notes" class="boldAttribute">Notes:</label>
+				  	<textarea rows=5 title="Notes" aria-labelledby="issue-notes" readonly>${issue.note || ''}</textarea>
+				  `
+          notesContainer.style = 'display: flex; flex-direction: column; margin-bottom: 20px;'
+          newModalBody.appendChild(notesContainer)
+        }
         // append screenshots with markers if available
         if (screenshotsMap && screenshotsMap[issue?.screenshotId]) {
           const screenshot = await resolveScreenshotWithMarkersImage(
@@ -839,10 +882,11 @@
 				reportTimestampInMs: number,
 				sdkVersion: string,
 				screenshotsMap?: Map<string, string>
+				hideNotes?: boolean
 			  }
 			 */
       function loadTableData(json) {
-        const { issues, reportTimestampInMs, sdkVersion, screenshotsMap } = json
+        const { issues, reportTimestampInMs, sdkVersion, screenshotsMap, hideNotes } = json
         const table = document.getElementById('tableBody')
         const issuesCount = document.getElementById('issuesCount')
         const reportTitle = document.getElementById('reportTitle')
@@ -856,7 +900,7 @@
         pageTitle.innerHTML = `Evinced Accessibility Test Report [${reportTimestamp}]`
         sdkVersionElem.innerHTML = sdkVersion || 'Unknown SDK version'
         issues.forEach((issue, issueIdx) => {
-          const showDetails = e => openIssueDetailsModal(issue, screenshotsMap, e.target)
+          const showDetails = e => openIssueDetailsModal(issue, screenshotsMap, e.target, hideNotes)
           const row = table.insertRow()
 
           // Issue number
@@ -1205,7 +1249,9 @@
               o = e[n]
             if ('object' != typeof o)
               return (
-                (a.valid = !1), (a.error = s + 'must be an object, but ' + typeof o + ' given'), a
+                (a.valid = !1),
+                (a.error = s + 'must be an object, but ' + typeof o + ' given'),
+                a
               )
             if (!x.helper.isString(o.type))
               return (
@@ -1307,11 +1353,11 @@
           'use strict'
           return '¨E' + r.charCodeAt(0) + 'E'
         }
-        ;(x.helper = {}),
+        ;((x.helper = {}),
           (x.extensions = {}),
           (x.setOption = function (e, r) {
             'use strict'
-            return (p[e] = r), this
+            return ((p[e] = r), this)
           }),
           (x.getOption = function (e) {
             'use strict'
@@ -1422,9 +1468,9 @@
           (x.helper.escapeCharactersCallback = n),
           (x.helper.escapeCharacters = function (e, r, t) {
             'use strict'
-            ;(r = '([' + r.replace(/([\[\]\\])/g, '\\$1') + '])'),
+            ;((r = '([' + r.replace(/([\[\]\\])/g, '\\$1') + '])'),
               t && (r = '\\\\' + r),
-              (t = new RegExp(r, 'g'))
+              (t = new RegExp(r, 'g')))
             return (e = e.replace(t, n))
           }),
           (x.helper.unescapeHTMLEntities = function (e) {
@@ -1434,7 +1480,7 @@
               .replace(/&lt;/g, '<')
               .replace(/&gt;/g, '>')
               .replace(/&amp;/g, '&')
-          })
+          }))
         function u(e, r, t, a) {
           'use strict'
           var n,
@@ -1503,7 +1549,7 @@
             )
           }
         }
-        ;(x.helper.matchRecursiveRegExp = function (e, r, t, a) {
+        ;((x.helper.matchRecursiveRegExp = function (e, r, t, a) {
           'use strict'
           for (var n = u(e, r, t, a), s = [], o = 0; o < n.length; ++o)
             s.push([
@@ -1529,7 +1575,7 @@
               var l = []
               0 !== o[0].wholeMatch.start && l.push(e.slice(0, o[0].wholeMatch.start))
               for (var c = 0; c < i; ++c)
-                l.push(
+                (l.push(
                   r(
                     e.slice(o[c].wholeMatch.start, o[c].wholeMatch.end),
                     e.slice(o[c].match.start, o[c].match.end),
@@ -1537,9 +1583,9 @@
                     e.slice(o[c].right.start, o[c].right.end)
                   )
                 ),
-                  c < i - 1 && l.push(e.slice(o[c].wholeMatch.end, o[c + 1].wholeMatch.start))
-              o[i - 1].wholeMatch.end < e.length && l.push(e.slice(o[i - 1].wholeMatch.end)),
-                (t = l.join(''))
+                  c < i - 1 && l.push(e.slice(o[c].wholeMatch.end, o[c + 1].wholeMatch.start)))
+              ;(o[i - 1].wholeMatch.end < e.length && l.push(e.slice(o[i - 1].wholeMatch.end)),
+                (t = l.join('')))
             }
             return t
           }),
@@ -2872,9 +2918,9 @@
                     typeof r +
                     ' given'
                 )
-              o.hasOwnProperty(e) || (o[e] = []), o[e].push(r)
+              ;(o.hasOwnProperty(e) || (o[e] = []), o[e].push(r))
             }
-            n.extensions && x.helper.forEach(n.extensions, c),
+            ;(n.extensions && x.helper.forEach(n.extensions, c),
               (this._dispatch = function (e, r, t, a) {
                 if (o.hasOwnProperty(e))
                   for (var n = 0; n < o[e].length; ++n) {
@@ -2884,7 +2930,7 @@
                 return r
               }),
               (this.listen = function (e, r) {
-                return u(e, r), this
+                return (u(e, r), this)
               }),
               (this.makeHtml = function (r) {
                 if (!r) return r
@@ -2983,18 +3029,18 @@
                                       break
                                     }
                                   }
-                                ;(n = x.helper.unescapeHTMLEntities(n)),
+                                ;((n = x.helper.unescapeHTMLEntities(n)),
                                   t.push(n),
                                   (r[a].outerHTML =
                                     '<precode language="' +
                                     s +
                                     '" precodenum="' +
                                     a.toString() +
-                                    '"></precode>')
+                                    '"></precode>'))
                               } else
-                                t.push(r[a].innerHTML),
+                                (t.push(r[a].innerHTML),
                                   (r[a].innerHTML = ''),
-                                  r[a].setAttribute('prenum', a.toString())
+                                  r[a].setAttribute('prenum', a.toString()))
                             return t
                           })(r)
                         }),
@@ -3067,7 +3113,7 @@
               }),
               (this._setMetadataRaw = function (e) {
                 s.raw = e
-              })
+              }))
           }),
           x.subParser('anchors', function (e, i, l) {
             'use strict'
@@ -3084,7 +3130,7 @@
                   x.helper.isUndefined(l.gUrls[t]))
                 )
                   return e
-                ;(a = l.gUrls[t]), x.helper.isUndefined(l.gTitles[t]) || (o = l.gTitles[t])
+                ;((a = l.gUrls[t]), x.helper.isUndefined(l.gTitles[t]) || (o = l.gTitles[t]))
               }
               return (
                 (e =
@@ -3144,7 +3190,7 @@
                 )),
               (e = l.converter._dispatch('anchors.after', e, i, l))
             )
-          })
+          }))
         var i =
             /([*~_]+|\b)(((https?|ftp|dict):\/\/|www\.)[^'">\s]+?\.[^'">\s]+?)()(\1)?(?=\s|$)(?!["<>])/gi,
           l =
@@ -3153,7 +3199,7 @@
           m =
             /(^|\s)(?:mailto:)?([A-Za-z0-9!#$%&'*+-/=?^_`{|}~.]+@[-a-z0-9]+(\.[-a-z0-9]+)*\.[a-z]+)(?=$|\s)/gim,
           f = /<()(?:mailto:)?([-.\w]+@[-a-z0-9]+(\.[-a-z0-9]+)*\.[a-z]+)>/gi
-        x.subParser('autoLinks', function (e, r, t) {
+        ;(x.subParser('autoLinks', function (e, r, t) {
           'use strict'
           return (
             (e = (e = (e = t.converter._dispatch('autoLinks.before', e, r, t)).replace(
@@ -3287,8 +3333,8 @@
                     break
                   case 'language':
                   case 'lang':
-                    ;(l = ' lang="' + t.metadata.parsed[a] + '"'),
-                      (c += '<meta name="' + a + '" content="' + t.metadata.parsed[a] + '">\n')
+                    ;((l = ' lang="' + t.metadata.parsed[a] + '"'),
+                      (c += '<meta name="' + a + '" content="' + t.metadata.parsed[a] + '">\n'))
                     break
                   default:
                     c += '<meta name="' + a + '" content="' + t.metadata.parsed[a] + '">\n'
@@ -3707,9 +3753,9 @@
                   x.helper.isUndefined(l[t]))
                 )
                   return e
-                ;(a = l[t]),
+                ;((a = l[t]),
                   x.helper.isUndefined(c[t]) || (i = c[t]),
-                  x.helper.isUndefined(u[t]) || ((n = u[t].width), (s = u[t].height))
+                  x.helper.isUndefined(u[t]) || ((n = u[t].width), (s = u[t].height)))
               }
               r = r
                 .replace(/"/g, '&quot;')
@@ -3810,7 +3856,7 @@
           x.subParser('lists', function (e, d, c) {
             'use strict'
             function p(e, r) {
-              c.gListLevel++, (e = e.replace(/\n{2,}$/, '\n'))
+              ;(c.gListLevel++, (e = e.replace(/\n{2,}$/, '\n')))
               var t =
                   /(\n)?(^ {0,3})([*+-]|\d+[.])[ \t]+((\[(x|X| )?])?[ \t]*[^\r]+?(\n{1,2}))(?=\n*(¨0| {0,3}([*+-]|\d+[.])[ \t]+))/gm,
                 l = /\n[ \t]*\n(?!¨0)/.test((e += '¨0'))
@@ -3829,7 +3875,7 @@
                       (n = n.replace(/^[ \t]*\[(x|X| )?]/m, function () {
                         var e =
                           '<input type="checkbox" disabled style="margin: 0px 0.35em 0.25em -1.6em; vertical-align: middle;"'
-                        return o && (e += ' checked'), (e += '>')
+                        return (o && (e += ' checked'), (e += '>'))
                       }))),
                     (n = n.replace(/^([-*+]|\d\.)[ \t]+[\S\n ]*/g, function (e) {
                       return '¨A' + e
@@ -3917,10 +3963,10 @@
               ? ((e = (e = (e = (e = a.converter._dispatch('metadata.before', e, r, a)).replace(
                   /^\s*«««+(\S*?)\n([\s\S]+?)\n»»»+\n/,
                   function (e, r, t) {
-                    return n(t), '¨M'
+                    return (n(t), '¨M')
                   }
                 )).replace(/^\s*---+(\S*?)\n([\s\S]+?)\n---+\n/, function (e, r, t) {
-                  return r && (a.metadata.format = r), n(t), '¨M'
+                  return (r && (a.metadata.format = r), n(t), '¨M')
                 })).replace(/¨M/g, '')),
                 a.converter._dispatch('metadata.after', e, r, a))
               : e
@@ -3930,7 +3976,7 @@
                 .replace(/"/g, '&quot;')).replace(/\n {4}/g, ' ')).replace(
                 /^([\S ]+): +([\s\S]+?)$/gm,
                 function (e, r, t) {
-                  return (a.metadata.parsed[r] = t), ''
+                  return ((a.metadata.parsed[r] = t), '')
                 }
               )
             }
@@ -3970,14 +4016,14 @@
               for (var l = '', c = n[o], u = !1; /¨(K|G)(\d+)\1/.test(c); ) {
                 var d = RegExp.$1,
                   p = RegExp.$2
-                ;(l = (l =
+                ;((l = (l =
                   'K' === d
                     ? t.gHtmlBlocks[p]
                     : u
                       ? x.subParser('encodeCode')(t.ghCodeBlocks[p].text, r, t)
                       : t.ghCodeBlocks[p].codeblock).replace(/\$/g, '$$$$')),
                   (c = c.replace(/(\n\n)?¨(K|G)\d+\2(\n\n)?/, l)),
-                  /^<pre\b[^>]*>\s*<code\b[^>]*>/.test(c) && (u = !0)
+                  /^<pre\b[^>]*>\s*<code\b[^>]*>/.test(c) && (u = !0))
               }
               n[o] = c
             }
@@ -4075,9 +4121,9 @@
             if (!y.tables) return e
             function r(e) {
               for (var r = e.split('\n'), t = 0; t < r.length; ++t)
-                /^ {0,3}\|/.test(r[t]) && (r[t] = r[t].replace(/^ {0,3}\|/, '')),
+                (/^ {0,3}\|/.test(r[t]) && (r[t] = r[t].replace(/^ {0,3}\|/, '')),
                   /\|[ \t]*$/.test(r[t]) && (r[t] = r[t].replace(/\|[ \t]*$/, '')),
-                  (r[t] = x.subParser('codeSpans')(r[t], y, P))
+                  (r[t] = x.subParser('codeSpans')(r[t], y, P)))
               var a,
                 n,
                 s,
@@ -4113,7 +4159,7 @@
                         : '')
                 )
               for (t = 0; t < l.length; ++t)
-                x.helper.isUndefined(p[t]) && (p[t] = ''),
+                (x.helper.isUndefined(p[t]) && (p[t] = ''),
                   d.push(
                     ((n = l[t]),
                     (s = p[t]),
@@ -4129,14 +4175,14 @@
                       '>' +
                       (n = x.subParser('spanGamut')(n, y, P)) +
                       '</th>\n')
-                  )
+                  ))
               for (t = 0; t < u.length; ++t) {
                 for (var _ = [], g = 0; g < d.length; ++g)
-                  x.helper.isUndefined(u[t][g]),
+                  (x.helper.isUndefined(u[t][g]),
                     _.push(
                       ((i = u[t][g]),
                       '<td' + p[g] + '>' + x.subParser('spanGamut')(i, y, P) + '</td>\n')
-                    )
+                    ))
                 h.push(_)
               }
               for (
@@ -4262,9 +4308,9 @@
             if (e.hasChildNodes() && e.hasAttribute('href')) {
               for (var a = e.childNodes, n = a.length, t = '[', s = 0; s < n; ++s)
                 t += x.subParser('makeMarkdown.node')(a[s], r)
-              ;(t = (t += '](') + ('<' + e.getAttribute('href') + '>')),
+              ;((t = (t += '](') + ('<' + e.getAttribute('href') + '>')),
                 e.hasAttribute('title') && (t += ' "' + e.getAttribute('title') + '"'),
-                (t += ')')
+                (t += ')'))
             }
             return t
           }),
@@ -4434,7 +4480,7 @@
                   case 'text-align:center;':
                     l = ':---:'
                 }
-              ;(a[0][o] = i.trim()), (a[1][o] = l)
+              ;((a[0][o] = i.trim()), (a[1][o] = l))
             }
             for (o = 0; o < s.length; ++o)
               for (
@@ -4443,8 +4489,8 @@
                 ++d
               ) {
                 var p = ' '
-                void 0 !== u[d] && (p = x.subParser('makeMarkdown.tableCell')(u[d], r)),
-                  a[c].push(p)
+                ;(void 0 !== u[d] && (p = x.subParser('makeMarkdown.tableCell')(u[d], r)),
+                  a[c].push(p))
               }
             var h = 3
             for (o = 0; o < a.length; ++o)
@@ -4488,7 +4534,7 @@
                 '\\]$1\\('
               )).replace(/^ {0,3}\[([\S \t]*?)]:/gm, '\\[$1]:'))
             )
-          })
+          }))
         'function' == typeof define && define.amd
           ? define(function () {
               'use strict'

@@ -6,6 +6,6 @@
     "cy:open": "cypress open"
   },
   "dependencies": {
-    "@evinced/cypress-sdk": "5.0.0"
+    "@evinced/cypress-sdk": "^5.2.2"
   }
 }
