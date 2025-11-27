@@ -3,9 +3,10 @@
     "cypress": "^14.0.1"
   },
   "scripts": {
-    "cy:open": "cypress open"
+    "cy:open": "cypress open",
+    "cy-local-test": "npx cypress run --browser chrome"
   },
   "dependencies": {
-    "@evinced/cypress-sdk": "5.0.0"
+    "@evinced/cypress-sdk": "^5.2.2"
   }
 }

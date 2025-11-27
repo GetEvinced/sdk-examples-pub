@@ -1,16 +1,25 @@
 const { defineConfig } = require("cypress");
 const Evinced = require("@evinced/cypress-sdk").default;
-const os = require('os');
+const os = require("os");
 
 module.exports = defineConfig({
   e2e: {
     setupNodeEvents(on, config) {
       // implement node event listeners here
       on("task", {
-        evTask: Evinced.cyEvTask
+        evTask: Evinced.cyEvTask,
+      });
+      on("before:browser:launch", (browser = {}, launchOptions) => {
+        launchOptions.args.push(
+          "--no-sandbox",
+          "--disable-dev-shm-usage",
+          "--disable-gpu",
+          "--disable-software-rasterizer"
+        );
+        return launchOptions;
       });
     },
-    pageLoadTimeout: 200000
+    pageLoadTimeout: 200000,
   },
   env: {
     serviceId: process.env.EVINCED_SERVICE_ID,
@@ -18,10 +27,10 @@ module.exports = defineConfig({
     evincedConfig: {
       switchOn: true,
       reporterOptions: {
-        reportFormat: "html", 
-        filePath: "./reports/aggregatedReport.html", 
-        tmpDir: os.tmpdir(), 
-        reportTimeStamp: new Date().toISOString(), 
+        reportFormat: "html",
+        filePath: "./reports/aggregatedReport.html",
+        tmpDir: os.tmpdir(),
+        reportTimeStamp: new Date().toISOString(),
       },
     },
   },
