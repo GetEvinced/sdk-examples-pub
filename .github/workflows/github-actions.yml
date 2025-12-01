@@ -41,7 +41,7 @@ jobs:
         if: always()
 
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up environment for ${{ matrix.language-folder.language }}
         run: |
