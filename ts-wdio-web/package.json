@@ -5,7 +5,7 @@
     "wdio": "wdio run ./wdio.conf.ts"
   },
   "dependencies": {
-    "@evinced/webdriverio-sdk": "^2.35.1"
+    "@evinced/webdriverio-sdk": "^2.45.0"
   },
   "devDependencies": {
     "@wdio/cli": "^8.45.0",
