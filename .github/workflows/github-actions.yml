@@ -80,6 +80,11 @@ jobs:
           echo "Detected Chrome version: $CHROME_VERSION"
           npm install chromedriver@$CHROME_VERSION
 
+      - name: Install Google Chrome
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y google-chrome-stable
+
       - name: Run Evinced Smoke tests
         id: run-tests
         env:
