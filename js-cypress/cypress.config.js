@@ -33,5 +33,15 @@ module.exports = defineConfig({
         reportTimeStamp: new Date().toISOString(),
       },
     },
+    evincedConfig: {
+      sdkLogging: {
+        enable: true,
+        level: "info",
+        directory: "EvincedLogs/",
+        browserLoggingEnabled: true,
+        systemInformationLoggingEnabled: true,
+        maxLogLength: 1500,
+      },
+    },
   },
 });
