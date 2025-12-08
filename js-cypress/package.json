@@ -3,7 +3,7 @@
     "cypress": "^14.0.1"
   },
   "scripts": {
-    "cy:open": "cypress open",
+    "cy:open": "cypress run --browser chrome --headless",
     "cy-local-test": "npx cypress run --browser chrome"
   },
   "dependencies": {
