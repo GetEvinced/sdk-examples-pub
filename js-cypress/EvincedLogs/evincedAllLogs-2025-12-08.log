@@ -1,0 +1,1259 @@
+2025-12-08T15:17:13.710Z [default] [info]: System Information:
+                - SDK: JS Cypress SDK 5.2.2
+                - Browser: undefined
+                - Node version: 
+                - Platform: undefined
+                - Architecture: undefined
+                - timezone: Europe/London (0 hours)
+            
+2025-12-08T15:17:13.710Z [default] [info]: Evinced SDK init called
+2025-12-08T15:17:13.836Z [default] [info]: Injecting AnalysisWeb
+2025-12-08T15:17:13.980Z [default] [info]: AnalysisWeb Injected
+2025-12-08T15:17:13.980Z [default] [info]: Registering events listeners
+2025-12-08T15:17:14.686Z [default] [info]: evAnalyze called
+2025-12-08T15:17:14.687Z [default] [info]: Call to initWebAnalysis
+2025-12-08T15:17:14.687Z [default] [info]: Loading previous persisted data
+2025-12-08T15:17:14.687Z [default] [info]: Calling analysisWebInit...
+2025-12-08T15:17:14.693Z [default] [info]: Start run analysis once
+2025-12-08T15:17:14.693Z [default] [info]: exec runAnalysisOnce command
+2025-12-08T15:17:15.850Z [default] [info]: Finished analyzing page, found 6 issues 
+2025-12-08T15:17:15.852Z [default] [info]: uploadReportToPlatform: Task "uploadToPlatform" triggered successfully
+2025-12-08T15:17:20.297Z [default] [info]: System Information:
+                - SDK: JS Cypress SDK 5.2.2
+                - Browser: undefined
+                - Node version: 
+                - Platform: undefined
+                - Architecture: undefined
+                - timezone: Europe/London (0 hours)
+            
+2025-12-08T15:17:20.297Z [default] [info]: Evinced SDK init called
+2025-12-08T15:17:20.418Z [default] [info]: Injecting AnalysisWeb
+2025-12-08T15:17:20.554Z [default] [info]: AnalysisWeb Injected
+2025-12-08T15:17:20.554Z [default] [info]: Registering events listeners
+2025-12-08T15:17:21.014Z [default] [info]: evAnalyze called
+2025-12-08T15:17:21.014Z [default] [info]: Call to initWebAnalysis
+2025-12-08T15:17:21.014Z [default] [info]: Loading previous persisted data
+2025-12-08T15:17:21.014Z [default] [info]: Calling analysisWebInit...
+2025-12-08T15:17:21.019Z [default] [info]: Start run analysis once
+2025-12-08T15:17:21.019Z [default] [info]: exec runAnalysisOnce command
+2025-12-08T15:17:21.968Z [default] [info]: Finished analyzing page, found 6 issues 
+2025-12-08T15:17:21.969Z [default] [info]: uploadReportToPlatform: Task "uploadToPlatform" triggered successfully
+2025-12-08T15:17:26.281Z [default] [info]: System Information:
+                - SDK: JS Cypress SDK 5.2.2
+                - Browser: undefined
+                - Node version: 
+                - Platform: undefined
+                - Architecture: undefined
+                - timezone: Europe/London (0 hours)
+            
+2025-12-08T15:17:26.281Z [default] [info]: Evinced SDK init called
+2025-12-08T15:17:26.317Z [default] [info]: evStart function called
+2025-12-08T15:17:26.317Z [default] [warn]: Delaying recording since no window object exists yet
+2025-12-08T15:17:26.433Z [default] [info]: Injecting AnalysisWeb
+2025-12-08T15:17:26.590Z [default] [info]: AnalysisWeb Injected
+2025-12-08T15:17:26.590Z [default] [info]: Registering events listeners
+2025-12-08T15:17:26.980Z [default] [info]: Call to initWebAnalysis
+2025-12-08T15:17:26.980Z [default] [info]: Loading previous persisted data
+2025-12-08T15:17:26.980Z [default] [info]: Calling analysisWebInit...
+2025-12-08T15:17:26.984Z [default] [info]: Calling "Start analysis" command
+2025-12-08T15:17:27.391Z [default] [info]: evStop function called
+2025-12-08T15:17:27.492Z [default] [info]: Waiting for the analysis to be finished for the last URL.
+2025-12-08T15:17:27.493Z [default] [info]: stopAnalysis function called
+2025-12-08T15:17:27.493Z [default] [info]: Call stopAnalysis function
+2025-12-08T15:17:27.493Z [default] [info]: Exec stopAnalysis command
+2025-12-08T15:17:27.493Z [default] [info]: Found 14 issues.
+2025-12-08T15:17:27.493Z [default] [info]: Log issues option is enable.
+2025-12-08T15:17:27.818Z [default] [info]: The message is too long (3688), only the first 1500 characters will be logged. 
+      In order to log such long messages -> update logging configuration.
+2025-12-08T15:17:27.493Z [default] [info]: [Evinced Issue] Interactive elements, such as buttons, links, and inputs, must convey that they can be interacted with by using the proper semantics.:
+                            ID: 718d92fc-b17b-4c9d-bb48-a0bacdacf023
+                            Index: I1
+                            Type: WRONG_SEMANTIC_ROLE
+                            Severity: Critical
+                            Summary: Interactive elements, such as buttons, links, and inputs, must convey that they can be interacted with by using the proper semantics.
+                            Description: **Cause:** 
+Screen readers are unable to identify that the element is interactive due to missing or incorrect semantics.
+**Effect:** 
+Screen reader users may not find the content or may not realize that the the content is interactive.
+**Suggested Solutions:**
+Use native HTML interactive elements such as <*button*>, <*a*>, <*select*>, <*input*>. Alternatively, add the appropriate ARIA role that corresponds to the content purpose.
+                            KB Link: https://knowledge.evinced.com/system-validations/interactable-role
+                            Raw Data: {
+  "id": "718d92fc-b17b-4c9d-bb48-a0bacdacf023",
+  "index": "I1",
+  "hidden": false,
+  "validation": {
+    "id": "eaf1d5f5-0c15-43ae-b97f-9e18633addcf"
+  },
+  "skipIssue": false,
+  "elements": [
+    {
+      "id": "4217abd5-c3d7-49d7-9b85-890f8fa38a7f",
+      "domSnippet": "<div class=\"dropdown line\"><p>Select</p></div>",
+      "componentId": "ce13d0
+2025-12-08T15:17:27.818Z [default] [info]: The message is too long (3623), only the first 1500 characters will be logged. 
+      In order to log such long messages -> update logging configuration.
+2025-12-08T15:17:27.493Z [default] [info]: [Evinced Issue] Keyboard users must be able to navigate to all the interactive elements on the page.:
+                            ID: 666d0b7d-96b3-4175-99e1-b8f07951fc75
+                            Index: I2
+                            Type: NOT_FOCUSABLE
+                            Severity: Critical
+                            Summary: Keyboard users must be able to navigate to all the interactive elements on the page.
+                            Description: **Cause:** 
+The element is missing the right tags or has incorrect tags. 
+**Effect:** 
+The element is excluded from the keyboard tab sequence and is therefore inaccessible to keyboard users. 
+**Suggested Solutions:**
+Use one of these approaches: 
+* Approach 1 (recommended): Add a tag that shows the element's purpose. Interactive elements don't need anything extra because they are focusable by nature. 
+* Approach 2: Add a `tabindex` attribute with the value of `0` to the element.
+                            KB Link: https://knowledge.evinced.com/system-validations/keyboard-accessible
+                            Raw Data: {
+  "id": "666d0b7d-96b3-4175-99e1-b8f07951fc75",
+  "index": "I2",
+  "hidden": false,
+  "validation": {
+    "id": "0b3950fd-6205-47a6-95bd-d957322be04f"
+  },
+  "skipIssue": false,
+  "elements": [
+    {
+      "id": "4217abd5-c3d7-49d7-9b85-890f8fa38a7f",
+      "domSnippet": "<div class=\"dropdown line\"><p>Select</p></div>",
+      "componentId": "ce13d0bb",
+      "index": "S1",
+      "selector": ".block
+2025-12-08T15:17:27.818Z [default] [info]: The message is too long (3688), only the first 1500 characters will be logged. 
+      In order to log such long messages -> update logging configuration.
+2025-12-08T15:17:27.493Z [default] [info]: [Evinced Issue] Interactive elements, such as buttons, links, and inputs, must convey that they can be interacted with by using the proper semantics.:
+                            ID: 21dd6214-405b-42f0-8977-761bcf733b96
+                            Index: I3
+                            Type: WRONG_SEMANTIC_ROLE
+                            Severity: Critical
+                            Summary: Interactive elements, such as buttons, links, and inputs, must convey that they can be interacted with by using the proper semantics.
+                            Description: **Cause:** 
+Screen readers are unable to identify that the element is interactive due to missing or incorrect semantics.
+**Effect:** 
+Screen reader users may not find the content or may not realize that the the content is interactive.
+**Suggested Solutions:**
+Use native HTML interactive elements such as <*button*>, <*a*>, <*select*>, <*input*>. Alternatively, add the appropriate ARIA role that corresponds to the content purpose.
+                            KB Link: https://knowledge.evinced.com/system-validations/interactable-role
+                            Raw Data: {
+  "id": "21dd6214-405b-42f0-8977-761bcf733b96",
+  "index": "I3",
+  "hidden": false,
+  "validation": {
+    "id": "49a0f9b0-82c8-4052-82aa-d5ec8a5c223a"
+  },
+  "skipIssue": false,
+  "elements": [
+    {
+      "id": "99719ddc-e9ec-46b6-a40a-c917849d2bd3",
+      "domSnippet": "<div class=\"dropdown line\"><p>Select</p></div>",
+      "componentId": "ce13d0
+2025-12-08T15:17:27.818Z [default] [info]: The message is too long (3623), only the first 1500 characters will be logged. 
+      In order to log such long messages -> update logging configuration.
+2025-12-08T15:17:27.493Z [default] [info]: [Evinced Issue] Keyboard users must be able to navigate to all the interactive elements on the page.:
+                            ID: 6e9c6583-c01b-46d2-b240-b2afaa9bbaaf
+                            Index: I4
+                            Type: NOT_FOCUSABLE
+                            Severity: Critical
+                            Summary: Keyboard users must be able to navigate to all the interactive elements on the page.
+                            Description: **Cause:** 
+The element is missing the right tags or has incorrect tags. 
+**Effect:** 
+The element is excluded from the keyboard tab sequence and is therefore inaccessible to keyboard users. 
+**Suggested Solutions:**
+Use one of these approaches: 
+* Approach 1 (recommended): Add a tag that shows the element's purpose. Interactive elements don't need anything extra because they are focusable by nature. 
+* Approach 2: Add a `tabindex` attribute with the value of `0` to the element.
+                            KB Link: https://knowledge.evinced.com/system-validations/keyboard-accessible
+                            Raw Data: {
+  "id": "6e9c6583-c01b-46d2-b240-b2afaa9bbaaf",
+  "index": "I4",
+  "hidden": false,
+  "validation": {
+    "id": "bfb81289-7cb3-4625-bf6d-6a1ea5c85087"
+  },
+  "skipIssue": false,
+  "elements": [
+    {
+      "id": "99719ddc-e9ec-46b6-a40a-c917849d2bd3",
+      "domSnippet": "<div class=\"dropdown line\"><p>Select</p></div>",
+      "componentId": "ce13d0bb",
+      "index": "S2",
+      "selector": ".block
+2025-12-08T15:17:27.818Z [default] [info]: The message is too long (3791), only the first 1500 characters will be logged. 
+      In order to log such long messages -> update logging configuration.
+2025-12-08T15:17:27.493Z [default] [info]: [Evinced Issue] Anchor elements (<a>) must have an `href` attribute to be recognized as a link.:
+                            ID: 12983e76-d962-49fa-baa7-497aae75ab18
+                            Index: I5
+                            Type: ANCHOR_WITHOUT_HREF
+                            Severity: Critical
+                            Summary: Anchor elements (<a>) must have an `href` attribute to be recognized as a link.
+                            Description: **Cause:** 
+ The <a> (anchor) element does not have an `href` attribute. 
+**Effect:** 
+Screen readers on Windows will read the element as plain text without indicating it is a link. On Mac OS, VoiceOver will still read the anchor as a link, even if it's not. The element won't be included in the page's tab sequence by default, making it inaccessible using a keyboard. 
+**Suggested Solutions:**
+* If the element should act as a link, add an `href` attribute that points to itself (<a href="#">) 
+* If the element is not meant to be a link, change it to something more appropriate, like a button
+                            KB Link: https://knowledge.evinced.com/system-validations/anchor-without-href
+                            Raw Data: {
+  "id": "12983e76-d962-49fa-baa7-497aae75ab18",
+  "index": "I5",
+  "hidden": false,
+  "validation": {
+    "id": "37315625-b4ac-4427-9402-56fa4f40d077"
+  },
+  "skipIssue": false,
+  "elements": [
+    {
+      "id": "bc2b2a83-2a2f-4a57-b9b1-1c244e142faf",
+      "domSnippet": "<a class=\"search-btn\"
+2025-12-08T15:17:27.818Z [default] [info]: The message is too long (3543), only the first 1500 characters will be logged. 
+      In order to log such long messages -> update logging configuration.
+2025-12-08T15:17:27.493Z [default] [info]: [Evinced Issue] Keyboard users must be able to navigate to all the interactive elements on the page.:
+                            ID: 6e67bb3e-ad78-4b5a-9472-bc043a085e3a
+                            Index: I6
+                            Type: NOT_FOCUSABLE
+                            Severity: Critical
+                            Summary: Keyboard users must be able to navigate to all the interactive elements on the page.
+                            Description: **Cause:** 
+The element is missing the right tags or has incorrect tags. 
+**Effect:** 
+The element is excluded from the keyboard tab sequence and is therefore inaccessible to keyboard users. 
+**Suggested Solutions:**
+Use one of these approaches: 
+* Approach 1 (recommended): Add a tag that shows the element's purpose. Interactive elements don't need anything extra because they are focusable by nature. 
+* Approach 2: Add a `tabindex` attribute with the value of `0` to the element.
+                            KB Link: https://knowledge.evinced.com/system-validations/keyboard-accessible
+                            Raw Data: {
+  "id": "6e67bb3e-ad78-4b5a-9472-bc043a085e3a",
+  "index": "I6",
+  "hidden": false,
+  "validation": {
+    "id": "013fd19c-9c8a-4cef-8ece-9eb75dbfca44"
+  },
+  "skipIssue": false,
+  "elements": [
+    {
+      "id": "bc2b2a83-2a2f-4a57-b9b1-1c244e142faf",
+      "domSnippet": "<a class=\"search-btn\">Search</a>",
+      "componentId": "a2d2a84e",
+      "index": "S3",
+      "selector": ".search-btn",
+      
+2025-12-08T15:17:27.818Z [default] [info]: The message is too long (3732), only the first 1500 characters will be logged. 
+      In order to log such long messages -> update logging configuration.
+2025-12-08T15:17:27.493Z [default] [info]: [Evinced Issue] Interactive elements, such as buttons, links, and inputs, must convey that they can be interacted with by using the proper semantics.:
+                            ID: 508e0afe-e303-41ca-b321-cfc7a370091a
+                            Index: I7
+                            Type: WRONG_SEMANTIC_ROLE
+                            Severity: Critical
+                            Summary: Interactive elements, such as buttons, links, and inputs, must convey that they can be interacted with by using the proper semantics.
+                            Description: **Cause:** 
+Screen readers are unable to identify that the element is interactive due to missing or incorrect semantics.
+**Effect:** 
+Screen reader users may not find the content or may not realize that the the content is interactive.
+**Suggested Solutions:**
+Use native HTML interactive elements such as <*button*>, <*a*>, <*select*>, <*input*>. Alternatively, add the appropriate ARIA role that corresponds to the content purpose.
+                            KB Link: https://knowledge.evinced.com/system-validations/interactable-role
+                            Raw Data: {
+  "id": "508e0afe-e303-41ca-b321-cfc7a370091a",
+  "index": "I7",
+  "hidden": false,
+  "validation": {
+    "id": "40135670-0924-4945-9686-702a4d29e793"
+  },
+  "skipIssue": false,
+  "elements": [
+    {
+      "id": "84278c5f-c605-40cf-a8b3-dfd056cdfab1",
+      "domSnippet": "<ul class=\"dropdownMenu active\"><li>Caravan</li><li>Tiny House</li><li>Treeho
+2025-12-08T15:17:27.818Z [default] [info]: The message is too long (4132), only the first 1500 characters will be logged. 
+      In order to log such long messages -> update logging configuration.
+2025-12-08T15:17:27.493Z [default] [info]: [Evinced Issue] Elements that can be interacted with, such as buttons, links, and input fields, must have an accessible name. The name should indicate which information or action is required, and/or what will happen if they interact with it.:
+                            ID: 3ad4b4e4-76d4-4b21-a313-a3a16554f697
+                            Index: I8
+                            Type: NO_DESCRIPTIVE_TEXT
+                            Severity: Critical
+                            Summary: Elements that can be interacted with, such as buttons, links, and input fields, must have an accessible name. The name should indicate which information or action is required, and/or what will happen if they interact with it.
+                            Description: **Cause:** 
+The element does not have an accessible name to inform the screen reader of its purpose and function.
+**Effect:** 
+Assistive technologies use the accessible name to label, announce and trigger the element's action. If there's no valid accessible name, assistive technologies won't be able to understand the element correctly. 
+**Suggested Solutions:**
+Depending on the type of element, either add a descriptive text to the body of the tag or add the appropriate attributes to the tag. 
+                            KB Link: https://knowledge.evinced.com/system-validations/accessible-name
+                            Raw Data: {
+  "id": "3ad4b4e4-76d4-4b21-a313-a3a16554f697",
+  "index": "I8",
+  "hidden": false,
+  "validation": {
+   
+2025-12-08T15:17:27.820Z [default] [info]: The message is too long (3667), only the first 1500 characters will be logged. 
+      In order to log such long messages -> update logging configuration.
+2025-12-08T15:17:27.493Z [default] [info]: [Evinced Issue] Keyboard users must be able to navigate to all the interactive elements on the page.:
+                            ID: a4f5dd93-ffc2-40d6-9f23-3580206b9c78
+                            Index: I9
+                            Type: NOT_FOCUSABLE
+                            Severity: Critical
+                            Summary: Keyboard users must be able to navigate to all the interactive elements on the page.
+                            Description: **Cause:** 
+The element is missing the right tags or has incorrect tags. 
+**Effect:** 
+The element is excluded from the keyboard tab sequence and is therefore inaccessible to keyboard users. 
+**Suggested Solutions:**
+Use one of these approaches: 
+* Approach 1 (recommended): Add a tag that shows the element's purpose. Interactive elements don't need anything extra because they are focusable by nature. 
+* Approach 2: Add a `tabindex` attribute with the value of `0` to the element.
+                            KB Link: https://knowledge.evinced.com/system-validations/keyboard-accessible
+                            Raw Data: {
+  "id": "a4f5dd93-ffc2-40d6-9f23-3580206b9c78",
+  "index": "I9",
+  "hidden": false,
+  "validation": {
+    "id": "d4ec43f0-2519-4128-8606-d399cd862c55"
+  },
+  "skipIssue": false,
+  "elements": [
+    {
+      "id": "84278c5f-c605-40cf-a8b3-dfd056cdfab1",
+      "domSnippet": "<ul class=\"dropdownMenu active\"><li>Caravan</li><li>Tiny House</li><li>Treehouse</li><li>Tent</li><li>Backyard</li></ul>",
+     
+2025-12-08T15:17:27.820Z [default] [info]: The message is too long (5122), only the first 1500 characters will be logged. 
+      In order to log such long messages -> update logging configuration.
+2025-12-08T15:17:27.493Z [default] [info]: [Evinced Issue] Scrollable region must have keyboard access:
+                            ID: 08dd9649-7c04-4576-9c8a-9381559433fe
+                            Index: I10
+                            Type: AXE-SCROLLABLE-REGION-FOCUSABLE
+                            Severity: Serious
+                            Summary: Scrollable region must have keyboard access
+                            Description: **Description:**
+	Ensure elements that have scrollable content are accessible by keyboard
+	**Failure Summary:**
+	Fix at least one (1) of the following
+* Element should have focusable content,* Element should be focusable
+                            KB Link: https://knowledge.evinced.com/system-validations/scrollable-region-focusable
+                            Raw Data: {
+  "id": "08dd9649-7c04-4576-9c8a-9381559433fe",
+  "index": "I10",
+  "hidden": false,
+  "validation": {
+    "id": "57ab88cd-9f32-4098-8686-d9f9d22cf19f"
+  },
+  "skipIssue": false,
+  "elements": [
+    {
+      "id": "84278c5f-c605-40cf-a8b3-dfd056cdfab1",
+      "domSnippet": "<ul class=\"dropdownMenu active\"><li>Caravan</li><li>Tiny House</li><li>Treehouse</li><li>Tent</li><li>Backyard</li></ul>",
+      "componentId": "0683cd54",
+      "index": "S4",
+      "selector": ".block-dropdown:nth-child(1) > .dropholder > ul",
+      "pageUrl": "https://demo.evinced.com/",
+      "pageTitle": "Home | Evinced, Demo site",
+      "boundingBox": {
+        "x": 301,
+        "y": 654,
+        "height": 225,
+        "width": 398,
+  
+2025-12-08T15:17:27.821Z [default] [info]: The message is too long (3800), only the first 1500 characters will be logged. 
+      In order to log such long messages -> update logging configuration.
+2025-12-08T15:17:27.493Z [default] [info]: [Evinced Issue] Interactive elements, such as buttons, links, and inputs, must convey that they can be interacted with by using the proper semantics.:
+                            ID: 378e8f07-5df2-47d4-8306-eef5b3738f32
+                            Index: I11
+                            Type: WRONG_SEMANTIC_ROLE
+                            Severity: Critical
+                            Summary: Interactive elements, such as buttons, links, and inputs, must convey that they can be interacted with by using the proper semantics.
+                            Description: **Cause:** 
+Screen readers are unable to identify that the element is interactive due to missing or incorrect semantics.
+**Effect:** 
+Screen reader users may not find the content or may not realize that the the content is interactive.
+**Suggested Solutions:**
+Use native HTML interactive elements such as <*button*>, <*a*>, <*select*>, <*input*>. Alternatively, add the appropriate ARIA role that corresponds to the content purpose.
+                            KB Link: https://knowledge.evinced.com/system-validations/interactable-role
+                            Raw Data: {
+  "id": "378e8f07-5df2-47d4-8306-eef5b3738f32",
+  "index": "I11",
+  "hidden": false,
+  "validation": {
+    "id": "4697d3ed-3c5a-4978-be15-2220054ab5cb"
+  },
+  "skipIssue": false,
+  "elements": [
+    {
+      "id": "46e5b45e-fe5f-4947-9029-03e13bbbc6ec",
+      "domSnippet": "<ul class=\"dropdownMenu active\"><li>Canada</li><li>The Great Lakes</li><li>
+2025-12-08T15:17:27.821Z [default] [info]: The message is too long (4200), only the first 1500 characters will be logged. 
+      In order to log such long messages -> update logging configuration.
+2025-12-08T15:17:27.493Z [default] [info]: [Evinced Issue] Elements that can be interacted with, such as buttons, links, and input fields, must have an accessible name. The name should indicate which information or action is required, and/or what will happen if they interact with it.:
+                            ID: 94b17c92-d598-4cd7-852e-db70e7841916
+                            Index: I12
+                            Type: NO_DESCRIPTIVE_TEXT
+                            Severity: Critical
+                            Summary: Elements that can be interacted with, such as buttons, links, and input fields, must have an accessible name. The name should indicate which information or action is required, and/or what will happen if they interact with it.
+                            Description: **Cause:** 
+The element does not have an accessible name to inform the screen reader of its purpose and function.
+**Effect:** 
+Assistive technologies use the accessible name to label, announce and trigger the element's action. If there's no valid accessible name, assistive technologies won't be able to understand the element correctly. 
+**Suggested Solutions:**
+Depending on the type of element, either add a descriptive text to the body of the tag or add the appropriate attributes to the tag. 
+                            KB Link: https://knowledge.evinced.com/system-validations/accessible-name
+                            Raw Data: {
+  "id": "94b17c92-d598-4cd7-852e-db70e7841916",
+  "index": "I12",
+  "hidden": false,
+  "validation": {
+ 
+2025-12-08T15:17:27.821Z [default] [info]: The message is too long (3735), only the first 1500 characters will be logged. 
+      In order to log such long messages -> update logging configuration.
+2025-12-08T15:17:27.493Z [default] [info]: [Evinced Issue] Keyboard users must be able to navigate to all the interactive elements on the page.:
+                            ID: 0ed455e8-9fa6-4a1d-b0ac-2cfb355931c1
+                            Index: I13
+                            Type: NOT_FOCUSABLE
+                            Severity: Critical
+                            Summary: Keyboard users must be able to navigate to all the interactive elements on the page.
+                            Description: **Cause:** 
+The element is missing the right tags or has incorrect tags. 
+**Effect:** 
+The element is excluded from the keyboard tab sequence and is therefore inaccessible to keyboard users. 
+**Suggested Solutions:**
+Use one of these approaches: 
+* Approach 1 (recommended): Add a tag that shows the element's purpose. Interactive elements don't need anything extra because they are focusable by nature. 
+* Approach 2: Add a `tabindex` attribute with the value of `0` to the element.
+                            KB Link: https://knowledge.evinced.com/system-validations/keyboard-accessible
+                            Raw Data: {
+  "id": "0ed455e8-9fa6-4a1d-b0ac-2cfb355931c1",
+  "index": "I13",
+  "hidden": false,
+  "validation": {
+    "id": "2cc70374-96c4-476b-8624-87c3e8c3a50e"
+  },
+  "skipIssue": false,
+  "elements": [
+    {
+      "id": "46e5b45e-fe5f-4947-9029-03e13bbbc6ec",
+      "domSnippet": "<ul class=\"dropdownMenu active\"><li>Canada</li><li>The Great Lakes</li><li>East Coast</li><li>West Coast</li><li>Down South</l
+2025-12-08T15:17:27.821Z [default] [info]: The message is too long (5254), only the first 1500 characters will be logged. 
+      In order to log such long messages -> update logging configuration.
+2025-12-08T15:17:27.493Z [default] [info]: [Evinced Issue] Scrollable region must have keyboard access:
+                            ID: 75f92c59-f62d-4eae-b3d5-aff0cbe615a1
+                            Index: I14
+                            Type: AXE-SCROLLABLE-REGION-FOCUSABLE
+                            Severity: Serious
+                            Summary: Scrollable region must have keyboard access
+                            Description: **Description:**
+	Ensure elements that have scrollable content are accessible by keyboard
+	**Failure Summary:**
+	Fix at least one (1) of the following
+* Element should have focusable content,* Element should be focusable
+                            KB Link: https://knowledge.evinced.com/system-validations/scrollable-region-focusable
+                            Raw Data: {
+  "id": "75f92c59-f62d-4eae-b3d5-aff0cbe615a1",
+  "index": "I14",
+  "hidden": false,
+  "validation": {
+    "id": "b7658332-08b2-47eb-a0ce-d97971a87679"
+  },
+  "skipIssue": false,
+  "type": {
+    "id": "AXE-SCROLLABLE-REGION-FOCUSABLE",
+    "newId": "e4d4390e-c29e-400d-8fbc-bec794a2b038",
+    "name": "Scrollable-region-focusable"
+  },
+  "elements": [
+    {
+      "id": "46e5b45e-fe5f-4947-9029-03e13bbbc6ec",
+      "domSnippet": "<ul class=\"dropdownMenu active\"><li>Canada</li><li>The Great Lakes</li><li>East Coast</li><li>West Coast</li><li>Down South</li><li>Middle America</li><li>Alaska</li><li>Hawaii</li></ul>",
+      "componentId": "099e33df",
+      "index": "S5",
+      "selector": ".block-dropdown:nth-child(2
+2025-12-08T15:17:27.493Z [default] [info]: calcReport function called
+2025-12-08T15:17:27.494Z [default] [info]: evStop function finished with 14 issues
+2025-12-08T15:17:27.497Z [default] [info]: uploadReportToPlatform: Task "uploadToPlatform" triggered successfully
+2025-12-08T15:17:32.004Z [default] [info]: System Information:
+                - SDK: JS Cypress SDK 5.2.2
+                - Browser: undefined
+                - Node version: 
+                - Platform: undefined
+                - Architecture: undefined
+                - timezone: Europe/London (0 hours)
+            
+2025-12-08T15:17:32.004Z [default] [info]: Evinced SDK init called
+2025-12-08T15:17:32.129Z [default] [info]: Injecting AnalysisWeb
+2025-12-08T15:17:32.279Z [default] [info]: AnalysisWeb Injected
+2025-12-08T15:17:32.279Z [default] [info]: Registering events listeners
+2025-12-08T15:17:32.689Z [default] [info]: evAnalyze called
+2025-12-08T15:17:32.690Z [default] [info]: Call to initWebAnalysis
+2025-12-08T15:17:32.690Z [default] [info]: Loading previous persisted data
+2025-12-08T15:17:32.690Z [default] [info]: Calling analysisWebInit...
+2025-12-08T15:17:32.695Z [default] [info]: Start run analysis once
+2025-12-08T15:17:32.695Z [default] [info]: exec runAnalysisOnce command
+2025-12-08T15:17:32.761Z [default] [info]: Finished analyzing page, found 6 issues 
+2025-12-08T15:17:32.762Z [default] [info]: uploadReportToPlatform: Task "uploadToPlatform" triggered successfully
+2025-12-08T15:17:32.901Z [default] [info]: evSaveFile command was called with format html.
+2025-12-08T15:17:32.901Z [default] [info]: Starting to save the report to a file at ./reports/results.html.
+2025-12-08T15:17:32.905Z [default] [info]: Successfully saved the report to ./reports/results.html.
+2025-12-08T15:17:37.023Z [default] [info]: System Information:
+                - SDK: JS Cypress SDK 5.2.2
+                - Browser: undefined
+                - Node version: 
+                - Platform: undefined
+                - Architecture: undefined
+                - timezone: Europe/London (0 hours)
+            
+2025-12-08T15:17:37.023Z [default] [info]: Evinced SDK init called
+2025-12-08T15:17:37.161Z [default] [info]: Injecting AnalysisWeb
+2025-12-08T15:17:37.317Z [default] [info]: AnalysisWeb Injected
+2025-12-08T15:17:37.317Z [default] [info]: Registering events listeners
+2025-12-08T15:17:37.621Z [default] [info]: Adding label
+2025-12-08T15:17:37.621Z [default] [info]: Adding label successfully
+2025-12-08T15:17:37.621Z [default] [info]: evStart function called
+2025-12-08T15:17:37.621Z [default] [info]: Initializing web analysis
+2025-12-08T15:17:37.621Z [default] [info]: Call to initWebAnalysis
+2025-12-08T15:17:37.622Z [default] [info]: Loading previous persisted data
+2025-12-08T15:17:37.622Z [default] [info]: Calling analysisWebInit...
+2025-12-08T15:17:37.627Z [default] [info]: Starting web analysis
+2025-12-08T15:17:37.627Z [default] [info]: Calling "Start analysis" command
+2025-12-08T15:17:37.786Z [default] [info]: evStop function called
+2025-12-08T15:17:37.886Z [default] [info]: Waiting for the analysis to be finished for the last URL.
+2025-12-08T15:17:37.886Z [default] [warn]: [Evinced Warning] Invalid option provided: uploadToPlatform data: []
+2025-12-08T15:17:37.886Z [default] [info]: stopAnalysis function called
+2025-12-08T15:17:37.886Z [default] [info]: Call stopAnalysis function
+2025-12-08T15:17:37.886Z [default] [info]: Exec stopAnalysis command
+2025-12-08T15:17:37.887Z [default] [info]: Found 10 issues.
+2025-12-08T15:17:37.887Z [default] [info]: Log issues option is enable.
+2025-12-08T15:17:38.045Z [default] [info]: The message is too long (3688), only the first 1500 characters will be logged. 
+      In order to log such long messages -> update logging configuration.
+2025-12-08T15:17:37.887Z [default] [info]: [Evinced Issue] Interactive elements, such as buttons, links, and inputs, must convey that they can be interacted with by using the proper semantics.:
+                            ID: 88059fba-49d8-45e4-8efc-c554da79985f
+                            Index: I1
+                            Type: WRONG_SEMANTIC_ROLE
+                            Severity: Critical
+                            Summary: Interactive elements, such as buttons, links, and inputs, must convey that they can be interacted with by using the proper semantics.
+                            Description: **Cause:** 
+Screen readers are unable to identify that the element is interactive due to missing or incorrect semantics.
+**Effect:** 
+Screen reader users may not find the content or may not realize that the the content is interactive.
+**Suggested Solutions:**
+Use native HTML interactive elements such as <*button*>, <*a*>, <*select*>, <*input*>. Alternatively, add the appropriate ARIA role that corresponds to the content purpose.
+                            KB Link: https://knowledge.evinced.com/system-validations/interactable-role
+                            Raw Data: {
+  "id": "88059fba-49d8-45e4-8efc-c554da79985f",
+  "index": "I1",
+  "hidden": false,
+  "validation": {
+    "id": "b4b40038-30bb-4078-9d7d-de527be508ff"
+  },
+  "skipIssue": false,
+  "elements": [
+    {
+      "id": "d021fb0c-6524-4ebb-a85e-b353c51ed3bd",
+      "domSnippet": "<div class=\"dropdown line\"><p>Select</p></div>",
+      "componentId": "ce13d0
+2025-12-08T15:17:38.045Z [default] [info]: The message is too long (3623), only the first 1500 characters will be logged. 
+      In order to log such long messages -> update logging configuration.
+2025-12-08T15:17:37.887Z [default] [info]: [Evinced Issue] Keyboard users must be able to navigate to all the interactive elements on the page.:
+                            ID: 883ec403-8686-420c-ad6a-a6ac216e0580
+                            Index: I2
+                            Type: NOT_FOCUSABLE
+                            Severity: Critical
+                            Summary: Keyboard users must be able to navigate to all the interactive elements on the page.
+                            Description: **Cause:** 
+The element is missing the right tags or has incorrect tags. 
+**Effect:** 
+The element is excluded from the keyboard tab sequence and is therefore inaccessible to keyboard users. 
+**Suggested Solutions:**
+Use one of these approaches: 
+* Approach 1 (recommended): Add a tag that shows the element's purpose. Interactive elements don't need anything extra because they are focusable by nature. 
+* Approach 2: Add a `tabindex` attribute with the value of `0` to the element.
+                            KB Link: https://knowledge.evinced.com/system-validations/keyboard-accessible
+                            Raw Data: {
+  "id": "883ec403-8686-420c-ad6a-a6ac216e0580",
+  "index": "I2",
+  "hidden": false,
+  "validation": {
+    "id": "a1ef0e7e-3d36-464f-adf9-0a695ec00c50"
+  },
+  "skipIssue": false,
+  "elements": [
+    {
+      "id": "d021fb0c-6524-4ebb-a85e-b353c51ed3bd",
+      "domSnippet": "<div class=\"dropdown line\"><p>Select</p></div>",
+      "componentId": "ce13d0bb",
+      "index": "S1",
+      "selector": ".block
+2025-12-08T15:17:38.045Z [default] [info]: The message is too long (3688), only the first 1500 characters will be logged. 
+      In order to log such long messages -> update logging configuration.
+2025-12-08T15:17:37.887Z [default] [info]: [Evinced Issue] Interactive elements, such as buttons, links, and inputs, must convey that they can be interacted with by using the proper semantics.:
+                            ID: 00ef4f97-1ec2-4a45-89e7-daa2be4f735f
+                            Index: I3
+                            Type: WRONG_SEMANTIC_ROLE
+                            Severity: Critical
+                            Summary: Interactive elements, such as buttons, links, and inputs, must convey that they can be interacted with by using the proper semantics.
+                            Description: **Cause:** 
+Screen readers are unable to identify that the element is interactive due to missing or incorrect semantics.
+**Effect:** 
+Screen reader users may not find the content or may not realize that the the content is interactive.
+**Suggested Solutions:**
+Use native HTML interactive elements such as <*button*>, <*a*>, <*select*>, <*input*>. Alternatively, add the appropriate ARIA role that corresponds to the content purpose.
+                            KB Link: https://knowledge.evinced.com/system-validations/interactable-role
+                            Raw Data: {
+  "id": "00ef4f97-1ec2-4a45-89e7-daa2be4f735f",
+  "index": "I3",
+  "hidden": false,
+  "validation": {
+    "id": "b8d2067d-36fd-41d2-a387-87b7ec1f9942"
+  },
+  "skipIssue": false,
+  "elements": [
+    {
+      "id": "1d9c2ddd-a4ec-4f24-9b31-ec471a0991d8",
+      "domSnippet": "<div class=\"dropdown line\"><p>Select</p></div>",
+      "componentId": "ce13d0
+2025-12-08T15:17:38.045Z [default] [info]: The message is too long (3623), only the first 1500 characters will be logged. 
+      In order to log such long messages -> update logging configuration.
+2025-12-08T15:17:37.887Z [default] [info]: [Evinced Issue] Keyboard users must be able to navigate to all the interactive elements on the page.:
+                            ID: cf4cccc0-8155-4fe5-bf3a-6a6c308e3494
+                            Index: I4
+                            Type: NOT_FOCUSABLE
+                            Severity: Critical
+                            Summary: Keyboard users must be able to navigate to all the interactive elements on the page.
+                            Description: **Cause:** 
+The element is missing the right tags or has incorrect tags. 
+**Effect:** 
+The element is excluded from the keyboard tab sequence and is therefore inaccessible to keyboard users. 
+**Suggested Solutions:**
+Use one of these approaches: 
+* Approach 1 (recommended): Add a tag that shows the element's purpose. Interactive elements don't need anything extra because they are focusable by nature. 
+* Approach 2: Add a `tabindex` attribute with the value of `0` to the element.
+                            KB Link: https://knowledge.evinced.com/system-validations/keyboard-accessible
+                            Raw Data: {
+  "id": "cf4cccc0-8155-4fe5-bf3a-6a6c308e3494",
+  "index": "I4",
+  "hidden": false,
+  "validation": {
+    "id": "5f166dbc-130f-4ea0-b050-0f7605772cd5"
+  },
+  "skipIssue": false,
+  "elements": [
+    {
+      "id": "1d9c2ddd-a4ec-4f24-9b31-ec471a0991d8",
+      "domSnippet": "<div class=\"dropdown line\"><p>Select</p></div>",
+      "componentId": "ce13d0bb",
+      "index": "S2",
+      "selector": ".block
+2025-12-08T15:17:38.045Z [default] [info]: The message is too long (3791), only the first 1500 characters will be logged. 
+      In order to log such long messages -> update logging configuration.
+2025-12-08T15:17:37.887Z [default] [info]: [Evinced Issue] Anchor elements (<a>) must have an `href` attribute to be recognized as a link.:
+                            ID: 93277ce9-82ff-4f96-8691-de9f1382b300
+                            Index: I5
+                            Type: ANCHOR_WITHOUT_HREF
+                            Severity: Critical
+                            Summary: Anchor elements (<a>) must have an `href` attribute to be recognized as a link.
+                            Description: **Cause:** 
+ The <a> (anchor) element does not have an `href` attribute. 
+**Effect:** 
+Screen readers on Windows will read the element as plain text without indicating it is a link. On Mac OS, VoiceOver will still read the anchor as a link, even if it's not. The element won't be included in the page's tab sequence by default, making it inaccessible using a keyboard. 
+**Suggested Solutions:**
+* If the element should act as a link, add an `href` attribute that points to itself (<a href="#">) 
+* If the element is not meant to be a link, change it to something more appropriate, like a button
+                            KB Link: https://knowledge.evinced.com/system-validations/anchor-without-href
+                            Raw Data: {
+  "id": "93277ce9-82ff-4f96-8691-de9f1382b300",
+  "index": "I5",
+  "hidden": false,
+  "validation": {
+    "id": "68410b97-cf02-438d-bb27-3f5e4ab91158"
+  },
+  "skipIssue": false,
+  "elements": [
+    {
+      "id": "de109a50-8e2d-49b6-a3cb-d8edbf4360e2",
+      "domSnippet": "<a class=\"search-btn\"
+2025-12-08T15:17:38.045Z [default] [info]: The message is too long (3543), only the first 1500 characters will be logged. 
+      In order to log such long messages -> update logging configuration.
+2025-12-08T15:17:37.887Z [default] [info]: [Evinced Issue] Keyboard users must be able to navigate to all the interactive elements on the page.:
+                            ID: 7ff8b67d-0259-4584-8bbd-36c76dfd8312
+                            Index: I6
+                            Type: NOT_FOCUSABLE
+                            Severity: Critical
+                            Summary: Keyboard users must be able to navigate to all the interactive elements on the page.
+                            Description: **Cause:** 
+The element is missing the right tags or has incorrect tags. 
+**Effect:** 
+The element is excluded from the keyboard tab sequence and is therefore inaccessible to keyboard users. 
+**Suggested Solutions:**
+Use one of these approaches: 
+* Approach 1 (recommended): Add a tag that shows the element's purpose. Interactive elements don't need anything extra because they are focusable by nature. 
+* Approach 2: Add a `tabindex` attribute with the value of `0` to the element.
+                            KB Link: https://knowledge.evinced.com/system-validations/keyboard-accessible
+                            Raw Data: {
+  "id": "7ff8b67d-0259-4584-8bbd-36c76dfd8312",
+  "index": "I6",
+  "hidden": false,
+  "validation": {
+    "id": "8945483d-a47f-4e7f-a5d3-14e9a880bab0"
+  },
+  "skipIssue": false,
+  "elements": [
+    {
+      "id": "de109a50-8e2d-49b6-a3cb-d8edbf4360e2",
+      "domSnippet": "<a class=\"search-btn\">Search</a>",
+      "componentId": "a2d2a84e",
+      "index": "S3",
+      "selector": ".search-btn",
+      
+2025-12-08T15:17:38.045Z [default] [info]: The message is too long (3732), only the first 1500 characters will be logged. 
+      In order to log such long messages -> update logging configuration.
+2025-12-08T15:17:37.887Z [default] [info]: [Evinced Issue] Interactive elements, such as buttons, links, and inputs, must convey that they can be interacted with by using the proper semantics.:
+                            ID: a8fb3fb1-2b0c-482a-a997-6041f035333e
+                            Index: I7
+                            Type: WRONG_SEMANTIC_ROLE
+                            Severity: Critical
+                            Summary: Interactive elements, such as buttons, links, and inputs, must convey that they can be interacted with by using the proper semantics.
+                            Description: **Cause:** 
+Screen readers are unable to identify that the element is interactive due to missing or incorrect semantics.
+**Effect:** 
+Screen reader users may not find the content or may not realize that the the content is interactive.
+**Suggested Solutions:**
+Use native HTML interactive elements such as <*button*>, <*a*>, <*select*>, <*input*>. Alternatively, add the appropriate ARIA role that corresponds to the content purpose.
+                            KB Link: https://knowledge.evinced.com/system-validations/interactable-role
+                            Raw Data: {
+  "id": "a8fb3fb1-2b0c-482a-a997-6041f035333e",
+  "index": "I7",
+  "hidden": false,
+  "validation": {
+    "id": "f3ee40ee-4bec-4716-b092-348e2c57dcff"
+  },
+  "skipIssue": false,
+  "elements": [
+    {
+      "id": "254150a7-1b94-44ee-87da-cabb55fdb222",
+      "domSnippet": "<ul class=\"dropdownMenu active\"><li>Caravan</li><li>Tiny House</li><li>Treeho
+2025-12-08T15:17:38.045Z [default] [info]: The message is too long (4132), only the first 1500 characters will be logged. 
+      In order to log such long messages -> update logging configuration.
+2025-12-08T15:17:37.887Z [default] [info]: [Evinced Issue] Elements that can be interacted with, such as buttons, links, and input fields, must have an accessible name. The name should indicate which information or action is required, and/or what will happen if they interact with it.:
+                            ID: 3f16910f-ea38-4f08-9aa9-6399a6835169
+                            Index: I8
+                            Type: NO_DESCRIPTIVE_TEXT
+                            Severity: Critical
+                            Summary: Elements that can be interacted with, such as buttons, links, and input fields, must have an accessible name. The name should indicate which information or action is required, and/or what will happen if they interact with it.
+                            Description: **Cause:** 
+The element does not have an accessible name to inform the screen reader of its purpose and function.
+**Effect:** 
+Assistive technologies use the accessible name to label, announce and trigger the element's action. If there's no valid accessible name, assistive technologies won't be able to understand the element correctly. 
+**Suggested Solutions:**
+Depending on the type of element, either add a descriptive text to the body of the tag or add the appropriate attributes to the tag. 
+                            KB Link: https://knowledge.evinced.com/system-validations/accessible-name
+                            Raw Data: {
+  "id": "3f16910f-ea38-4f08-9aa9-6399a6835169",
+  "index": "I8",
+  "hidden": false,
+  "validation": {
+   
+2025-12-08T15:17:38.045Z [default] [info]: The message is too long (3667), only the first 1500 characters will be logged. 
+      In order to log such long messages -> update logging configuration.
+2025-12-08T15:17:37.887Z [default] [info]: [Evinced Issue] Keyboard users must be able to navigate to all the interactive elements on the page.:
+                            ID: c0dd1010-ac49-45e5-830f-58975ebebce0
+                            Index: I9
+                            Type: NOT_FOCUSABLE
+                            Severity: Critical
+                            Summary: Keyboard users must be able to navigate to all the interactive elements on the page.
+                            Description: **Cause:** 
+The element is missing the right tags or has incorrect tags. 
+**Effect:** 
+The element is excluded from the keyboard tab sequence and is therefore inaccessible to keyboard users. 
+**Suggested Solutions:**
+Use one of these approaches: 
+* Approach 1 (recommended): Add a tag that shows the element's purpose. Interactive elements don't need anything extra because they are focusable by nature. 
+* Approach 2: Add a `tabindex` attribute with the value of `0` to the element.
+                            KB Link: https://knowledge.evinced.com/system-validations/keyboard-accessible
+                            Raw Data: {
+  "id": "c0dd1010-ac49-45e5-830f-58975ebebce0",
+  "index": "I9",
+  "hidden": false,
+  "validation": {
+    "id": "a14fad1b-400b-4cc7-afe7-cdfe34adcdf6"
+  },
+  "skipIssue": false,
+  "elements": [
+    {
+      "id": "254150a7-1b94-44ee-87da-cabb55fdb222",
+      "domSnippet": "<ul class=\"dropdownMenu active\"><li>Caravan</li><li>Tiny House</li><li>Treehouse</li><li>Tent</li><li>Backyard</li></ul>",
+     
+2025-12-08T15:17:38.046Z [default] [info]: The message is too long (5122), only the first 1500 characters will be logged. 
+      In order to log such long messages -> update logging configuration.
+2025-12-08T15:17:37.887Z [default] [info]: [Evinced Issue] Scrollable region must have keyboard access:
+                            ID: 45562292-6fd9-49be-801e-54d5d968bd35
+                            Index: I10
+                            Type: AXE-SCROLLABLE-REGION-FOCUSABLE
+                            Severity: Serious
+                            Summary: Scrollable region must have keyboard access
+                            Description: **Description:**
+	Ensure elements that have scrollable content are accessible by keyboard
+	**Failure Summary:**
+	Fix at least one (1) of the following
+* Element should have focusable content,* Element should be focusable
+                            KB Link: https://knowledge.evinced.com/system-validations/scrollable-region-focusable
+                            Raw Data: {
+  "id": "45562292-6fd9-49be-801e-54d5d968bd35",
+  "index": "I10",
+  "hidden": false,
+  "validation": {
+    "id": "d9f8c179-5098-4997-8629-559d46cfe0c7"
+  },
+  "skipIssue": false,
+  "type": {
+    "id": "AXE-SCROLLABLE-REGION-FOCUSABLE",
+    "newId": "e4d4390e-c29e-400d-8fbc-bec794a2b038",
+    "name": "Scrollable-region-focusable"
+  },
+  "elements": [
+    {
+      "id": "254150a7-1b94-44ee-87da-cabb55fdb222",
+      "domSnippet": "<ul class=\"dropdownMenu active\"><li>Caravan</li><li>Tiny House</li><li>Treehouse</li><li>Tent</li><li>Backyard</li></ul>",
+      "componentId": "0683cd54",
+      "index": "S4",
+      "selector": ".block-dropdown:nth-child(1) > .dropholder > ul",
+      "pageUrl": "https://demo.evinced.com/
+2025-12-08T15:17:37.887Z [default] [info]: calcReport function called
+2025-12-08T15:17:37.887Z [default] [info]: evStop function finished with 10 issues
+2025-12-08T15:17:37.890Z [default] [info]: uploadReportToPlatform: Task "uploadToPlatform" triggered successfully
+2025-12-08T15:17:42.131Z [default] [info]: System Information:
+                - SDK: JS Cypress SDK 5.2.2
+                - Browser: undefined
+                - Node version: 
+                - Platform: undefined
+                - Architecture: undefined
+                - timezone: Europe/London (0 hours)
+            
+2025-12-08T15:17:42.131Z [default] [info]: Evinced SDK init called
+2025-12-08T15:17:42.166Z [default] [info]: evStart function called
+2025-12-08T15:17:42.166Z [default] [warn]: Delaying recording since no window object exists yet
+2025-12-08T15:17:42.266Z [default] [info]: Injecting AnalysisWeb
+2025-12-08T15:17:42.423Z [default] [info]: AnalysisWeb Injected
+2025-12-08T15:17:42.423Z [default] [info]: Registering events listeners
+2025-12-08T15:17:42.720Z [default] [info]: Call to initWebAnalysis
+2025-12-08T15:17:42.720Z [default] [info]: Loading previous persisted data
+2025-12-08T15:17:42.720Z [default] [info]: Calling analysisWebInit...
+2025-12-08T15:17:42.723Z [default] [info]: Calling "Start analysis" command
+2025-12-08T15:17:43.147Z [default] [info]: evStop function called
+2025-12-08T15:17:43.247Z [default] [info]: Waiting for the analysis to be finished for the last URL.
+2025-12-08T15:17:43.247Z [default] [info]: stopAnalysis function called
+2025-12-08T15:17:43.247Z [default] [info]: Call stopAnalysis function
+2025-12-08T15:17:43.247Z [default] [info]: Exec stopAnalysis command
+2025-12-08T15:17:43.248Z [default] [info]: Found 14 issues.
+2025-12-08T15:17:43.248Z [default] [info]: Log issues option is enable.
+2025-12-08T15:17:43.574Z [default] [info]: The message is too long (3688), only the first 1500 characters will be logged. 
+      In order to log such long messages -> update logging configuration.
+2025-12-08T15:17:43.248Z [default] [info]: [Evinced Issue] Interactive elements, such as buttons, links, and inputs, must convey that they can be interacted with by using the proper semantics.:
+                            ID: 6e3ca72a-ac06-492e-ad1a-e4307cdaebef
+                            Index: I1
+                            Type: WRONG_SEMANTIC_ROLE
+                            Severity: Critical
+                            Summary: Interactive elements, such as buttons, links, and inputs, must convey that they can be interacted with by using the proper semantics.
+                            Description: **Cause:** 
+Screen readers are unable to identify that the element is interactive due to missing or incorrect semantics.
+**Effect:** 
+Screen reader users may not find the content or may not realize that the the content is interactive.
+**Suggested Solutions:**
+Use native HTML interactive elements such as <*button*>, <*a*>, <*select*>, <*input*>. Alternatively, add the appropriate ARIA role that corresponds to the content purpose.
+                            KB Link: https://knowledge.evinced.com/system-validations/interactable-role
+                            Raw Data: {
+  "id": "6e3ca72a-ac06-492e-ad1a-e4307cdaebef",
+  "index": "I1",
+  "hidden": false,
+  "validation": {
+    "id": "5e44d990-263e-4b4f-8ab8-2d59d55390ab"
+  },
+  "skipIssue": false,
+  "elements": [
+    {
+      "id": "4a830131-d674-456d-981a-7ce4791e7eb9",
+      "domSnippet": "<div class=\"dropdown line\"><p>Select</p></div>",
+      "componentId": "ce13d0
+2025-12-08T15:17:43.574Z [default] [info]: The message is too long (3623), only the first 1500 characters will be logged. 
+      In order to log such long messages -> update logging configuration.
+2025-12-08T15:17:43.248Z [default] [info]: [Evinced Issue] Keyboard users must be able to navigate to all the interactive elements on the page.:
+                            ID: 1c565788-f3c9-4c42-932b-8b0227e8c8c4
+                            Index: I2
+                            Type: NOT_FOCUSABLE
+                            Severity: Critical
+                            Summary: Keyboard users must be able to navigate to all the interactive elements on the page.
+                            Description: **Cause:** 
+The element is missing the right tags or has incorrect tags. 
+**Effect:** 
+The element is excluded from the keyboard tab sequence and is therefore inaccessible to keyboard users. 
+**Suggested Solutions:**
+Use one of these approaches: 
+* Approach 1 (recommended): Add a tag that shows the element's purpose. Interactive elements don't need anything extra because they are focusable by nature. 
+* Approach 2: Add a `tabindex` attribute with the value of `0` to the element.
+                            KB Link: https://knowledge.evinced.com/system-validations/keyboard-accessible
+                            Raw Data: {
+  "id": "1c565788-f3c9-4c42-932b-8b0227e8c8c4",
+  "index": "I2",
+  "hidden": false,
+  "validation": {
+    "id": "8f711f82-8a63-4f81-a946-509737881b8a"
+  },
+  "skipIssue": false,
+  "elements": [
+    {
+      "id": "4a830131-d674-456d-981a-7ce4791e7eb9",
+      "domSnippet": "<div class=\"dropdown line\"><p>Select</p></div>",
+      "componentId": "ce13d0bb",
+      "index": "S1",
+      "selector": ".block
+2025-12-08T15:17:43.574Z [default] [info]: The message is too long (3688), only the first 1500 characters will be logged. 
+      In order to log such long messages -> update logging configuration.
+2025-12-08T15:17:43.248Z [default] [info]: [Evinced Issue] Interactive elements, such as buttons, links, and inputs, must convey that they can be interacted with by using the proper semantics.:
+                            ID: 0130d0a1-b1e7-489d-afea-7fd626d5cd4c
+                            Index: I3
+                            Type: WRONG_SEMANTIC_ROLE
+                            Severity: Critical
+                            Summary: Interactive elements, such as buttons, links, and inputs, must convey that they can be interacted with by using the proper semantics.
+                            Description: **Cause:** 
+Screen readers are unable to identify that the element is interactive due to missing or incorrect semantics.
+**Effect:** 
+Screen reader users may not find the content or may not realize that the the content is interactive.
+**Suggested Solutions:**
+Use native HTML interactive elements such as <*button*>, <*a*>, <*select*>, <*input*>. Alternatively, add the appropriate ARIA role that corresponds to the content purpose.
+                            KB Link: https://knowledge.evinced.com/system-validations/interactable-role
+                            Raw Data: {
+  "id": "0130d0a1-b1e7-489d-afea-7fd626d5cd4c",
+  "index": "I3",
+  "hidden": false,
+  "validation": {
+    "id": "ba24bf15-5f0b-488b-b37c-774d3378101f"
+  },
+  "skipIssue": false,
+  "elements": [
+    {
+      "id": "00f4941a-fd93-4d92-bfc4-d94757f250eb",
+      "domSnippet": "<div class=\"dropdown line\"><p>Select</p></div>",
+      "componentId": "ce13d0
+2025-12-08T15:17:43.574Z [default] [info]: The message is too long (3623), only the first 1500 characters will be logged. 
+      In order to log such long messages -> update logging configuration.
+2025-12-08T15:17:43.248Z [default] [info]: [Evinced Issue] Keyboard users must be able to navigate to all the interactive elements on the page.:
+                            ID: 83ee951a-aac2-4762-a87e-c3c7e544a7b9
+                            Index: I4
+                            Type: NOT_FOCUSABLE
+                            Severity: Critical
+                            Summary: Keyboard users must be able to navigate to all the interactive elements on the page.
+                            Description: **Cause:** 
+The element is missing the right tags or has incorrect tags. 
+**Effect:** 
+The element is excluded from the keyboard tab sequence and is therefore inaccessible to keyboard users. 
+**Suggested Solutions:**
+Use one of these approaches: 
+* Approach 1 (recommended): Add a tag that shows the element's purpose. Interactive elements don't need anything extra because they are focusable by nature. 
+* Approach 2: Add a `tabindex` attribute with the value of `0` to the element.
+                            KB Link: https://knowledge.evinced.com/system-validations/keyboard-accessible
+                            Raw Data: {
+  "id": "83ee951a-aac2-4762-a87e-c3c7e544a7b9",
+  "index": "I4",
+  "hidden": false,
+  "validation": {
+    "id": "e206ebda-1012-4f59-9ad4-bc93879dfa48"
+  },
+  "skipIssue": false,
+  "elements": [
+    {
+      "id": "00f4941a-fd93-4d92-bfc4-d94757f250eb",
+      "domSnippet": "<div class=\"dropdown line\"><p>Select</p></div>",
+      "componentId": "ce13d0bb",
+      "index": "S2",
+      "selector": ".block
+2025-12-08T15:17:43.575Z [default] [info]: The message is too long (3791), only the first 1500 characters will be logged. 
+      In order to log such long messages -> update logging configuration.
+2025-12-08T15:17:43.248Z [default] [info]: [Evinced Issue] Anchor elements (<a>) must have an `href` attribute to be recognized as a link.:
+                            ID: 1791b81b-a012-4835-bd3b-08bb576741ce
+                            Index: I5
+                            Type: ANCHOR_WITHOUT_HREF
+                            Severity: Critical
+                            Summary: Anchor elements (<a>) must have an `href` attribute to be recognized as a link.
+                            Description: **Cause:** 
+ The <a> (anchor) element does not have an `href` attribute. 
+**Effect:** 
+Screen readers on Windows will read the element as plain text without indicating it is a link. On Mac OS, VoiceOver will still read the anchor as a link, even if it's not. The element won't be included in the page's tab sequence by default, making it inaccessible using a keyboard. 
+**Suggested Solutions:**
+* If the element should act as a link, add an `href` attribute that points to itself (<a href="#">) 
+* If the element is not meant to be a link, change it to something more appropriate, like a button
+                            KB Link: https://knowledge.evinced.com/system-validations/anchor-without-href
+                            Raw Data: {
+  "id": "1791b81b-a012-4835-bd3b-08bb576741ce",
+  "index": "I5",
+  "hidden": false,
+  "validation": {
+    "id": "14623df9-8dcb-44f7-919d-06af7dec99af"
+  },
+  "skipIssue": false,
+  "elements": [
+    {
+      "id": "c8e09193-7fc6-4a14-9bad-fa74390f2716",
+      "domSnippet": "<a class=\"search-btn\"
+2025-12-08T15:17:43.575Z [default] [info]: The message is too long (3543), only the first 1500 characters will be logged. 
+      In order to log such long messages -> update logging configuration.
+2025-12-08T15:17:43.248Z [default] [info]: [Evinced Issue] Keyboard users must be able to navigate to all the interactive elements on the page.:
+                            ID: 830bdbdb-b40c-4b72-a1d2-47f253295342
+                            Index: I6
+                            Type: NOT_FOCUSABLE
+                            Severity: Critical
+                            Summary: Keyboard users must be able to navigate to all the interactive elements on the page.
+                            Description: **Cause:** 
+The element is missing the right tags or has incorrect tags. 
+**Effect:** 
+The element is excluded from the keyboard tab sequence and is therefore inaccessible to keyboard users. 
+**Suggested Solutions:**
+Use one of these approaches: 
+* Approach 1 (recommended): Add a tag that shows the element's purpose. Interactive elements don't need anything extra because they are focusable by nature. 
+* Approach 2: Add a `tabindex` attribute with the value of `0` to the element.
+                            KB Link: https://knowledge.evinced.com/system-validations/keyboard-accessible
+                            Raw Data: {
+  "id": "830bdbdb-b40c-4b72-a1d2-47f253295342",
+  "index": "I6",
+  "hidden": false,
+  "validation": {
+    "id": "f739b0c5-34fe-47e4-8b71-f252b95102a0"
+  },
+  "skipIssue": false,
+  "elements": [
+    {
+      "id": "c8e09193-7fc6-4a14-9bad-fa74390f2716",
+      "domSnippet": "<a class=\"search-btn\">Search</a>",
+      "componentId": "a2d2a84e",
+      "index": "S3",
+      "selector": ".search-btn",
+      
+2025-12-08T15:17:43.575Z [default] [info]: The message is too long (3732), only the first 1500 characters will be logged. 
+      In order to log such long messages -> update logging configuration.
+2025-12-08T15:17:43.248Z [default] [info]: [Evinced Issue] Interactive elements, such as buttons, links, and inputs, must convey that they can be interacted with by using the proper semantics.:
+                            ID: 9d34147f-a071-403a-9828-dbc60ac9edc6
+                            Index: I7
+                            Type: WRONG_SEMANTIC_ROLE
+                            Severity: Critical
+                            Summary: Interactive elements, such as buttons, links, and inputs, must convey that they can be interacted with by using the proper semantics.
+                            Description: **Cause:** 
+Screen readers are unable to identify that the element is interactive due to missing or incorrect semantics.
+**Effect:** 
+Screen reader users may not find the content or may not realize that the the content is interactive.
+**Suggested Solutions:**
+Use native HTML interactive elements such as <*button*>, <*a*>, <*select*>, <*input*>. Alternatively, add the appropriate ARIA role that corresponds to the content purpose.
+                            KB Link: https://knowledge.evinced.com/system-validations/interactable-role
+                            Raw Data: {
+  "id": "9d34147f-a071-403a-9828-dbc60ac9edc6",
+  "index": "I7",
+  "hidden": false,
+  "validation": {
+    "id": "26d57217-d8e2-423d-b38f-ece3a5b4e1e7"
+  },
+  "skipIssue": false,
+  "elements": [
+    {
+      "id": "5749eddf-6fc9-4cfc-b182-71f4b852686d",
+      "domSnippet": "<ul class=\"dropdownMenu active\"><li>Caravan</li><li>Tiny House</li><li>Treeho
+2025-12-08T15:17:43.575Z [default] [info]: The message is too long (4132), only the first 1500 characters will be logged. 
+      In order to log such long messages -> update logging configuration.
+2025-12-08T15:17:43.248Z [default] [info]: [Evinced Issue] Elements that can be interacted with, such as buttons, links, and input fields, must have an accessible name. The name should indicate which information or action is required, and/or what will happen if they interact with it.:
+                            ID: 7505f97a-e90b-45f3-8bd7-b264b5b6dbb2
+                            Index: I8
+                            Type: NO_DESCRIPTIVE_TEXT
+                            Severity: Critical
+                            Summary: Elements that can be interacted with, such as buttons, links, and input fields, must have an accessible name. The name should indicate which information or action is required, and/or what will happen if they interact with it.
+                            Description: **Cause:** 
+The element does not have an accessible name to inform the screen reader of its purpose and function.
+**Effect:** 
+Assistive technologies use the accessible name to label, announce and trigger the element's action. If there's no valid accessible name, assistive technologies won't be able to understand the element correctly. 
+**Suggested Solutions:**
+Depending on the type of element, either add a descriptive text to the body of the tag or add the appropriate attributes to the tag. 
+                            KB Link: https://knowledge.evinced.com/system-validations/accessible-name
+                            Raw Data: {
+  "id": "7505f97a-e90b-45f3-8bd7-b264b5b6dbb2",
+  "index": "I8",
+  "hidden": false,
+  "validation": {
+   
+2025-12-08T15:17:43.575Z [default] [info]: The message is too long (3667), only the first 1500 characters will be logged. 
+      In order to log such long messages -> update logging configuration.
+2025-12-08T15:17:43.248Z [default] [info]: [Evinced Issue] Keyboard users must be able to navigate to all the interactive elements on the page.:
+                            ID: 131e6e95-75a7-453c-a594-d17890482a83
+                            Index: I9
+                            Type: NOT_FOCUSABLE
+                            Severity: Critical
+                            Summary: Keyboard users must be able to navigate to all the interactive elements on the page.
+                            Description: **Cause:** 
+The element is missing the right tags or has incorrect tags. 
+**Effect:** 
+The element is excluded from the keyboard tab sequence and is therefore inaccessible to keyboard users. 
+**Suggested Solutions:**
+Use one of these approaches: 
+* Approach 1 (recommended): Add a tag that shows the element's purpose. Interactive elements don't need anything extra because they are focusable by nature. 
+* Approach 2: Add a `tabindex` attribute with the value of `0` to the element.
+                            KB Link: https://knowledge.evinced.com/system-validations/keyboard-accessible
+                            Raw Data: {
+  "id": "131e6e95-75a7-453c-a594-d17890482a83",
+  "index": "I9",
+  "hidden": false,
+  "validation": {
+    "id": "f0a4707d-21a6-4403-b86f-f9813577e39f"
+  },
+  "skipIssue": false,
+  "elements": [
+    {
+      "id": "5749eddf-6fc9-4cfc-b182-71f4b852686d",
+      "domSnippet": "<ul class=\"dropdownMenu active\"><li>Caravan</li><li>Tiny House</li><li>Treehouse</li><li>Tent</li><li>Backyard</li></ul>",
+     
+2025-12-08T15:17:43.575Z [default] [info]: The message is too long (5122), only the first 1500 characters will be logged. 
+      In order to log such long messages -> update logging configuration.
+2025-12-08T15:17:43.248Z [default] [info]: [Evinced Issue] Scrollable region must have keyboard access:
+                            ID: 0422e0f2-af18-4c51-8430-b6820f4bb79a
+                            Index: I10
+                            Type: AXE-SCROLLABLE-REGION-FOCUSABLE
+                            Severity: Serious
+                            Summary: Scrollable region must have keyboard access
+                            Description: **Description:**
+	Ensure elements that have scrollable content are accessible by keyboard
+	**Failure Summary:**
+	Fix at least one (1) of the following
+* Element should have focusable content,* Element should be focusable
+                            KB Link: https://knowledge.evinced.com/system-validations/scrollable-region-focusable
+                            Raw Data: {
+  "id": "0422e0f2-af18-4c51-8430-b6820f4bb79a",
+  "index": "I10",
+  "hidden": false,
+  "validation": {
+    "id": "8bcfa959-4710-4d08-81db-d65eb754182a"
+  },
+  "skipIssue": false,
+  "elements": [
+    {
+      "id": "5749eddf-6fc9-4cfc-b182-71f4b852686d",
+      "domSnippet": "<ul class=\"dropdownMenu active\"><li>Caravan</li><li>Tiny House</li><li>Treehouse</li><li>Tent</li><li>Backyard</li></ul>",
+      "componentId": "0683cd54",
+      "index": "S4",
+      "selector": ".block-dropdown:nth-child(1) > .dropholder > ul",
+      "pageUrl": "https://demo.evinced.com/",
+      "pageTitle": "Home | Evinced, Demo site",
+      "boundingBox": {
+        "x": 301,
+        "y": 654,
+        "height": 225,
+        "width": 398,
+  
+2025-12-08T15:17:43.575Z [default] [info]: The message is too long (3800), only the first 1500 characters will be logged. 
+      In order to log such long messages -> update logging configuration.
+2025-12-08T15:17:43.248Z [default] [info]: [Evinced Issue] Interactive elements, such as buttons, links, and inputs, must convey that they can be interacted with by using the proper semantics.:
+                            ID: 5c335059-6977-4d61-a81e-622b7e79b062
+                            Index: I11
+                            Type: WRONG_SEMANTIC_ROLE
+                            Severity: Critical
+                            Summary: Interactive elements, such as buttons, links, and inputs, must convey that they can be interacted with by using the proper semantics.
+                            Description: **Cause:** 
+Screen readers are unable to identify that the element is interactive due to missing or incorrect semantics.
+**Effect:** 
+Screen reader users may not find the content or may not realize that the the content is interactive.
+**Suggested Solutions:**
+Use native HTML interactive elements such as <*button*>, <*a*>, <*select*>, <*input*>. Alternatively, add the appropriate ARIA role that corresponds to the content purpose.
+                            KB Link: https://knowledge.evinced.com/system-validations/interactable-role
+                            Raw Data: {
+  "id": "5c335059-6977-4d61-a81e-622b7e79b062",
+  "index": "I11",
+  "hidden": false,
+  "validation": {
+    "id": "da60aaa0-8bae-4899-8d9e-8cbaa2f51b85"
+  },
+  "skipIssue": false,
+  "elements": [
+    {
+      "id": "f1281ccf-7800-4926-9be7-d3cdda3738b9",
+      "domSnippet": "<ul class=\"dropdownMenu active\"><li>Canada</li><li>The Great Lakes</li><li>
+2025-12-08T15:17:43.575Z [default] [info]: The message is too long (4200), only the first 1500 characters will be logged. 
+      In order to log such long messages -> update logging configuration.
+2025-12-08T15:17:43.248Z [default] [info]: [Evinced Issue] Elements that can be interacted with, such as buttons, links, and input fields, must have an accessible name. The name should indicate which information or action is required, and/or what will happen if they interact with it.:
+                            ID: 0b804cc3-c844-47a7-9b4c-23f627c8ea63
+                            Index: I12
+                            Type: NO_DESCRIPTIVE_TEXT
+                            Severity: Critical
+                            Summary: Elements that can be interacted with, such as buttons, links, and input fields, must have an accessible name. The name should indicate which information or action is required, and/or what will happen if they interact with it.
+                            Description: **Cause:** 
+The element does not have an accessible name to inform the screen reader of its purpose and function.
+**Effect:** 
+Assistive technologies use the accessible name to label, announce and trigger the element's action. If there's no valid accessible name, assistive technologies won't be able to understand the element correctly. 
+**Suggested Solutions:**
+Depending on the type of element, either add a descriptive text to the body of the tag or add the appropriate attributes to the tag. 
+                            KB Link: https://knowledge.evinced.com/system-validations/accessible-name
+                            Raw Data: {
+  "id": "0b804cc3-c844-47a7-9b4c-23f627c8ea63",
+  "index": "I12",
+  "hidden": false,
+  "validation": {
+ 
+2025-12-08T15:17:43.575Z [default] [info]: The message is too long (3735), only the first 1500 characters will be logged. 
+      In order to log such long messages -> update logging configuration.
+2025-12-08T15:17:43.248Z [default] [info]: [Evinced Issue] Keyboard users must be able to navigate to all the interactive elements on the page.:
+                            ID: 4eb383f8-d0b3-4462-b9d4-fde2afd0e9d0
+                            Index: I13
+                            Type: NOT_FOCUSABLE
+                            Severity: Critical
+                            Summary: Keyboard users must be able to navigate to all the interactive elements on the page.
+                            Description: **Cause:** 
+The element is missing the right tags or has incorrect tags. 
+**Effect:** 
+The element is excluded from the keyboard tab sequence and is therefore inaccessible to keyboard users. 
+**Suggested Solutions:**
+Use one of these approaches: 
+* Approach 1 (recommended): Add a tag that shows the element's purpose. Interactive elements don't need anything extra because they are focusable by nature. 
+* Approach 2: Add a `tabindex` attribute with the value of `0` to the element.
+                            KB Link: https://knowledge.evinced.com/system-validations/keyboard-accessible
+                            Raw Data: {
+  "id": "4eb383f8-d0b3-4462-b9d4-fde2afd0e9d0",
+  "index": "I13",
+  "hidden": false,
+  "validation": {
+    "id": "bc835b60-9f86-4484-9f9e-38299ea7f913"
+  },
+  "skipIssue": false,
+  "elements": [
+    {
+      "id": "f1281ccf-7800-4926-9be7-d3cdda3738b9",
+      "domSnippet": "<ul class=\"dropdownMenu active\"><li>Canada</li><li>The Great Lakes</li><li>East Coast</li><li>West Coast</li><li>Down South</l
+2025-12-08T15:17:43.575Z [default] [info]: The message is too long (5254), only the first 1500 characters will be logged. 
+      In order to log such long messages -> update logging configuration.
+2025-12-08T15:17:43.248Z [default] [info]: [Evinced Issue] Scrollable region must have keyboard access:
+                            ID: 29482a45-7ce7-4405-a991-09e18448a8e4
+                            Index: I14
+                            Type: AXE-SCROLLABLE-REGION-FOCUSABLE
+                            Severity: Serious
+                            Summary: Scrollable region must have keyboard access
+                            Description: **Description:**
+	Ensure elements that have scrollable content are accessible by keyboard
+	**Failure Summary:**
+	Fix at least one (1) of the following
+* Element should have focusable content,* Element should be focusable
+                            KB Link: https://knowledge.evinced.com/system-validations/scrollable-region-focusable
+                            Raw Data: {
+  "id": "29482a45-7ce7-4405-a991-09e18448a8e4",
+  "index": "I14",
+  "hidden": false,
+  "validation": {
+    "id": "328540b2-6aba-49ae-8215-272c6c0b699b"
+  },
+  "skipIssue": false,
+  "type": {
+    "id": "AXE-SCROLLABLE-REGION-FOCUSABLE",
+    "newId": "e4d4390e-c29e-400d-8fbc-bec794a2b038",
+    "name": "Scrollable-region-focusable"
+  },
+  "elements": [
+    {
+      "id": "f1281ccf-7800-4926-9be7-d3cdda3738b9",
+      "domSnippet": "<ul class=\"dropdownMenu active\"><li>Canada</li><li>The Great Lakes</li><li>East Coast</li><li>West Coast</li><li>Down South</li><li>Middle America</li><li>Alaska</li><li>Hawaii</li></ul>",
+      "componentId": "099e33df",
+      "index": "S5",
+      "selector": ".block-dropdown:nth-child(2
+2025-12-08T15:17:43.248Z [default] [info]: calcReport function called
+2025-12-08T15:17:43.248Z [default] [info]: evStop function finished with 14 issues
+2025-12-08T15:17:43.252Z [default] [info]: uploadReportToPlatform: Task "uploadToPlatform" triggered successfully
