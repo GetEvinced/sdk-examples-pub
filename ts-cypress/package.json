@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "npx cypress run --browser chrome --headless",
-    "cy:open": "cypress open"
+    "cy:open": "cypress run --browser chrome --headless"
   },
   "keywords": [],
   "author": "Shane @ Evinced",
