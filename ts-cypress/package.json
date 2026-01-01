@@ -18,6 +18,6 @@
     "typescript": "^5.7.3"
   },
   "dependencies": {
-    "@evinced/cypress-sdk": "^5.2.2"
+    "@evinced/cypress-sdk": "^5.4.0"
   }
 }
