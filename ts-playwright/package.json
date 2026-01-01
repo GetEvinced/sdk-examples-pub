@@ -12,7 +12,7 @@
     "@types/node": "^22.10.1"
   },
   "dependencies": {
-    "@evinced/js-playwright-sdk": "^2.35.0",
+    "@evinced/js-playwright-sdk": "^2.40.1",
     "evinced-web-sdk-types": "^1.0.1"
   }
 }
