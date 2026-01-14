@@ -20,7 +20,7 @@
    <repository>
      <id>evinced-repository</id>
      <name>Evinced Jfrog Repo</name>
-     <url>https://evinced.jfrog.io/ui/native/restricted-maven/com/evinced/selenium-sdk</url>
+     <url>https://evinced.jfrog.io/artifactory/restricted-maven/com/evinced/selenium-sdk</url>
    </repository>
 
     <repository>
