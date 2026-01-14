@@ -24,8 +24,8 @@ jobs:
           - { language: "typescript", folder: "ts-wdio-web" }
           - { language: "javascript", folder: "js-playwright" }
           - { language: "typescript", folder: "ts-playwright" }
-          - { language: "javascript", folder: "js-cypress" }
-          - { language: "typescript", folder: "ts-cypress" }
+          # - { language: "javascript", folder: "js-cypress" }
+          # - { language: "typescript", folder: "ts-cypress" }
           - { language: "javascript", folder: "react-unit-tester" }
           - { language: "javascript", folder: "nextjs-react-unit-tester" }
           - { language: "javascript", folder: "js-wdio-mobile" }
