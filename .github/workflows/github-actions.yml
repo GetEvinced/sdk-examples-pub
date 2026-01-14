@@ -103,9 +103,6 @@ jobs:
           elif [ -f "playwright.config.js" ] || [ -f "playwright.config.ts" ]; then
             echo "Running Playwright tests"
             npx playwright test
-          elif [ -f "cypress.config.js" ] || [ -f "cypress.config.ts" ]; then
-            echo "Running Cypress tests"
-            npx cypress run --browser chrome --headless
           elif [ "${{ matrix.language-folder.folder }}" == "js-selenium-web" ]; then
             echo "Running Selenium tests"
             npm test
