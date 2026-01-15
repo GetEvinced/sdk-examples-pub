@@ -91,7 +91,7 @@ public class EvincedSetupExample
             
             //Saves issues in a file with the specified format and location. 
             //Supported formats - json, html, sarif, and csv.
-            EvincedReporter.evSaveFile("landing_page",landingPageReport, EvincedReporter.FileFormat.HTML_v2_1);
+            EvincedReporter.evSaveFile(landingPageReport, EvincedReporter.FileFormat.HTML_v2_1);
             assertFalse(landingPageReport.getIssues().isEmpty());
 
             evincedDriver.get("https://demo.evinced.com/results/?what=Tiny%20House&where=Canada&date=Tue%20Jul%2009%202024%2011:21:39%20GMT-0400%20(Eastern%20Daylight%20Time");
