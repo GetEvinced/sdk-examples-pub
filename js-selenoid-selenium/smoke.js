@@ -1,4 +1,4 @@
-const { Builder } = require("selenium-webdriver");
+import { Builder } from "selenium-webdriver";
 
 (async () => {
   const driver = await new Builder()
