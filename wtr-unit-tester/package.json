@@ -10,7 +10,7 @@
     "test:debug": "DEBUG=true web-test-runner test/**/*.test.js --node-resolve"
   },
   "dependencies": {
-    "@evinced/unit-tester": "file:/Users/nathanalmaleh/Documents/GitHub/evinced/js/unit-tester/evinced-unit-tester-2.29.0.tgz"
+    "@evinced/unit-tester": "^2.29.0"
   },
   "devDependencies": {
     "@web/test-runner": "^0.18.0",

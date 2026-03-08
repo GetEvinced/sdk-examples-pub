@@ -10,7 +10,7 @@
     "test:ui": "vitest --ui"
   },
   "dependencies": {
-    "@evinced/unit-tester": "file:/Users/nathanalmaleh/Documents/GitHub/evinced/js/unit-tester/evinced-unit-tester-2.29.0.tgz"
+    "@evinced/unit-tester": "^2.29.0"
   },
   "devDependencies": {
     "@vitest/browser": "^4.0.0",
