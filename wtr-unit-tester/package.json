@@ -1,0 +1,19 @@
+{
+  "name": "wtr-unit-tester",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "test": "web-test-runner test/**/*.test.js --node-resolve",
+    "test:button": "web-test-runner test/button.test.js --node-resolve",
+    "test:watch": "web-test-runner test/**/*.test.js --node-resolve --watch",
+    "test:debug": "DEBUG=true web-test-runner test/**/*.test.js --node-resolve"
+  },
+  "dependencies": {
+    "@evinced/unit-tester": "file:/Users/nathanalmaleh/Documents/GitHub/evinced/js/unit-tester/evinced-unit-tester-2.29.0.tgz"
+  },
+  "devDependencies": {
+    "@web/test-runner": "^0.18.0",
+    "@web/test-runner-playwright": "^0.11.0"
+  }
+}
