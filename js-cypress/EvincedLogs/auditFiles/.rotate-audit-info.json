@@ -1,0 +1,20 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "EvincedLogs//auditFiles/.rotate-audit-info.json",
+    "files": [
+        {
+            "date": 1767799064362,
+            "name": "EvincedLogs/evincedAllLogs-2026-01-07.log",
+            "hash": "2c8f0e7d299f7449a460d6c186d3531d70fb61b1d11510041ccc417d0e2d6b3f"
+        },
+        {
+            "date": 1767799064364,
+            "name": "EvincedLogs/evincedErrorsLogs-2026-01-07.log",
+            "hash": "27129749fca21c2c7f8eea99ba08c9dfa29a11acfa293be1b44ccf3dbcc8a887"
+        }
+    ],
+    "hashType": "sha256"
+}

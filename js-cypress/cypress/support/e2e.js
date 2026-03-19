@@ -31,7 +31,7 @@ Evinced.setCredentials({
 
 Evinced.setUploadToPlatformConfig({
   enableUploadToPlatform: true,
-  setUploadToPlatformDefault: false,
+  setUploadToPlatformDefault: true,
 });
 
 // ONLY USED OFFLINE CREDENTIALS IF YOU NEED TO ISOLATE AN ISSUE

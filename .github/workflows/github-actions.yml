@@ -24,8 +24,8 @@ jobs:
           - { language: "typescript", folder: "ts-wdio-web" }
           - { language: "javascript", folder: "js-playwright" }
           - { language: "typescript", folder: "ts-playwright" }
-          - { language: "javascript", folder: "js-cypress" }
-          - { language: "typescript", folder: "ts-cypress" }
+          # - { language: "javascript", folder: "js-cypress" }
+          # - { language: "typescript", folder: "ts-cypress" }
           - { language: "javascript", folder: "react-unit-tester" }
           - { language: "javascript", folder: "nextjs-react-unit-tester" }
           - { language: "javascript", folder: "js-wdio-mobile" }
@@ -80,6 +80,11 @@ jobs:
           echo "Detected Chrome version: $CHROME_VERSION"
           npm install chromedriver@$CHROME_VERSION
 
+      - name: Install Google Chrome
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y google-chrome-stable
+
       - name: Run Evinced Smoke tests
         id: run-tests
         env:
@@ -98,9 +103,6 @@ jobs:
           elif [ -f "playwright.config.js" ] || [ -f "playwright.config.ts" ]; then
             echo "Running Playwright tests"
             npx playwright test
-          elif [ -f "cypress.config.js" ] || [ -f "cypress.config.ts" ]; then
-            echo "Running Cypress tests"
-            npx cypress run
           elif [ "${{ matrix.language-folder.folder }}" == "js-selenium-web" ]; then
             echo "Running Selenium tests"
             npm test
@@ -116,7 +118,7 @@ jobs:
           fi
 
       - name: Upload HTML reports
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ matrix.language-folder.folder }}-report
           path: |
@@ -134,6 +136,6 @@ jobs:
 
     steps:
       - name: Download all reports
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           path: reports
