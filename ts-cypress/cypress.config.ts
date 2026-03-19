@@ -7,10 +7,19 @@ export default defineConfig({
       // This is how you should upload to platform with Cypress
       on("task", {
         uploadToPlatform: Evinced.cyTaskUploadToPlatform,
-        evTask: Evinced.cyEvTask
+        evTask: Evinced.cyEvTask,
+      });
+      on("before:browser:launch", (browser: any = {}, launchOptions) => {
+        launchOptions.args.push(
+          "--no-sandbox",
+          "--disable-dev-shm-usage",
+          "--disable-gpu",
+          "--disable-software-rasterizer"
+        );
+        return launchOptions;
       });
     },
-    pageLoadTimeout: 120000
+    pageLoadTimeout: 120000,
   },
   env: {
     serviceId: process.env.EVINCED_SERVICE_ID,
