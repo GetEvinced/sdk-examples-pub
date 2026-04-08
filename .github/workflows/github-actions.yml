@@ -58,6 +58,11 @@ jobs:
         run: |
           echo "${{ secrets.EVINCED_NPM_TOKEN }}" > ~/.npmrc
 
+      - name: Install Google Chrome
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y google-chrome-stable
+
       - name: Install dependencies
         run: |
           cd ${{ matrix.language-folder.folder }}
@@ -67,23 +72,18 @@ jobs:
             npm install
           fi
 
-      - name: Install Playwright browsers
-        if: contains(matrix.language-folder.folder, 'playwright')
-        run: |
-          cd ${{ matrix.language-folder.folder }}
-          npx playwright install
-
       - name: Install matching Chromedriver
         if: matrix.language-folder.folder == 'js-selenium-web'
         run: |
           CHROME_VERSION=$(google-chrome --version | grep -oP '\d+' | head -1)
           echo "Detected Chrome version: $CHROME_VERSION"
-          npm install chromedriver@$CHROME_VERSION
+          cd js-selenium-web && npm install chromedriver@$CHROME_VERSION
 
-      - name: Install Google Chrome
+      - name: Install Playwright browsers
+        if: contains(matrix.language-folder.folder, 'playwright')
         run: |
-          sudo apt-get update
-          sudo apt-get install -y google-chrome-stable
+          cd ${{ matrix.language-folder.folder }}
+          npx playwright install
 
       - name: Run Evinced Smoke tests
         id: run-tests
