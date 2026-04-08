@@ -7,6 +7,6 @@
     "cy-local-test": "npx cypress run --browser chrome"
   },
   "dependencies": {
-    "@evinced/cypress-sdk": "^5.7.0"
+    "@evinced/cypress-sdk": "^5.7.2"
   }
 }
