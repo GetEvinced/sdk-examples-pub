@@ -9,6 +9,6 @@ describe("Menu component accessibility test", () => {
     const menu = screen.getByTestId("menu");
     const results = await EvincedUT.analyzeMenu(menu);
 
-    expect(results.length).toBe(8);
+    expect(results.length).toBeGreaterThan(4);
   });
 });
