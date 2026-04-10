@@ -1,0 +1,22 @@
+**/node_modules/
+package-lock.json
+**/.npmrc/
+**/.cache/
+**/userToken
+.npmrc
+.DS_Store
+react-unit-tester/.cache
+js-wdio-mobile/evinced-reports
+evinced-dot-net/sdk
+evinced-dot-net/bin
+playwright-bdd/evinced-reports
+js-selenium-web/logs
+
+# For Java projects
+target/
+build/
+*.class
+*.jar
+*.war
+*.ear
+tmp

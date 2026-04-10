@@ -1,0 +1,11 @@
+{
+    "uploadToPlatformOptions": {
+        "enableUploadToPlatform": true,
+        "setUploadToPlatformDefault": true
+    },
+    "enableScreenshots": true,
+    "logging": {
+        "LOGGING_LEVEL": "debug",
+        "ADD_LOGGING_CONTEXT": true
+    }
+}

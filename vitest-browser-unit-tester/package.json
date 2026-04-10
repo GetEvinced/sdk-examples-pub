@@ -1,0 +1,22 @@
+{
+  "name": "vitest-browser-unit-tester",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "test": "vitest run",
+    "test:button": "vitest run test/button.test.js",
+    "test:watch": "vitest",
+    "test:ui": "vitest --ui"
+  },
+  "dependencies": {
+    "@evinced/unit-tester": "^2.29.0"
+  },
+  "devDependencies": {
+    "@vitest/browser": "^4.0.0",
+    "@vitest/browser-playwright": "^4.0.0",
+    "chai": "^4.3.10",
+    "playwright": "^1.49.0",
+    "vitest": "^4.0.0"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "uploadToPlatformOptions": {
+    "enableUploadToPlatform": false,
+    "setUploadToPlatformDefault": false
+  },
+  "axeConfig": {
+    "rules": {}
+  },
+  "logging": {
+    "LOGGING_LEVEL": "trace",
+    "ADD_LOGGING_CONTEXT": true
+  },
+  "sdkLogging": {
+    "enable": false,
+    "performance": true,
+    "level": "trace",
+    "directory": "./logs",
+    "browserLoggingEnabled": true,
+    "systemInformationLoggingEnabled": true,
+    "maxLogLength": 10000
+  },
+  "sdk_options": {
+    "usePlaywrightScreenshotCapturing": true
+  },
+  "recordingService": {
+    "ENABLE_DEBOUNCE_NEW_SELECTORS": false,
+    "DEBOUNCE_NEW_SELECTORS_MS": 500,
+    "DELAY_MODE": "throttle"
+  },
+  "toggles": {
+    "USE_AXE_NEEDS_REVIEW": false,
+    "USE_AXE_BEST_PRACTICES": false,
+    "ENABLE_SENDING_ENGINE_MATRICES": false
+  },
+  "skipValidations": [],
+  "enableScreenshots": true
+}

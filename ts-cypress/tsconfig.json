@@ -1,0 +1,10 @@
+{
+  "extends": "@tsconfig/node22/tsconfig.json",
+  "compilerOptions": {
+    "strict": true,
+    "types": ["cypress", "node"],
+    "module": "Node16",
+    "lib": ["ESNext", "dom"]
+  },
+  "include": ["cypress.config.ts", "cypress/**/*.ts"]
+}

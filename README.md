@@ -1,47 +1,47 @@
-# Evinced Appium Python SDK Example
 
-A working example of the Evinced Appium Python SDK integrated with pytest for Android accessibility testing.
+# Evinced Support SDK Examples
 
-## Prerequisites
+Welcome to the **Evinced Support SDK Examples** repository! This repository provides working examples of the latest code snippets and dependencies, ensuring customers can copy and use reliable, up-to-date examples for their projects.
 
-- Python 3.7+
-- Node.js v22+
-- Android Studio with an emulator configured
-- Evinced service account credentials (service ID and API key)
-- A valid Android APK
+## Overview
 
-## Setup
+This repository is designed to:
+- Provide **reliable and functional examples** for customers to integrate Evinced SDKs with ease.
+- Ensure all examples are **validated and maintained** using automated smoke tests.
+- Enable seamless integration of the latest SDK features with minimal effort.
 
-### 1. Install Appium
+---
 
-```bash
-npm install -g appium
-appium driver install uiautomator2
+## Features
+
+### 🔧 Latest Code Snippets
+- Each example is written with the latest versions of the SDKs and dependencies.
+- Easy-to-follow examples for quick integration into your project.
+
+### ✅ Reliable Examples
+- All examples are validated using **smoke tests**, ensuring they work as expected out of the box.
+- Examples are updated regularly to reflect the latest SDK improvements and bug fixes.
+
+### 🚀 Quick Start
+- Copy and paste examples directly into your project.
+- Documentation and comments are included for every example.
+
+---
+
+## To note:
+- In each folder, the commands to use the repository are present in the `README.md` file and they vary slightly project by project, please take a moment to review
+- In order for this to work properly, you must add a `.npmrc` file or provide the necessary authentication credentials related to your SDK. The keys can be obtained by logging into your Evinced account
+- Please ensure you run `npm install` to set the project up
+- You will see that in the tests we do use environment variables which are stored on our machines, you will need to either set the named variables on your machine or change accordingly to ensure you get up and running!
+
+An example set of environment variables might look like this:
+```javascript
+configure({
+  serviceAccountId: process.env.EVINCED_SERVICE_ID,
+  serviceAccountSecret: process.env.EVINCED_API_KEY,
+});
 ```
-
-### 2. Install Python evinced-appium-sdk
-
-```bash
-pip3 install evinced-appium-sdk --extra-index-url https://evinced.jfrog.io/artifactory/api/pypi/public-python/simple/
-```
-
-### 3. Configure environment variables
-
-Add the following to your shell profile (`~/.zshrc` or `~/.bashrc`):
-
-```bash
-export EVINCED_SERVICE_ID=your_service_id
-export EVINCED_API_KEY=your_api_key
-export APP_PATH=/path/to/your/app.apk
-```
-
-
-## The Fixture
-
-Using `conftest.py` fixture that defines a shared `driver`.
-
-The fixture handles:
-- Authenticating with Evinced credentials
-- Creating the Appium driver session before all tests `scope="module"`
-- Passes driver with `yield`
-- Quitting the session after tests complete
+---
+### Got Questions? 
+Do not hesitate to reach out to the Support team (support@evinced.com)
+>>>>>>> 0916f070fe2cfd4341b4341f1e7443f64ca7eaa8

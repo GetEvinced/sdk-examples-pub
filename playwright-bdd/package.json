@@ -1,0 +1,20 @@
+{
+  "name": "playwright-bdd",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "generate": "bddgen",
+    "test": "npm run generate && playwright test"
+  },
+  "keywords": [],
+  "author": "Shane @ Evinced",
+  "license": "ISC",
+  "description": "A playwright BDD test using Evinced",
+  "devDependencies": {
+    "@playwright/test": "^1.52.0",
+    "playwright-bdd": "^8.2.1"
+  },
+  "dependencies": {
+    "@evinced/js-playwright-sdk": "^2.31.2"
+  }
+}

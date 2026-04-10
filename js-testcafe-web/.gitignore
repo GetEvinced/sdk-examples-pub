@@ -1,0 +1,11 @@
+
+## exclude these things 
+.DS_Store
+logs
+/tests/results/*
+
+## exclude node_modules directory
+node_modules/*
+
+## exclude tarblls
+*.tgz

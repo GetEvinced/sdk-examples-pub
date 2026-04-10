@@ -1,0 +1,276 @@
+[2026-04-07T15:53:48.307] [INFO] default - Setting online credentials...
+[2026-04-07T15:53:48.307] [INFO] default - Getting authentication token online
+[2026-04-07T15:53:48.494] [DEBUG] default - Response status: 200
+[2026-04-07T15:53:48.494] [INFO] default - Credentials have been set
+[2026-04-07T15:53:48.495] [INFO] default - Setting online credentials...
+[2026-04-07T15:53:48.495] [INFO] default - Getting authentication token online
+[2026-04-07T15:53:48.615] [DEBUG] default - Response status: 200
+[2026-04-07T15:53:48.616] [INFO] default - Credentials have been set
+[2026-04-07T15:54:05.063] [INFO] default - Setting online credentials...
+[2026-04-07T15:54:05.063] [INFO] default - Getting authentication token online
+[2026-04-07T15:54:11.345] [DEBUG] default - Response status: 200
+[2026-04-07T15:54:11.345] [INFO] default - Credentials have been set
+[2026-04-07T15:56:13.578] [INFO] default - Setting online credentials...
+[2026-04-07T15:56:13.579] [INFO] default - Getting authentication token online
+[2026-04-07T15:56:13.745] [DEBUG] default - Response status: 200
+[2026-04-07T15:56:13.746] [INFO] default - Credentials have been set
+[2026-04-07T15:56:13.748] [INFO] default - Setting online credentials...
+[2026-04-07T15:56:13.748] [INFO] default - Getting authentication token online
+[2026-04-07T15:56:13.873] [DEBUG] default - Response status: 200
+[2026-04-07T15:56:13.874] [INFO] default - Credentials have been set
+[2026-04-07T15:56:15.237] [INFO] default - Evinced SDK: initializing...
+[2026-04-07T15:56:15.237] [DEBUG] default - AuthData initialized. Checking license
+[2026-04-07T15:56:15.237] [DEBUG] default - Token decoded
+[2026-04-07T15:56:15.238] [DEBUG] default - Token signed
+[2026-04-07T15:56:15.238] [DEBUG] default - Product type approved
+[2026-04-07T15:56:15.238] [DEBUG] default - Service account approved
+[2026-04-07T15:56:15.238] [INFO] default - License approved
+[2026-04-07T15:56:15.238] [DEBUG] default - EngineCommandsExecutor instance reset
+[2026-04-07T15:56:15.238] [DEBUG] default - TestRunInformation initialized: {"testId":"d9695006-4432-4fd9-b303-24ff0771b745","runTime":1775573775238,"productVersion":"2.6.0","enginesVersion":"15.15.0","testName":"value not specified"}
+[2026-04-07T15:56:15.238] [DEBUG] default - EngineCommandsExecutor initialized
+[2026-04-07T15:56:15.238] [DEBUG] default - ListenerService initialized
+[2026-04-07T15:56:16.146] [INFO] default - evAnalyze called
+[2026-04-07T15:56:16.146] [DEBUG] default - ConfigProvider: Local "evConfig.json" parsed: {"sdkLogging":{"enable":"true","level":"debug"}}
+[2026-04-07T15:56:16.147] [DEBUG] default - ConfigProvider: Final merged config: {"includeIframes":true}
+[2026-04-07T15:56:16.147] [DEBUG] default - Iframe setting initialized: true
+[2026-04-07T15:56:16.147] [INFO] default - Injecting Evinced SDK
+[2026-04-07T15:56:16.150] [INFO] default - Evinced is injected: false
+[2026-04-07T15:56:16.407] [INFO] default - Evinced SDK has been injected
+[2026-04-07T15:56:16.412] [DEBUG] default - Injecting Evinced into iframes: true
+[2026-04-07T15:56:16.412] [INFO] default - Injecting Evinced into iframes (recursive)
+[2026-04-07T15:56:16.412] [DEBUG] default - Checking for iframes at depth 0
+[2026-04-07T15:56:16.418] [DEBUG] default - Found 0 iframes at depth 0
+[2026-04-07T15:56:16.418] [DEBUG] default - Iframe injection completed successfully
+[2026-04-07T15:56:16.418] [INFO] default - Preparing configuration for engine initialisation
+[2026-04-07T15:56:16.418] [DEBUG] default - Local "evConfig.json" parsed: {"sdkLogging":{"enable":"true","level":"debug"}}
+[2026-04-07T15:56:16.418] [DEBUG] default - Merged configuration: {"rootSelector":"","enableScreenshots":true,"includeIframes":true,"toggles":{"ENABLE_PENDO_ANALYTICS":false,"ENABLE_SENDING_ENGINE_MATRICES":true,"SAVE_FULL_HTML":false,"USE_AXE_BEST_PRACTICES":false,"USE_AXE_NEEDS_REVIEW":false,"USE_BROKEN_SKIP_LINK_VALIDATOR":false,"USE_FOCUS_INDICATION":false,"USE_LANGUAGE_ATTRIBUTE_MISMATCH_VALIDATOR":false,"USE_SCREEN_READING_ORDER_VALIDATOR":false,"USE_TAB_ORDER_VALIDATOR":false,"USE_TEXT_ON_IMAGE":false,"ENABLE_SCREENSHOTS":false,"ALLOW_SCREENSHOTS_WHEN_IFRAMES_TOGGLE_IS_ON":true,"RUN_VALIDATION_ON_IFRAMES":true},"issuesContentPerType":null,"axeIssuesContentPerType":null,"recordingService":{"ENABLE_DEBOUNCE_NEW_SELECTORS":false,"DEBOUNCE_NEW_SELECTORS_MS":200,"DELAY_MODE":"debounce"},"analytics":{"obfuscate_urls":false,"analytics_url":"https://ingestion.evinced.com/analytics","disable_scan_initiated_event":false},"sdk_options":{"localUniquenessValidation":true},"sdkLogging":{"enable":"true","level":"debug"}}
+[2026-04-07T15:56:16.418] [DEBUG] default - Configuration. Session info: {"userId":"js-selenium-sdk-user","serverConfig":{"TOGGLES":{"ENABLE_PENDO_ANALYTICS":false,"ENABLE_SENDING_ENGINE_MATRICES":true,"SAVE_FULL_HTML":false,"USE_AXE_BEST_PRACTICES":false,"USE_AXE_NEEDS_REVIEW":false,"USE_BROKEN_SKIP_LINK_VALIDATOR":false,"USE_FOCUS_INDICATION":false,"USE_LANGUAGE_ATTRIBUTE_MISMATCH_VALIDATOR":false,"USE_SCREEN_READING_ORDER_VALIDATOR":false,"USE_TAB_ORDER_VALIDATOR":false,"USE_TEXT_ON_IMAGE":false,"ENABLE_SCREENSHOTS":true,"ALLOW_SCREENSHOTS_WHEN_IFRAMES_TOGGLE_IS_ON":true,"RUN_VALIDATION_ON_IFRAMES":true},"showDuplicateIssues":true,"RECORDING_SERVICE":{"ENABLE_DEBOUNCE_NEW_SELECTORS":false,"DEBOUNCE_NEW_SELECTORS_MS":200,"DELAY_MODE":"debounce"},"ANALYTICS_CONFIG":{"obfuscate_urls":false,"analytics_url":"https://ingestion.evinced.com/analytics","disable_scan_initiated_event":false}}}
+[2026-04-07T15:56:16.419] [DEBUG] default - Configuration. Analysis config: {"analysisId":"53a0c027-ef9f-4574-94b3-cae159777fe9","rootSelector":"","licenseData":{"accessToken":"********","tenantId":"8ccf5b56-8f64-4d35-afea-aded8f1a349f"}}
+[2026-04-07T15:56:16.419] [DEBUG] default - Configuration. Analysis persisted data: undefined
+[2026-04-07T15:56:16.419] [DEBUG] default - Configuration. Updates callback: undefined
+[2026-04-07T15:56:16.419] [DEBUG] default - Configuration. Running context: {"hostingProduct":"SELENIUM-JS-SDK","productName":"WEB_SDK","sdkType":"SELENIUM_JS_SDK","hostingProductVersion":"2.6.0"}
+[2026-04-07T15:56:16.419] [DEBUG] default - Checking if Selenium BiDi API is enabled
+[2026-04-07T15:56:16.419] [DEBUG] default - Capabilities: {"map_":{}}
+[2026-04-07T15:56:16.419] [DEBUG] default - BiDi enabled: false
+[2026-04-07T15:56:16.419] [DEBUG] default - Calling "Init analysis client core" command
+[2026-04-07T15:56:16.430] [DEBUG] default - Calling "Run analysis once" command
+[2026-04-07T15:56:17.543] [DEBUG] default - Screenshots map updated
+[2026-04-07T15:56:17.543] [INFO] default - Analysis report received. Analysis finished. Got issues: 6
+[2026-04-07T15:56:17.543] [DEBUG] default - ConfigProvider: Final platform upload options: {"enableUploadToPlatform":false,"setUploadToPlatformDefault":true,"useGzip":true,"platformURL":"https://ingestion.evinced.com/product/wsdk"}
+[2026-04-07T15:56:17.543] [INFO] default - Upload to platform is enabled, preparing to upload issues
+[2026-04-07T15:56:17.543] [DEBUG] default - ConfigProvider: Final platform upload options: {"enableUploadToPlatform":false,"setUploadToPlatformDefault":true,"useGzip":true,"platformURL":"https://ingestion.evinced.com/product/wsdk"}
+[2026-04-07T15:56:17.544] [DEBUG] default - Upload to platform is disabled. (enableUploadToPlatform)
+[2026-04-07T15:56:17.544] [INFO] default - Upload to platform completed
+[2026-04-07T15:56:17.544] [INFO] default - evSaveFile called with format: html
+[2026-04-07T15:56:17.544] [INFO] default - Saving report to test-results/evAnalyze-report.html in html format
+[2026-04-07T15:56:17.544] [DEBUG] default - The message is too long (13116), only the first 1000 characters will be logged. 
+      In order to log such long messages -> update logging configuration.
+[2026-04-07T15:56:17.544] [DEBUG] default - Report content: Issues: [{"additionalInformation":{},"canonicalSignature":"2ffa5563","customKnowledgeBaseLinks":null,"description":"**Cause:** \nScreen readers are unable to identify that the element is interactive due to missing or incorrect semantics.\n**Effect:** \nScreen reader users may not find the content or may not realize that the the content is interactive.\n**Suggested Solutions:**\nUse native HTML interactive elements such as `<*button*>`, `<*a*>`, `<*select*>`, `<*input*>`. Alternatively, add the appropriate ARIA role that corresponds to the content purpose.","elements":[{"boundingBox":{"bottom":469.875,"height":23.9375,"left":239,"right":517,"top":445.9375,"width":278,"x":239,"y":445.9375},"canonicalUrl":null,"componentId":"ce13d0bb","domSnippet":"<div class=\"dropdown line\"><p>Select</p></div>","id":"14acec8c-46ae-4d4a-beda-aab0c60a8a8b","index":"S1","pageTitle":"Home | Evinced, Demo site","pageUrl":"https://demo.evinced.com/","selector":".block-dropdown:nth-child(1) > 
+[2026-04-07T15:56:17.547] [DEBUG] default - The message is too long (430434), only the first 1000 characters will be logged. 
+      In order to log such long messages -> update logging configuration.
+[2026-04-07T15:56:17.547] [DEBUG] default - Report content: ScreenshotsMap: {"623dee48-f918-40c7-b9b8-81c5c069ecf1":"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8QEBEQCgwSExIQEw8QEBD/2wBDAQMDAwQDBAgEBAgQCwkLEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBD/wAARCA2nAXoDASIAAhEBAxEB/8QAHgAAAAcBAQEBAAAAAAAAAAAAAAIDBAUG
+[2026-04-07T15:56:17.547] [DEBUG] default - Report testId: d9695006-4432-4fd9-b303-24ff0771b745
+[2026-04-07T15:56:17.548] [INFO] default - Saving report to test-results/evAnalyze-report.html with format html
+[2026-04-07T15:56:17.548] [DEBUG] default - The message is too long (13100), only the first 1000 characters will be logged. 
+      In order to log such long messages -> update logging configuration.
+[2026-04-07T15:56:17.549] [DEBUG] default - Issues: [{"additionalInformation":{},"canonicalSignature":"2ffa5563","customKnowledgeBaseLinks":null,"description":"**Cause:** \nScreen readers are unable to identify that the element is interactive due to missing or incorrect semantics.\n**Effect:** \nScreen reader users may not find the content or may not realize that the the content is interactive.\n**Suggested Solutions:**\nUse native HTML interactive elements such as `<*button*>`, `<*a*>`, `<*select*>`, `<*input*>`. Alternatively, add the appropriate ARIA role that corresponds to the content purpose.","elements":[{"boundingBox":{"bottom":469.875,"height":23.9375,"left":239,"right":517,"top":445.9375,"width":278,"x":239,"y":445.9375},"canonicalUrl":null,"componentId":"ce13d0bb","domSnippet":"<div class=\"dropdown line\"><p>Select</p></div>","id":"14acec8c-46ae-4d4a-beda-aab0c60a8a8b","index":"S1","pageTitle":"Home | Evinced, Demo site","pageUrl":"https://demo.evinced.com/","selector":".block-dropdown:nth-child(1) > .dropholder > .d
+[2026-04-07T15:56:17.551] [DEBUG] default - The message is too long (430418), only the first 1000 characters will be logged. 
+      In order to log such long messages -> update logging configuration.
+[2026-04-07T15:56:17.551] [DEBUG] default - Screenshot map: {"623dee48-f918-40c7-b9b8-81c5c069ecf1":"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8QEBEQCgwSExIQEw8QEBD/2wBDAQMDAwQDBAgEBAgQCwkLEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBD/wAARCA2nAXoDASIAAhEBAxEB/8QAHgAAAAcBAQEBAAAAAAAAAAAAAAIDBAUGBwgBCQr/xAB2EAAB
+[2026-04-07T15:56:17.557] [INFO] default - Report successfully saved to test-results/evAnalyze-report.html
+[2026-04-07T15:56:18.128] [INFO] default - Evinced SDK: initializing...
+[2026-04-07T15:56:18.129] [DEBUG] default - AuthData initialized. Checking license
+[2026-04-07T15:56:18.129] [DEBUG] default - Token decoded
+[2026-04-07T15:56:18.129] [DEBUG] default - Token signed
+[2026-04-07T15:56:18.129] [DEBUG] default - Product type approved
+[2026-04-07T15:56:18.129] [DEBUG] default - Service account approved
+[2026-04-07T15:56:18.129] [INFO] default - License approved
+[2026-04-07T15:56:18.129] [DEBUG] default - EngineCommandsExecutor instance reset
+[2026-04-07T15:56:18.129] [DEBUG] default - TestRunInformation initialized: {"testId":"e772e645-93a9-41a0-b16e-a3e3119b3f68","runTime":1775573778129,"productVersion":"2.6.0","enginesVersion":"15.15.0","testName":"value not specified"}
+[2026-04-07T15:56:18.129] [DEBUG] default - EngineCommandsExecutor initialized
+[2026-04-07T15:56:18.129] [DEBUG] default - ListenerService initialized
+[2026-04-07T15:56:18.129] [INFO] default - evStart called
+[2026-04-07T15:56:18.129] [DEBUG] default - ConfigProvider: Local "evConfig.json" parsed: {"sdkLogging":{"enable":"true","level":"debug"}}
+[2026-04-07T15:56:18.129] [DEBUG] default - ConfigProvider: Final merged config: {"includeIframes":true}
+[2026-04-07T15:56:18.129] [DEBUG] default - Iframe setting initialized: true
+[2026-04-07T15:56:18.129] [INFO] default - Preparing state for continuous analysis
+[2026-04-07T15:56:18.129] [DEBUG] default - Checking if Selenium BiDi API is enabled
+[2026-04-07T15:56:18.129] [DEBUG] default - Capabilities: {"map_":{}}
+[2026-04-07T15:56:18.129] [DEBUG] default - BiDi enabled: false
+[2026-04-07T15:56:18.129] [DEBUG] default - Extending Selenium actions with Evinced logic...
+[2026-04-07T15:56:18.129] [DEBUG] default - Extending action: click
+[2026-04-07T15:56:18.129] [DEBUG] default - `click` Selenium action has been extended with start/stop.
+[2026-04-07T15:56:18.129] [DEBUG] default - Extending action: get
+[2026-04-07T15:56:18.129] [DEBUG] default - `get` Selenium action has been extended.
+[2026-04-07T15:56:18.130] [DEBUG] default - Extending navigation methods: navigate, back, forward, refresh
+[2026-04-07T15:56:18.130] [DEBUG] default - Extending executeScript method
+[2026-04-07T15:56:18.130] [DEBUG] default - Selenium actions have been extended.
+[2026-04-07T15:56:18.130] [DEBUG] default - Setting up iframe listener for continuous analysis
+[2026-04-07T15:56:18.130] [DEBUG] default - Adding iframe attached listener
+[2026-04-07T15:56:18.133] [INFO] default - Injecting Evinced SDK
+[2026-04-07T15:56:18.137] [INFO] default - Evinced is injected: false
+[2026-04-07T15:56:18.394] [INFO] default - Evinced SDK has been injected
+[2026-04-07T15:56:18.398] [DEBUG] default - Injecting Evinced into iframes: true
+[2026-04-07T15:56:18.398] [INFO] default - Injecting Evinced into iframes (recursive)
+[2026-04-07T15:56:18.398] [DEBUG] default - Checking for iframes at depth 0
+[2026-04-07T15:56:18.403] [DEBUG] default - Found 0 iframes at depth 0
+[2026-04-07T15:56:18.403] [DEBUG] default - Iframe injection completed successfully
+[2026-04-07T15:56:18.403] [INFO] default - Preparing configuration for engine initialisation
+[2026-04-07T15:56:18.403] [DEBUG] default - Local "evConfig.json" parsed: {"sdkLogging":{"enable":"true","level":"debug"}}
+[2026-04-07T15:56:18.404] [DEBUG] default - Merged configuration: {"rootSelector":"","enableScreenshots":false,"includeIframes":true,"toggles":{"ENABLE_PENDO_ANALYTICS":false,"ENABLE_SENDING_ENGINE_MATRICES":true,"SAVE_FULL_HTML":false,"USE_AXE_BEST_PRACTICES":false,"USE_AXE_NEEDS_REVIEW":false,"USE_BROKEN_SKIP_LINK_VALIDATOR":false,"USE_FOCUS_INDICATION":false,"USE_LANGUAGE_ATTRIBUTE_MISMATCH_VALIDATOR":false,"USE_SCREEN_READING_ORDER_VALIDATOR":false,"USE_TAB_ORDER_VALIDATOR":false,"USE_TEXT_ON_IMAGE":false,"ENABLE_SCREENSHOTS":false,"ALLOW_SCREENSHOTS_WHEN_IFRAMES_TOGGLE_IS_ON":true,"RUN_VALIDATION_ON_IFRAMES":true},"issuesContentPerType":null,"axeIssuesContentPerType":null,"recordingService":{"ENABLE_DEBOUNCE_NEW_SELECTORS":false,"DEBOUNCE_NEW_SELECTORS_MS":200,"DELAY_MODE":"debounce"},"analytics":{"obfuscate_urls":false,"analytics_url":"https://ingestion.evinced.com/analytics","disable_scan_initiated_event":false},"sdk_options":{"localUniquenessValidation":true},"sdkLogging":{"enable":"true","level":"debug"}}
+[2026-04-07T15:56:18.404] [DEBUG] default - Configuration. Session info: {"userId":"js-selenium-sdk-user","serverConfig":{"TOGGLES":{"ENABLE_PENDO_ANALYTICS":false,"ENABLE_SENDING_ENGINE_MATRICES":true,"SAVE_FULL_HTML":false,"USE_AXE_BEST_PRACTICES":false,"USE_AXE_NEEDS_REVIEW":false,"USE_BROKEN_SKIP_LINK_VALIDATOR":false,"USE_FOCUS_INDICATION":false,"USE_LANGUAGE_ATTRIBUTE_MISMATCH_VALIDATOR":false,"USE_SCREEN_READING_ORDER_VALIDATOR":false,"USE_TAB_ORDER_VALIDATOR":false,"USE_TEXT_ON_IMAGE":false,"ENABLE_SCREENSHOTS":false,"ALLOW_SCREENSHOTS_WHEN_IFRAMES_TOGGLE_IS_ON":true,"RUN_VALIDATION_ON_IFRAMES":true},"showDuplicateIssues":true,"RECORDING_SERVICE":{"ENABLE_DEBOUNCE_NEW_SELECTORS":false,"DEBOUNCE_NEW_SELECTORS_MS":200,"DELAY_MODE":"debounce"},"ANALYTICS_CONFIG":{"obfuscate_urls":false,"analytics_url":"https://ingestion.evinced.com/analytics","disable_scan_initiated_event":false}}}
+[2026-04-07T15:56:18.404] [DEBUG] default - Configuration. Analysis config: {"analysisId":"44546f1f-7bf9-4e9a-8eb4-7dd9b6c7d522","rootSelector":"","licenseData":{"accessToken":"********","tenantId":"8ccf5b56-8f64-4d35-afea-aded8f1a349f"}}
+[2026-04-07T15:56:18.404] [DEBUG] default - Configuration. Analysis persisted data: undefined
+[2026-04-07T15:56:18.404] [DEBUG] default - Configuration. Updates callback: undefined
+[2026-04-07T15:56:18.404] [DEBUG] default - Configuration. Running context: {"hostingProduct":"SELENIUM-JS-SDK","productName":"WEB_SDK","sdkType":"SELENIUM_JS_SDK","hostingProductVersion":"2.6.0"}
+[2026-04-07T15:56:18.404] [DEBUG] default - Checking if Selenium BiDi API is enabled
+[2026-04-07T15:56:18.404] [DEBUG] default - Capabilities: {"map_":{}}
+[2026-04-07T15:56:18.404] [DEBUG] default - BiDi enabled: false
+[2026-04-07T15:56:18.404] [DEBUG] default - Calling "Init analysis client core" command
+[2026-04-07T15:56:18.415] [INFO] default - Continuous mode is starting...
+[2026-04-07T15:56:18.415] [DEBUG] default - Calling "Start analysis" command
+[2026-04-07T15:56:18.431] [DEBUG] default - ----ACTION CALLED----: "get" was called.
+[2026-04-07T15:56:18.432] [DEBUG] default - Processing the action (before): 'get'.
+[2026-04-07T15:56:18.433] [DEBUG] default - Current URL: data:,
+[2026-04-07T15:56:18.433] [DEBUG] default - Calling the original method get.
+[2026-04-07T15:56:18.635] [DEBUG] default - Processing the action (after): 'get'.
+[2026-04-07T15:56:18.635] [DEBUG] default - Iframes enabled: true
+[2026-04-07T15:56:18.635] [DEBUG] default - Checking for dynamically added iframes
+[2026-04-07T15:56:18.635] [DEBUG] default - Checking for dynamically added iframes
+[2026-04-07T15:56:18.636] [DEBUG] default - No new iframes detected, skipping injection
+[2026-04-07T15:56:18.638] [DEBUG] default - Checking if initialization is needed for URL https://demo.evinced.com/
+[2026-04-07T15:56:18.638] [DEBUG] default - URL change detected. Previous URL: data:,, new URL: https://demo.evinced.com/
+[2026-04-07T15:56:18.639] [DEBUG] default - Injection and initialization are needed
+[2026-04-07T15:56:18.639] [DEBUG] default - Performing full inject
+[2026-04-07T15:56:18.639] [DEBUG] default - prepareEngineAndStartAnalysis - iframes enabled: true
+[2026-04-07T15:56:18.639] [INFO] default - Injecting Evinced SDK
+[2026-04-07T15:56:18.640] [INFO] default - Evinced is injected: false
+[2026-04-07T15:56:18.905] [INFO] default - Evinced SDK has been injected
+[2026-04-07T15:56:18.910] [DEBUG] default - Injecting Evinced into iframes: true
+[2026-04-07T15:56:18.910] [INFO] default - Injecting Evinced into iframes (recursive)
+[2026-04-07T15:56:18.910] [DEBUG] default - Checking for iframes at depth 0
+[2026-04-07T15:56:18.915] [DEBUG] default - Found 0 iframes at depth 0
+[2026-04-07T15:56:18.915] [DEBUG] default - Iframe injection completed successfully
+[2026-04-07T15:56:18.915] [INFO] default - Preparing configuration for engine initialisation
+[2026-04-07T15:56:18.915] [DEBUG] default - Local "evConfig.json" parsed: {"sdkLogging":{"enable":"true","level":"debug"}}
+[2026-04-07T15:56:18.915] [DEBUG] default - Merged configuration: {"rootSelector":"","enableScreenshots":false,"includeIframes":true,"toggles":{"ENABLE_PENDO_ANALYTICS":false,"ENABLE_SENDING_ENGINE_MATRICES":true,"SAVE_FULL_HTML":false,"USE_AXE_BEST_PRACTICES":false,"USE_AXE_NEEDS_REVIEW":false,"USE_BROKEN_SKIP_LINK_VALIDATOR":false,"USE_FOCUS_INDICATION":false,"USE_LANGUAGE_ATTRIBUTE_MISMATCH_VALIDATOR":false,"USE_SCREEN_READING_ORDER_VALIDATOR":false,"USE_TAB_ORDER_VALIDATOR":false,"USE_TEXT_ON_IMAGE":false,"ENABLE_SCREENSHOTS":false,"ALLOW_SCREENSHOTS_WHEN_IFRAMES_TOGGLE_IS_ON":true,"RUN_VALIDATION_ON_IFRAMES":true},"issuesContentPerType":null,"axeIssuesContentPerType":null,"recordingService":{"ENABLE_DEBOUNCE_NEW_SELECTORS":false,"DEBOUNCE_NEW_SELECTORS_MS":200,"DELAY_MODE":"debounce"},"analytics":{"obfuscate_urls":false,"analytics_url":"https://ingestion.evinced.com/analytics","disable_scan_initiated_event":false},"sdk_options":{"localUniquenessValidation":true},"sdkLogging":{"enable":"true","level":"debug"}}
+[2026-04-07T15:56:18.915] [DEBUG] default - Configuration. Session info: {"userId":"js-selenium-sdk-user","serverConfig":{"TOGGLES":{"ENABLE_PENDO_ANALYTICS":false,"ENABLE_SENDING_ENGINE_MATRICES":true,"SAVE_FULL_HTML":false,"USE_AXE_BEST_PRACTICES":false,"USE_AXE_NEEDS_REVIEW":false,"USE_BROKEN_SKIP_LINK_VALIDATOR":false,"USE_FOCUS_INDICATION":false,"USE_LANGUAGE_ATTRIBUTE_MISMATCH_VALIDATOR":false,"USE_SCREEN_READING_ORDER_VALIDATOR":false,"USE_TAB_ORDER_VALIDATOR":false,"USE_TEXT_ON_IMAGE":false,"ENABLE_SCREENSHOTS":false,"ALLOW_SCREENSHOTS_WHEN_IFRAMES_TOGGLE_IS_ON":true,"RUN_VALIDATION_ON_IFRAMES":true},"showDuplicateIssues":true,"RECORDING_SERVICE":{"ENABLE_DEBOUNCE_NEW_SELECTORS":false,"DEBOUNCE_NEW_SELECTORS_MS":200,"DELAY_MODE":"debounce"},"ANALYTICS_CONFIG":{"obfuscate_urls":false,"analytics_url":"https://ingestion.evinced.com/analytics","disable_scan_initiated_event":false}}}
+[2026-04-07T15:56:18.916] [DEBUG] default - Configuration. Analysis config: {"analysisId":"3212a158-4904-499b-9824-a8d79027b93b","rootSelector":"","licenseData":{"accessToken":"********","tenantId":"8ccf5b56-8f64-4d35-afea-aded8f1a349f"}}
+[2026-04-07T15:56:18.916] [DEBUG] default - Configuration. Analysis persisted data: undefined
+[2026-04-07T15:56:18.916] [DEBUG] default - Configuration. Updates callback: undefined
+[2026-04-07T15:56:18.916] [DEBUG] default - Configuration. Running context: {"hostingProduct":"SELENIUM-JS-SDK","productName":"WEB_SDK","sdkType":"SELENIUM_JS_SDK","hostingProductVersion":"2.6.0"}
+[2026-04-07T15:56:18.916] [DEBUG] default - Checking if Selenium BiDi API is enabled
+[2026-04-07T15:56:18.916] [DEBUG] default - Capabilities: {"map_":{}}
+[2026-04-07T15:56:18.916] [DEBUG] default - BiDi enabled: false
+[2026-04-07T15:56:18.916] [DEBUG] default - Calling "Init analysis client core" command
+[2026-04-07T15:56:18.927] [DEBUG] default - Calling "Start analysis" command
+[2026-04-07T15:56:19.020] [DEBUG] default - Engine prepared. Analysis started
+[2026-04-07T15:56:19.020] [DEBUG] default - After action 'get: processing finished.
+[2026-04-07T15:56:19.020] [INFO] default - evStop called
+[2026-04-07T15:56:19.020] [DEBUG] default - Continuous mode is ON. Checking if engine is injected and analyzing the page
+[2026-04-07T15:56:19.020] [DEBUG] default - Iframes enabled: true
+[2026-04-07T15:56:19.020] [DEBUG] default - Checking for dynamically added iframes
+[2026-04-07T15:56:19.020] [DEBUG] default - Checking for dynamically added iframes
+[2026-04-07T15:56:19.022] [DEBUG] default - No new iframes detected, skipping injection
+[2026-04-07T15:56:19.024] [DEBUG] default - Checking if initialization is needed for URL https://demo.evinced.com/
+[2026-04-07T15:56:19.025] [DEBUG] default - Engine prepared. Analysis started
+[2026-04-07T15:56:19.025] [DEBUG] default - Removing iframe attached listener
+[2026-04-07T15:56:19.028] [DEBUG] default - Calling "Stop analysis" command
+[2026-04-07T15:56:19.031] [INFO] default - Continuous mode is stopped
+[2026-04-07T15:56:19.031] [DEBUG] default - Got new issues: 6
+[2026-04-07T15:56:19.031] [DEBUG] default - Collected issues updated. New length: 6
+[2026-04-07T15:56:19.031] [DEBUG] default - Starting deduplication for 6 issues
+[2026-04-07T15:56:19.032] [DEBUG] default - Local "evConfig.json" parsed: {"sdkLogging":{"enable":"true","level":"debug"}}
+[2026-04-07T15:56:19.032] [DEBUG] default - The message is too long (1002), only the first 1000 characters will be logged. 
+      In order to log such long messages -> update logging configuration.
+[2026-04-07T15:56:19.032] [DEBUG] default - Merged configuration: {"rootSelector":"","enableScreenshots":false,"includeIframes":true,"toggles":{"ENABLE_PENDO_ANALYTICS":false,"ENABLE_SENDING_ENGINE_MATRICES":true,"SAVE_FULL_HTML":false,"USE_AXE_BEST_PRACTICES":false,"USE_AXE_NEEDS_REVIEW":false,"USE_BROKEN_SKIP_LINK_VALIDATOR":false,"USE_FOCUS_INDICATION":false,"USE_LANGUAGE_ATTRIBUTE_MISMATCH_VALIDATOR":false,"USE_SCREEN_READING_ORDER_VALIDATOR":false,"USE_TAB_ORDER_VALIDATOR":false,"USE_TEXT_ON_IMAGE":false,"ENABLE_SCREENSHOTS":false,"ALLOW_SCREENSHOTS_WHEN_IFRAMES_TOGGLE_IS_ON":true,"RUN_VALIDATION_ON_IFRAMES":true},"issuesContentPerType":null,"axeIssuesContentPerType":null,"recordingService":{"ENABLE_DEBOUNCE_NEW_SELECTORS":false,"DEBOUNCE_NEW_SELECTORS_MS":200,"DELAY_MODE":"debounce"},"analytics":{"obfuscate_urls":false,"analytics_url":"https://ingestion.evinced.com/analytics","disable_scan_initiated_event":false},"sdk_options":{"localUniquenessValidation":true},"sdkLogging":{"enable":"true","level":"debug"},"initOptions":{
+[2026-04-07T15:56:19.032] [DEBUG] default - Using local deduplication for 6 issues
+[2026-04-07T15:56:19.032] [DEBUG] default - Removing duplicates from 6 issues
+[2026-04-07T15:56:19.032] [DEBUG] default - ConfigProvider: Final platform upload options: {"enableUploadToPlatform":false,"setUploadToPlatformDefault":true,"useGzip":true,"platformURL":"https://ingestion.evinced.com/product/wsdk"}
+[2026-04-07T15:56:19.032] [INFO] default - Upload to platform is enabled, preparing to upload issues
+[2026-04-07T15:56:19.032] [DEBUG] default - ConfigProvider: Final platform upload options: {"enableUploadToPlatform":false,"setUploadToPlatformDefault":true,"useGzip":true,"platformURL":"https://ingestion.evinced.com/product/wsdk"}
+[2026-04-07T15:56:19.032] [DEBUG] default - Upload to platform is disabled. (enableUploadToPlatform)
+[2026-04-07T15:56:19.032] [INFO] default - Upload to platform completed
+[2026-04-07T15:56:19.032] [INFO] default - evSaveFile called with format: html
+[2026-04-07T15:56:19.032] [INFO] default - Saving report to test-results/evStartStop-report.html in html format
+[2026-04-07T15:56:19.032] [DEBUG] default - The message is too long (12792), only the first 1000 characters will be logged. 
+      In order to log such long messages -> update logging configuration.
+[2026-04-07T15:56:19.032] [DEBUG] default - Report content: Issues: [{"additionalInformation":{},"canonicalSignature":"2ffa5563","customKnowledgeBaseLinks":null,"description":"**Cause:** \nScreen readers are unable to identify that the element is interactive due to missing or incorrect semantics.\n**Effect:** \nScreen reader users may not find the content or may not realize that the the content is interactive.\n**Suggested Solutions:**\nUse native HTML interactive elements such as `<*button*>`, `<*a*>`, `<*select*>`, `<*input*>`. Alternatively, add the appropriate ARIA role that corresponds to the content purpose.","elements":[{"boundingBox":{"bottom":469.875,"height":23.9375,"left":239,"right":517,"top":445.9375,"width":278,"x":239,"y":445.9375},"canonicalUrl":null,"componentId":"ce13d0bb","domSnippet":"<div class=\"dropdown line\"><p>Select</p></div>","id":"7fbc108b-4acf-4b34-b744-e07ce29f12bd","index":"S1","pageTitle":"Home | Evinced, Demo site","pageUrl":"https://demo.evinced.com/","selector":".block-dropdown:nth-child(1) > 
+[2026-04-07T15:56:19.032] [DEBUG] default - Report content: ScreenshotsMap: {}
+[2026-04-07T15:56:19.032] [DEBUG] default - Report testId: e772e645-93a9-41a0-b16e-a3e3119b3f68
+[2026-04-07T15:56:19.032] [INFO] default - Saving report to test-results/evStartStop-report.html with format html
+[2026-04-07T15:56:19.032] [DEBUG] default - The message is too long (12776), only the first 1000 characters will be logged. 
+      In order to log such long messages -> update logging configuration.
+[2026-04-07T15:56:19.032] [DEBUG] default - Issues: [{"additionalInformation":{},"canonicalSignature":"2ffa5563","customKnowledgeBaseLinks":null,"description":"**Cause:** \nScreen readers are unable to identify that the element is interactive due to missing or incorrect semantics.\n**Effect:** \nScreen reader users may not find the content or may not realize that the the content is interactive.\n**Suggested Solutions:**\nUse native HTML interactive elements such as `<*button*>`, `<*a*>`, `<*select*>`, `<*input*>`. Alternatively, add the appropriate ARIA role that corresponds to the content purpose.","elements":[{"boundingBox":{"bottom":469.875,"height":23.9375,"left":239,"right":517,"top":445.9375,"width":278,"x":239,"y":445.9375},"canonicalUrl":null,"componentId":"ce13d0bb","domSnippet":"<div class=\"dropdown line\"><p>Select</p></div>","id":"7fbc108b-4acf-4b34-b744-e07ce29f12bd","index":"S1","pageTitle":"Home | Evinced, Demo site","pageUrl":"https://demo.evinced.com/","selector":".block-dropdown:nth-child(1) > .dropholder > .d
+[2026-04-07T15:56:19.032] [DEBUG] default - Screenshot map: {}
+[2026-04-07T15:56:19.033] [INFO] default - Report successfully saved to test-results/evStartStop-report.html
+[2026-04-07T15:56:19.089] [INFO] default - Setting online credentials...
+[2026-04-07T15:56:19.090] [INFO] default - Getting authentication token online
+[2026-04-07T15:56:19.347] [DEBUG] default - Response status: 200
+[2026-04-07T15:56:19.347] [INFO] default - Credentials have been set
+[2026-04-07T15:56:19.572] [INFO] default - Setting upload to platform config: enableUploadToPlatform=true, setUploadToPlatformDefault=true
+[2026-04-07T15:56:19.572] [DEBUG] default - Upload to platform config set: {"enableUploadToPlatform":true,"setUploadToPlatformDefault":true}
+[2026-04-07T15:56:19.572] [INFO] default - Evinced SDK: initializing...
+[2026-04-07T15:56:19.572] [DEBUG] default - AuthData initialized. Checking license
+[2026-04-07T15:56:19.572] [DEBUG] default - Token decoded
+[2026-04-07T15:56:19.572] [DEBUG] default - Token signed
+[2026-04-07T15:56:19.572] [DEBUG] default - Product type approved
+[2026-04-07T15:56:19.572] [DEBUG] default - Service account approved
+[2026-04-07T15:56:19.572] [INFO] default - License approved
+[2026-04-07T15:56:19.572] [DEBUG] default - EngineCommandsExecutor instance reset
+[2026-04-07T15:56:19.572] [DEBUG] default - TestRunInformation initialized: {"testId":"2bb85424-beb1-458d-b4d0-c6cc505b3dcb","runTime":1775573779572,"productVersion":"2.6.0","enginesVersion":"15.15.0","testName":"value not specified"}
+[2026-04-07T15:56:19.572] [DEBUG] default - EngineCommandsExecutor initialized
+[2026-04-07T15:56:19.572] [DEBUG] default - ListenerService initialized
+[2026-04-07T15:56:19.572] [INFO] default - Adding test run labels: {"testName":"Simple Upload Test","gitBranch":"main","environment":"test"}
+[2026-04-07T15:56:19.572] [DEBUG] default - Test run labels updated: {"testId":"2bb85424-beb1-458d-b4d0-c6cc505b3dcb","runTime":1775573779572,"productVersion":"2.6.0","enginesVersion":"15.15.0","testName":"Simple Upload Test","gitBranch":"main","environment":"test","customFields":{},"customLabels":[]}
+[2026-04-07T15:56:19.573] [DEBUG] default - ----ACTION CALLED----: "get" was called.
+[2026-04-07T15:56:19.573] [DEBUG] default - Action "get" was called but ContinuousMode is OFF. Calling the original method.
+[2026-04-07T15:56:20.504] [INFO] default - evAnalyze called
+[2026-04-07T15:56:20.504] [DEBUG] default - ConfigProvider: Local "evConfig.json" parsed: {"sdkLogging":{"enable":"true","level":"debug"}}
+[2026-04-07T15:56:20.504] [DEBUG] default - ConfigProvider: Final merged config: {"includeIframes":true}
+[2026-04-07T15:56:20.504] [DEBUG] default - Iframe setting initialized: true
+[2026-04-07T15:56:20.504] [INFO] default - Injecting Evinced SDK
+[2026-04-07T15:56:20.508] [INFO] default - Evinced is injected: false
+[2026-04-07T15:56:20.786] [INFO] default - Evinced SDK has been injected
+[2026-04-07T15:56:20.791] [DEBUG] default - Injecting Evinced into iframes: true
+[2026-04-07T15:56:20.791] [INFO] default - Injecting Evinced into iframes (recursive)
+[2026-04-07T15:56:20.791] [DEBUG] default - Checking for iframes at depth 0
+[2026-04-07T15:56:20.796] [DEBUG] default - Found 0 iframes at depth 0
+[2026-04-07T15:56:20.796] [DEBUG] default - Iframe injection completed successfully
+[2026-04-07T15:56:20.796] [INFO] default - Preparing configuration for engine initialisation
+[2026-04-07T15:56:20.796] [DEBUG] default - Local "evConfig.json" parsed: {"sdkLogging":{"enable":"true","level":"debug"}}
+[2026-04-07T15:56:20.796] [DEBUG] default - Merged configuration: {"rootSelector":"","enableScreenshots":false,"includeIframes":true,"toggles":{"ENABLE_PENDO_ANALYTICS":false,"ENABLE_SENDING_ENGINE_MATRICES":true,"SAVE_FULL_HTML":false,"USE_AXE_BEST_PRACTICES":false,"USE_AXE_NEEDS_REVIEW":false,"USE_BROKEN_SKIP_LINK_VALIDATOR":false,"USE_FOCUS_INDICATION":false,"USE_LANGUAGE_ATTRIBUTE_MISMATCH_VALIDATOR":false,"USE_SCREEN_READING_ORDER_VALIDATOR":false,"USE_TAB_ORDER_VALIDATOR":false,"USE_TEXT_ON_IMAGE":false,"ENABLE_SCREENSHOTS":false,"ALLOW_SCREENSHOTS_WHEN_IFRAMES_TOGGLE_IS_ON":true,"RUN_VALIDATION_ON_IFRAMES":true},"issuesContentPerType":null,"axeIssuesContentPerType":null,"recordingService":{"ENABLE_DEBOUNCE_NEW_SELECTORS":false,"DEBOUNCE_NEW_SELECTORS_MS":200,"DELAY_MODE":"debounce"},"analytics":{"obfuscate_urls":false,"analytics_url":"https://ingestion.evinced.com/analytics","disable_scan_initiated_event":false},"sdk_options":{"localUniquenessValidation":true},"sdkLogging":{"enable":"true","level":"debug"}}
+[2026-04-07T15:56:20.796] [DEBUG] default - Configuration. Session info: {"userId":"js-selenium-sdk-user","serverConfig":{"TOGGLES":{"ENABLE_PENDO_ANALYTICS":false,"ENABLE_SENDING_ENGINE_MATRICES":true,"SAVE_FULL_HTML":false,"USE_AXE_BEST_PRACTICES":false,"USE_AXE_NEEDS_REVIEW":false,"USE_BROKEN_SKIP_LINK_VALIDATOR":false,"USE_FOCUS_INDICATION":false,"USE_LANGUAGE_ATTRIBUTE_MISMATCH_VALIDATOR":false,"USE_SCREEN_READING_ORDER_VALIDATOR":false,"USE_TAB_ORDER_VALIDATOR":false,"USE_TEXT_ON_IMAGE":false,"ENABLE_SCREENSHOTS":false,"ALLOW_SCREENSHOTS_WHEN_IFRAMES_TOGGLE_IS_ON":true,"RUN_VALIDATION_ON_IFRAMES":true},"showDuplicateIssues":true,"RECORDING_SERVICE":{"ENABLE_DEBOUNCE_NEW_SELECTORS":false,"DEBOUNCE_NEW_SELECTORS_MS":200,"DELAY_MODE":"debounce"},"ANALYTICS_CONFIG":{"obfuscate_urls":false,"analytics_url":"https://ingestion.evinced.com/analytics","disable_scan_initiated_event":false}}}
+[2026-04-07T15:56:20.796] [DEBUG] default - Configuration. Analysis config: {"analysisId":"68c88d1d-aedb-4e38-8cf9-f355cbc8ab5c","rootSelector":"","licenseData":{"accessToken":"********","tenantId":"8ccf5b56-8f64-4d35-afea-aded8f1a349f"}}
+[2026-04-07T15:56:20.796] [DEBUG] default - Configuration. Analysis persisted data: undefined
+[2026-04-07T15:56:20.796] [DEBUG] default - Configuration. Updates callback: undefined
+[2026-04-07T15:56:20.796] [DEBUG] default - Configuration. Running context: {"hostingProduct":"SELENIUM-JS-SDK","productName":"WEB_SDK","sdkType":"SELENIUM_JS_SDK","hostingProductVersion":"2.6.0"}
+[2026-04-07T15:56:20.796] [DEBUG] default - Checking if Selenium BiDi API is enabled
+[2026-04-07T15:56:20.796] [DEBUG] default - Capabilities: {"map_":{}}
+[2026-04-07T15:56:20.796] [DEBUG] default - BiDi enabled: false
+[2026-04-07T15:56:20.796] [DEBUG] default - Calling "Init analysis client core" command
+[2026-04-07T15:56:20.809] [DEBUG] default - Calling "Run analysis once" command
+[2026-04-07T15:56:21.580] [INFO] default - Analysis report received. Analysis finished. Got issues: 6
+[2026-04-07T15:56:21.580] [DEBUG] default - ConfigProvider: Platform upload options from environment: {"enableUploadToPlatform":true,"setUploadToPlatformDefault":true}
+[2026-04-07T15:56:21.580] [DEBUG] default - ConfigProvider: Final platform upload options: {"enableUploadToPlatform":true,"setUploadToPlatformDefault":true,"useGzip":true,"platformURL":"https://ingestion.evinced.com/product/wsdk"}
+[2026-04-07T15:56:21.580] [INFO] default - Upload to platform is enabled, preparing to upload issues
+[2026-04-07T15:56:21.580] [DEBUG] default - ConfigProvider: Platform upload options from environment: {"enableUploadToPlatform":true,"setUploadToPlatformDefault":true}
+[2026-04-07T15:56:21.580] [DEBUG] default - ConfigProvider: Final platform upload options: {"enableUploadToPlatform":true,"setUploadToPlatformDefault":true,"useGzip":true,"platformURL":"https://ingestion.evinced.com/product/wsdk"}
+[2026-04-07T15:56:21.584] [INFO] default - Preparing for data uploading.
+[2026-04-07T15:56:21.584] [INFO] default - Preparing data for platform upload according to Jira schema
+[2026-04-07T15:56:21.584] [DEBUG] default - Generated unique testId for this upload: eb195cf5-5e40-414d-9957-72d885f6e789
+[2026-04-07T15:56:21.585] [DEBUG] default - Data prepared for upload: 6 issues grouped into 1 pages
+[2026-04-07T15:56:21.585] [DEBUG] default - Test ID updated to: eb195cf5-5e40-414d-9957-72d885f6e789
+[2026-04-07T15:56:21.585] [DEBUG] default - Updated testRunInfo with upload testId: eb195cf5-5e40-414d-9957-72d885f6e789
+[2026-04-07T15:56:21.585] [DEBUG] default - Token for uploading has been read from 'authData'. Token is defined: true
+[2026-04-07T15:56:21.586] [DEBUG] default - The message is too long (13304), only the first 1000 characters will be logged. 
+      In order to log such long messages -> update logging configuration.
+[2026-04-07T15:56:21.586] [DEBUG] default - Prepared data before the post request while uploading to platform: {"runs":[{"testId":"eb195cf5-5e40-414d-9957-72d885f6e789","runTime":1775573779572,"productVersion":"2.6.0","enginesVersion":"15.15.0","testName":"Simple Upload Test","gitBranch":"main","environment":"test","customFields":{},"customLabels":[],"pages":[{"id":"57c6c61b-05fc-4416-bc17-51082b3d68e3","url":"https://demo.evinced.com/","issues":[{"additionalInformation":{},"canonicalSignature":"2ffa5563","customKnowledgeBaseLinks":null,"description":"**Cause:** \nScreen readers are unable to identify that the element is interactive due to missing or incorrect semantics.\n**Effect:** \nScreen reader users may not find the content or may not realize that the the content is interactive.\n**Suggested Solutions:**\nUse native HTML interactive elements such as `<*button*>`, `<*a*>`, `<*select*>`, `<*input*>`. Alternatively, add the appropriate ARIA role that corresponds to the content purpose.","elements":[{"boundingBox":{"bottom":46
+[2026-04-07T15:56:21.586] [DEBUG] default - Uploading data to platform: https://ingestion.evinced.com/product/wsdk
+[2026-04-07T15:56:21.587] [DEBUG] default - [ApiService] Created new instance with default config: {}
+[2026-04-07T15:56:21.587] [DEBUG] default - [ApiService] No explicit proxy set for https://ingestion.evinced.com/product/wsdk. Axios might use environment variables.
+[2026-04-07T15:56:21.588] [DEBUG] default - [ApiService] Starting Request: POST https://ingestion.evinced.com/product/wsdk
+[2026-04-07T15:56:21.588] [DEBUG] default - [ApiService] Request Headers: {"Accept":"application/json, text/plain, */*","Content-Type":"application/json","Authorization":"Bearer eyJraWQiOiJaekVGeWw0Rmh5Z2dvc3VWOExGQyIsImFsZyI6IlJTMjU2In0.eyJzZXJ2aWNlQWNjb3VudElkIjoiYjgzYjUyNTEtYjA2OS00YjI0LWI4OWEtMjczYTliZGMzYTNhIiwidGVuYW50TmFtZSI6IkV2aW5jZWQgU3VwcG9ydCIsInRlbmFudElkIjoiOGNjZjViNTYtOGY2NC00ZDM1LWFmZWEtYWRlZDhmMWEzNDlmIiwiYXVkIjoiaHR0cHM6Ly9hcHAuZXZpbmNlZC5jb20vYXBpIiwiZXhwIjoxNzk5MzM0OTQ2LCJzdWIiOiJXRUJfU0RLIn0.EcK2UcXVtOfiykV3yrsu3oCQZ-WidIV2r5ZikvOc2TYoigX0leH-1HTur6L4rHFsLd0Z7fW4b1TXtdzoBh5FxY-Y5r3OnINi1MqXjNYMjrHeBUj1pnJj1jH7NgAqRgnE6xADAdWPK-Awyjyr9tbb7fYaS4hKuEpXR2SmXLmJJ1natQiJ7-BcCDH5UVKIQ7KZ30-18xmNsMb83E6okjkJKojImtGc4tz5IDL8NfAbZE-K-iVu_hBCNHepDjDMxJBnFbQRE9SKCjAdnu85LWNJKTCenQzufutNiDtCJtJj6DDEDyCQ1hLwZP5S1rYk-7Dkc-6KpSsPykofSVSCVRMPMQ","Content-Encoding":"gzip","Content-Length":"2617"}
+[2026-04-07T15:56:21.917] [DEBUG] default - [ApiService] Response Status: 200
+[2026-04-07T15:56:21.917] [INFO] default - Issues uploaded to the platform successfully! Status: 200, Text: OK
+[2026-04-07T15:56:21.917] [INFO] default - Upload to platform completed

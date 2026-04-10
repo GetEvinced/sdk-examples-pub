@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Evinced Test Demo</string>
+
+    <string name="nav_text">Text</string>
+    <string name="nav_image">Images</string>
+    <string name="nav_button">Buttons</string>
+</resources>

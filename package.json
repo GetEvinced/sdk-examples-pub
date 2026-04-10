@@ -1,0 +1,44 @@
+{
+  "name": "support-golden-examples",
+  "version": "1.0.0",
+  "description": "Welcome to the **Evinced Support SDK Examples** repository! This repository provides working examples of the latest code snippets and dependencies, ensuring customers can copy and use reliable, up-to-date examples for their projects.",
+  "main": "index.js",
+  "dependencies": {
+    "ansi-regex": "^5.0.1",
+    "ansi-styles": "^4.3.0",
+    "aria-query": "^5.3.0",
+    "chalk": "^4.1.2",
+    "color-convert": "^2.0.1",
+    "color-name": "^1.1.4",
+    "dequal": "^2.0.3",
+    "dom-accessibility-api": "^0.5.16",
+    "has-flag": "^4.0.0",
+    "js-tokens": "^4.0.0",
+    "lz-string": "^1.5.0",
+    "picocolors": "^1.1.1",
+    "pretty-format": "^27.5.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-is": "^17.0.2",
+    "regenerator-runtime": "^0.14.1",
+    "scheduler": "^0.25.0",
+    "supports-color": "^7.2.0"
+  },
+  "devDependencies": {
+    "cypress": "^14.0.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GetEvinced/examples.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GetEvinced/examples/issues"
+  },
+  "homepage": "https://github.com/GetEvinced/examples#readme"
+}

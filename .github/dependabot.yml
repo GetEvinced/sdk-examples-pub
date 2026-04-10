@@ -1,0 +1,84 @@
+version: 2
+registries:
+  evinced-artifactory:
+    type: "npm-registry"
+    url: https://evinced.jfrog.io/artifactory/api/npm/restricted-npm
+    username: shane
+    password: ${{ secrets.SHANE_JFROG_PASSWORD }}
+    replaces-base: true  # Set to true if evinced jfrog should be the default registry
+
+updates:
+  - package-ecosystem: "npm"
+    directory: "/js-wdio-web"
+    schedule:
+      interval: "monthly"
+    registries:
+      - evinced-artifactory
+    allow:
+      - dependency-name: "@evinced/webdriverio-sdk"
+    versioning-strategy: increase
+
+  - package-ecosystem: "npm"
+    directory: "/ts-wdio-web"
+    schedule:
+      interval: "monthly"
+    registries:
+      - evinced-artifactory
+    allow:
+      - dependency-name: "@evinced/webdriverio-sdk"
+    versioning-strategy: increase
+
+  - package-ecosystem: "npm"
+    directory: "/js-playwright"
+    schedule:
+      interval: "monthly"
+    registries:
+      - evinced-artifactory
+    allow:
+      - dependency-name: "@evinced/js-playwright-sdk"
+    versioning-strategy: increase
+
+  - package-ecosystem: "npm"
+    directory: "/ts-playwright"
+    schedule:
+      interval: "monthly"
+    registries:
+      - evinced-artifactory
+    allow:
+      - dependency-name: "@evinced/js-playwright-sdk"
+    versioning-strategy: increase
+
+  - package-ecosystem: "npm"
+    directory: "/js-cypress"
+    schedule:
+      interval: "monthly"
+    registries:
+      - evinced-artifactory
+    allow:
+      - dependency-name: "@evinced/cypress-sdk"
+    versioning-strategy: increase
+
+  - package-ecosystem: "npm"
+    directory: "/ts-cypress"
+    schedule:
+      interval: "monthly"
+    registries:
+      - evinced-artifactory
+    allow:
+      - dependency-name: "@evinced/cypress-sdk"
+    versioning-strategy: increase
+
+  - package-ecosystem: "npm"
+    directory: "/react-unit-tester"
+    schedule:
+      interval: "monthly"
+    registries:
+      - evinced-artifactory
+    allow:
+      - dependency-name: "@evinced/unit-tester"
+    versioning-strategy: increase
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
