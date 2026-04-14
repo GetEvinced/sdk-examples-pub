@@ -30,7 +30,8 @@
   "toggles": {
     "USE_AXE_NEEDS_REVIEW": false,
     "USE_AXE_BEST_PRACTICES": false,
-    "ENABLE_SENDING_ENGINE_MATRICES": false
+    "ENABLE_SENDING_ENGINE_MATRICES": false,
+    "USE_INTERACTIVE_ELEMENTS_MODEL": true
   },
   "skipValidations": [],
   "enableScreenshots": true,

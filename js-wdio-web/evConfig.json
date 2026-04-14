@@ -1,5 +1,4 @@
 {
-  "enableScreenshots": false,
   "toggles": {
     "USE_INTERACTIVE_ELEMENTS_MODEL": true
   }
