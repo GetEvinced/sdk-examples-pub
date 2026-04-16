@@ -1,7 +1,6 @@
 {
   "uploadToPlatformOptions": {
-    "enableUploadToPlatform": false,
-    "setUploadToPlatformDefault": false
+    "enableUploadToPlatform": true
   },
   "axeConfig": {
     "rules": {}

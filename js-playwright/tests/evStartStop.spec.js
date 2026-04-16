@@ -1,11 +1,31 @@
 import { test, expect } from "@playwright/test";
 import { existsSync } from "node:fs";
 import { EvincedSDK } from "@evinced/js-playwright-sdk";
+import { setUploadToPlatformConfig } from "@evinced/js-playwright-sdk";
+
 
 test.describe("Evinced Demo Page", () => {
-  test("Using evStart and evStop", async ({ page }) => {
+  test("Using evStart and evStop", async ({ page }, testInfo) => {
     const evReport = "./test-results/continuous.html";
     const evincedService = new EvincedSDK(page);
+
+    setUploadToPlatformConfig({ enableUploadToPlatform: true });
+    evincedService.testRunInfo.addLabel({
+      testName: testInfo.title,
+      testFile: testInfo.file,
+      environment: 'Development',
+      gitBranch: 'main'
+    });
+
+    // A space for setting any and all extra data labels
+    evincedService.testRunInfo.customLabel({
+      // unitId is a reserved key and will be used to group tests in the Evinced Platform, the rest of the keys are custom and can be used as needed
+      unitId: "Digital", // Options are [Digital, Main, Kids, Learning, Parents, Food, Shop]
+      "Repo": "Your-Repository-Name",
+      "Team": "Your-Team-Name",
+      "framework": "Playwright"
+    })
+
     await evincedService.evStart();
 
     await page.goto("https://demo.evinced.com/");
