@@ -30,7 +30,7 @@ describe("Demo page", () => {
     evincedService.evSaveFile(
       issues,
       "html",
-      "test-results/evAnalyze-report.html"
+      "test-results/evStartStop-report.html"
     );
     assert.equal(issues.length, 6);
     await driver.quit();

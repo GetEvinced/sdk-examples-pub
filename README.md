@@ -1,3 +1,4 @@
+
 # Evinced Support SDK Examples
 
 Welcome to the **Evinced Support SDK Examples** repository! This repository provides working examples of the latest code snippets and dependencies, ensuring customers can copy and use reliable, up-to-date examples for their projects.
@@ -43,3 +44,4 @@ configure({
 ---
 ### Got Questions? 
 Do not hesitate to reach out to the Support team (support@evinced.com)
+>>>>>>> 0916f070fe2cfd4341b4341f1e7443f64ca7eaa8

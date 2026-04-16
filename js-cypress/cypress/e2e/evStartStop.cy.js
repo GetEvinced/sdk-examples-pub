@@ -4,7 +4,17 @@ context("Evinced Demo Site tests", () => {
 
     cy.addLabel({
       testName: Cypress.currentTest.title,
-      environment: "Cypress Pipeline",
+      environment: "QA",
+      gitBranch: "main"
+    });
+
+    cy.customLabel({
+      // unitId is a reserved key and will be used to group tests in the Evinced Platform, the rest of the keys are custom and can be used as needed
+      unitId: "Digital", // Options are [Digital, Main, Kids, Learning, Parents, Food, Shop]
+      // these labels are arbitrary, you could
+      // have any text you wanted here
+      "Repo": "Examples",
+      "Team": "Support"
     });
 
     // Start the Evinced engine
