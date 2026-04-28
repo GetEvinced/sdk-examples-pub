@@ -1,30 +1,32 @@
 import { test, expect } from "@playwright/test";
 import { existsSync } from "node:fs";
-import { EvincedSDK } from "@evinced/js-playwright-sdk";
-import { setUploadToPlatformConfig } from "@evinced/js-playwright-sdk";
+import { EvincedSDK, setUploadToPlatformConfig } from "@evinced/js-playwright-sdk";
 
+// Set enableUploadToPlatform to true to upload results to the Evinced Platform.
+// Requires EVINCED_SERVICE_ID and EVINCED_API_KEY environment variables.
+setUploadToPlatformConfig({ enableUploadToPlatform: false });
 
 test.describe("Evinced Demo Page", () => {
   test("Using evStart and evStop", async ({ page }, testInfo) => {
     const evReport = "./test-results/continuous.html";
     const evincedService = new EvincedSDK(page);
 
-    setUploadToPlatformConfig({ enableUploadToPlatform: true });
+    // Labels attach metadata to your results on the Evinced Platform
     evincedService.testRunInfo.addLabel({
       testName: testInfo.title,
       testFile: testInfo.file,
-      environment: 'Development',
-      gitBranch: 'main'
+      environment: "CI/CD",
+      gitBranch: "main",
     });
 
-    // A space for setting any and all extra data labels
+    // customLabel accepts any key/value pairs.
+    // unitId is a reserved key that groups tests together on the platform.
     evincedService.testRunInfo.customLabel({
-      // unitId is a reserved key and will be used to group tests in the Evinced Platform, the rest of the keys are custom and can be used as needed
-      unitId: "Digital", // Options are [Digital, Main, Kids, Learning, Parents, Food, Shop]
-      "Repo": "Your-Repository-Name",
-      "Team": "Your-Team-Name",
-      "framework": "Playwright"
-    })
+      unitId: "your-unit-id",
+      Repo: "your-repo-name",
+      Team: "your-team-name",
+      Framework: "Playwright",
+    });
 
     await evincedService.evStart();
 
@@ -35,12 +37,12 @@ test.describe("Evinced Demo Page", () => {
     const SELECT_HOME_DROPDOWN = `${BASE_FORM_SELECTOR} > div:nth-child(1) > div > div.dropdown.line`;
     const SELECT_WHERE_DROPDOWN = `${BASE_FORM_SELECTOR} > div:nth-child(2) > div > div.dropdown.line`;
     const TINY_HOME_OPTION = `${BASE_FORM_SELECTOR} > div:nth-child(1) > div > ul > li:nth-child(2)`;
-    const EAST_COST_OPTION = `${BASE_FORM_SELECTOR} > div:nth-child(2) > div > ul > li:nth-child(3)`;
+    const EAST_COAST_OPTION = `${BASE_FORM_SELECTOR} > div:nth-child(2) > div > ul > li:nth-child(3)`;
 
     await page.locator(SELECT_HOME_DROPDOWN).click();
     await page.locator(TINY_HOME_OPTION).click();
     await page.locator(SELECT_WHERE_DROPDOWN).click();
-    await page.locator(EAST_COST_OPTION).click();
+    await page.locator(EAST_COAST_OPTION).click();
 
     const issues = await evincedService.evStop();
     await evincedService.evSaveFile(issues, "html", evReport);
