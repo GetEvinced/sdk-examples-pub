@@ -1,0 +1,81 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+    strategy:
+      matrix:
+        java-version: [8, 11, 17]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up JDK ${{ matrix.java-version }}
+      uses: actions/setup-java@v4
+      with:
+        java-version: ${{ matrix.java-version }}
+        distribution: 'temurin'
+        cache: maven
+
+    - name: Configure Maven settings for JFrog
+      run: |
+        mkdir -p ~/.m2
+        cat > ~/.m2/settings.xml <<EOF
+        <settings>
+          <servers>
+            <server>
+              <id>evinced-repository</id>
+              <username>\${env.JFROG_USER}</username>
+              <password>\${env.JFROG_PW}</password>
+            </server>
+          </servers>
+        </settings>
+        EOF
+      env:
+        JFROG_USER: ${{ secrets.JFROG_USER }}
+        JFROG_PW: ${{ secrets.JFROG_PW }}
+
+    - name: Build with Maven
+      run: mvn clean compile -B
+      env:
+        JFROG_USER: ${{ secrets.JFROG_USER }}
+        JFROG_PW: ${{ secrets.JFROG_PW }}
+
+    - name: Run tests
+      run: mvn test -B
+      env:
+        JFROG_USER: ${{ secrets.JFROG_USER }}
+        JFROG_PW: ${{ secrets.JFROG_PW }}
+        EVINCED_SERVICE_ID: ${{ secrets.EVINCED_SERVICE_ID }}
+        EVINCED_AUTH_TOKEN: ${{ secrets.EVINCED_AUTH_TOKEN }}
+        SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
+        SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
+      continue-on-error: true
+
+    - name: Upload test reports
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-reports-jdk-${{ matrix.java-version }}
+        path: target/surefire-reports/
+        retention-days: 30
+
+    - name: Upload Evinced reports
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: evinced-reports-jdk-${{ matrix.java-version }}
+        path: |
+          evinced-report/
+          target/logs/evinced/
+        retention-days: 30

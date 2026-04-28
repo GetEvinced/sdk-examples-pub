@@ -1,0 +1,6 @@
+{
+  "devDependencies": {
+    "@evinced/js-testcafe-sdk": "file:js-testcafe-sdk-1.9.0.tgz",
+    "testcafe": "^3.7.2" 
+  }
+}

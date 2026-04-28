@@ -1,0 +1,20 @@
+{
+  "name": "js-playwright",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx playwright test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.49.0",
+    "@types/node": "^22.10.1"
+  },
+  "dependencies": {
+    "@evinced/js-playwright-sdk": "^2.44.1",
+    "dotenv": "^16.4.7"
+  }
+}

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+
+    <servers>
+        <server>
+            <id>jfrog-repository</id>
+            <username>${env.JFROG_USERNAME}</username>
+            <password>${env.JFROG_AUTH_TOKEN}</password>
+        </server>
+    </servers>
+
+    <profiles>
+        <profile>
+            <id>jfrog-profile</id>
+            <repositories>
+                <repository>
+                    <id>jfrog-repository</id>
+                    <name>JFrog Repository</name>
+                    <url>${env.JFROG_EVINCED_RESTRICTED_MAVEN_URL}</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+            </repositories>
+        </profile>
+    </profiles>
+
+    <activeProfiles>
+        <activeProfile>jfrog-profile</activeProfile>
+    </activeProfiles>
+</settings>
