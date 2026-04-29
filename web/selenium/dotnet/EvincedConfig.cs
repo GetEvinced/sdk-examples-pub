@@ -10,6 +10,7 @@ public static class EvincedConfig
 
         EvincedSDK.SetOfflineCredentials(serviceId, authToken);
 
-        EvincedSDK.UploadToPlatform = true;
+        // To upload results to the Evinced Platform, set UploadToPlatform to true:
+        // EvincedSDK.UploadToPlatform = true;
     }
 }
