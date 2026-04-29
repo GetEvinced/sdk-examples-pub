@@ -20,13 +20,13 @@ namespace EvincedCSharpTests
             try
             {
                 // Navigate to the site under test
-                driver.Navigate().GoToUrl("https://www.google.com");
+                driver.Navigate().GoToUrl("https://demo.evinced.com/");
 
                 // Run analysis and get the accessibility report
                 IReport result = driver.EvAnalyze();
 
-                // Assert that there are no accessibility issues
-                NUnit.Framework.Assert.That(result.GetIssues(), Has.Count.EqualTo(0));
+                // Assert that accessibility issues were found
+                NUnit.Framework.Assert.That(result.GetIssues(), Has.Count.GreaterThan(0));
             }
             finally
             {

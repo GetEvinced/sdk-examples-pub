@@ -32,7 +32,12 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class EvincedHooksTest {
 
     private static Browser browser;
-    private EvPage page;
+    // Single page reused across all tests. Creating a new page per test via
+    // browser.newPage() accumulates abandoned pages whose pending network
+    // requests (from SPA result-page navigation) can block evStop() in SDK 1.6.1.
+    // Reusing one page and navigating back to home in @BeforeEach cancels those
+    // requests before each scan starts.
+    private static EvPage page;
 
     private interface Selectors {
         String HOUSE_DROPDOWN =
@@ -50,11 +55,15 @@ public class EvincedHooksTest {
     @BeforeAll
     static void launchBrowser() {
         browser = PlaywrightTestSetup.playwright.chromium().launch();
+        page = EvPageFactory.create(browser.newPage());
     }
 
     @BeforeEach
     void setUp() {
-        page = EvPageFactory.create(browser.newPage());
+        // Navigate to a fresh home-page state each time. This cancels any
+        // pending network requests left over from the previous test (e.g. the
+        // never-resolving date API call triggered by the demo SPA results page),
+        // which would otherwise block evStop() in SDK 1.6.1.
         page.navigate("https://demo.evinced.com/");
         page.waitForLoadState(LoadState.NETWORKIDLE);
         // Start continuous scan before each test

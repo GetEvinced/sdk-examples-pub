@@ -1,7 +1,6 @@
 package com.evinced.example.playwright;
 
 import com.microsoft.playwright.Browser;
-import com.microsoft.playwright.Playwright;
 import com.microsoft.playwright.options.LoadState;
 
 import org.junit.jupiter.api.Test;
@@ -26,28 +25,19 @@ public class EvincedAnalyzeTest {
 
     @Test
     void evAnalyze_savesReport() {
-        try (Playwright playwright = Playwright.create()) {
-            EvincedSDK.setCredentials(
-                    System.getenv("EVINCED_SERVICE_ID"),
-                    System.getenv("EVINCED_API_KEY"));
+        Browser browser = PlaywrightTestSetup.browser;
+        EvPage page = EvPageFactory.create(browser.newPage());
 
-            Browser browser = playwright.chromium().launch();
-            try {
-                EvPage page = EvPageFactory.create(browser.newPage());
+        page.navigate("https://demo.evinced.com/");
+        page.waitForLoadState(LoadState.NETWORKIDLE);
 
-                page.navigate("https://demo.evinced.com/");
-                page.waitForLoadState(LoadState.NETWORKIDLE);
+        Report report = page.evAnalyze();
+        assertNotNull(report, "Evinced report should not be null");
 
-                Report report = page.evAnalyze();
-                assertNotNull(report, "Evinced report should not be null");
+        // Save HTML report
+        EvincedSDK.evSaveFile("./tmp/ev-analyze-report", report, FileFormat.HTML);
 
-                // Save HTML report
-                EvincedSDK.evSaveFile("./tmp/ev-analyze-report", report, FileFormat.HTML);
-
-                System.out.println("Issues found: " + report.getIssues().size());
-            } finally {
-                browser.close();
-            }
-        }
+        System.out.println("Issues found: " + report.getIssues().size());
+        page.close();
     }
 }

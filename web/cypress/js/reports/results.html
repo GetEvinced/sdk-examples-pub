@@ -263,6 +263,10 @@
         display: inline-block;
       }
 
+      .overflow-anywhere {
+        overflow-wrap: anywhere;
+      }
+
       .boldAttribute {
         font-weight: 600;
         color: #1b3050;
@@ -383,10 +387,6 @@
         <caption id="issuesCount" scope="col" colspan="8"></caption>
         <thead>
           <tr class="top-row">
-            <th scope="col">
-              <span aria-hidden="true">No.</span>
-              <span class="sr-only">Number</span>
-            </th>
             <th scope="col">Issue Type</th>
             <th scope="col">Severity</th>
             <th scope="col">Component</th>
@@ -611,6 +611,10 @@
 						description?: string;
 						link?: string;
 					}[];
+					regulations?: {
+						Section_508?: { name?: string; successCriteria: string; url?: string }[];
+						EN_301_549?: { name?: string; successCriteria: string; url?: string }[];
+					};
 					screenshotId: string;
 					cause: string;
 					effect: string;
@@ -621,6 +625,23 @@
 
       function isOtherIssueType(issue) {
         return issue.typeName === 'Other - manual'
+      }
+
+      // Tooltip texts
+      const WCAG_TOOLTIP_TEXT =
+        'WCAG is the international standard for making web content accessible and is used by regulations like Section 508 and EN 301 549.'
+      const SECTION_508_TOOLTIP_TEXT =
+        'Section 508 is a US federal law requiring federal agencies to make their electronic and information technology accessible to people with disabilities.'
+      const EN_301_549_TOOLTIP_TEXT =
+        'EN 301 549 is the European standard for accessibility requirements for ICT products and services.'
+
+      // InfoIcon SVG (from ui-common)
+      const INFO_ICON_SVG = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align: middle; margin-left: 6px; cursor: help;">
+        <path d="M8 0C12.4183 0 16 3.58172 16 8C16 12.4183 12.4183 16 8 16C3.58172 16 0 12.4183 0 8C0 3.58172 3.58172 0 8 0ZM8 2C4.68629 2 2 4.68629 2 8C2 11.3137 4.68629 14 8 14C11.3137 14 14 11.3137 14 8C14 4.68629 11.3137 2 8 2ZM8 10C8.55228 10 9 10.4477 9 11C9 11.5523 8.55228 12 8 12C7.44772 12 7 11.5523 7 11C7 10.4477 7.44772 10 8 10ZM8.54199 3.0625C9.12073 3.1159 9.69778 3.33929 10.2207 3.79004L10.4414 3.99805L10.4795 4.03613L10.5117 4.08008C11.1398 4.9386 11.3451 5.78814 11.1631 6.58398C10.9884 7.34704 10.4872 7.9231 9.99219 8.33008C9.49156 8.74154 8.9296 9.03611 8.50879 9.22461C8.29537 9.3202 8.11037 9.39215 7.97754 9.44043C7.91124 9.46452 7.85691 9.48233 7.81836 9.49512C7.79927 9.50145 7.78376 9.50714 7.77246 9.51074C7.76715 9.51243 7.76225 9.51359 7.75879 9.51465C7.75715 9.51516 7.75513 9.51617 7.75391 9.5166H7.75195L7.75098 9.51758C7.35484 9.6383 6.93528 9.41468 6.81445 9.01855C6.70137 8.64721 6.89076 8.25542 7.24121 8.1084L7.31348 8.08203C7.31452 8.08179 7.31662 8.08161 7.31836 8.08105C7.32393 8.07928 7.33336 8.07636 7.3457 8.07227C7.37192 8.06356 7.41292 8.04914 7.46484 8.03027C7.56972 7.99215 7.72066 7.93378 7.89551 7.85547C8.25171 7.69591 8.68188 7.4653 9.04004 7.1709C9.40371 6.87186 9.62907 6.55987 9.7002 6.24902C9.76217 5.97775 9.7349 5.58047 9.33105 5.01074C9.01257 4.70103 8.69843 4.5838 8.4043 4.55664C8.08026 4.52684 7.73137 4.60158 7.38477 4.74512C7.04048 4.88776 6.73333 5.08373 6.50781 5.24902C6.39703 5.33024 6.30914 5.40164 6.25098 5.45117C6.22217 5.47572 6.19969 5.49494 6.18652 5.50684C6.18026 5.5125 6.17615 5.5173 6.17383 5.51953L6.11523 5.56934C5.81498 5.80238 5.38115 5.77513 5.11328 5.49414C4.82771 5.19428 4.83899 4.71929 5.13867 4.43359L5.50293 4.81543L5.13965 4.43262L5.14062 4.43164C5.14156 4.43087 5.14348 4.4297 5.14453 4.42871C5.14679 4.42655 5.15001 4.423 5.15332 4.41992C5.16023 4.4135 5.16943 4.40469 5.18066 4.39453C5.20395 4.37347 5.23656 4.34432 5.27734 4.30957C5.35908 4.23993 5.47639 4.14515 5.62109 4.03906C5.90764 3.82904 6.3209 3.56225 6.81055 3.35938C7.29832 3.15735 7.8989 3.00329 8.54199 3.0625Z" fill="#607085"/>
+      </svg>`
+
+      function createSectionTitle(title, tooltipText) {
+        return `<span class="boldAttribute">${title}:<span title="${tooltipText}">${INFO_ICON_SVG}</span></span>`
       }
 
       function generateWCAGLinks(issue) {
@@ -645,6 +666,54 @@
 					`
         }
         return ''
+      }
+
+      function generateSection508Links(issue) {
+        const regulations = issue.regulations?.Section_508
+        if (!regulations?.length) {
+          return ''
+        }
+        return `
+          <ul style="margin: 0; list-style: none">
+            ${regulations
+              .map(reg => {
+                const description =
+                  reg.name && reg.successCriteria !== reg.name
+                    ? `${reg.successCriteria} ${reg.name}`
+                    : reg.successCriteria
+                const link = reg.url?.trim()
+                if (link) {
+                  return `<li><a href="${link}" target="_blank" rel="noopener noreferrer">${description}</a></li>`
+                }
+                return `<li>${description}</li>`
+              })
+              .join('')}
+          </ul>
+        `
+      }
+
+      function generateEN301549Links(issue) {
+        const regulations = issue.regulations?.EN_301_549
+        if (!regulations?.length) {
+          return ''
+        }
+        return `
+          <ul style="margin: 0; list-style: none">
+            ${regulations
+              .map(reg => {
+                const description =
+                  reg.name && reg.successCriteria !== reg.name
+                    ? `${reg.successCriteria} ${reg.name}`
+                    : reg.successCriteria
+                const link = reg.url?.trim()
+                if (link) {
+                  return `<li><a href="${link}" target="_blank" rel="noopener noreferrer">${description}</a></li>`
+                }
+                return `<li>${description}</li>`
+              })
+              .join('')}
+          </ul>
+        `
       }
 
       function generateKnowledgeBaseLinks(issue) {
@@ -688,7 +757,7 @@
         return issue.knowledgeBaseLink || issue.customKnowledgeBaseLinks?.length ? linksHtml : ''
       }
 
-      const jsonData = {"issues":[{"issueIndex":"1","pageUrl":"https://demo.evinced.com/","pageTitle":"Home | Evinced, Demo site","typeName":"Interactable role","summary":"Interactive elements, such as buttons, links, and inputs, must convey that they can be interacted with by using the proper semantics.","elements":[{"componentId":"ce13d0bb","selector":".block-dropdown:nth-child(1) > .dropholder > .dropdown.line","domSnippet":"&#60;div class&#61;&#34;dropdown line&#34;&#62;&#60;p&#62;Select&#60;&#47;p&#62;&#60;&#47;div&#62;","boundingBox":{"x":301,"y":610.9375,"height":23.9375,"width":398,"top":610.9375,"left":301,"right":699,"bottom":634.875}}],"knowledgeBaseLink":"https://knowledge.evinced.com/system-validations/interactable-role","severityName":"Critical","tags":[{"id":"WCAG-4.1.2","description":"4.1.2 Name, Role, Value  (Level A)","link":"https://www.w3.org/WAI/WCAG21/Understanding/name-role-value.html"},{"id":"WCAG-A"},{"id":"WCAG2.0"}],"cause":"Screen readers are unable to identify that the element is interactive due to missing or incorrect semantics.","effect":"Screen reader users may not find the content or may not realize that the the content is interactive.","howToFix":"Use native HTML interactive elements such as &lt;*button*&gt;, &lt;*a*&gt;, &lt;*select*&gt;, &lt;*input*&gt;. Alternatively, add the appropriate ARIA role that corresponds to the content purpose."},{"issueIndex":"2","pageUrl":"https://demo.evinced.com/","pageTitle":"Home | Evinced, Demo site","typeName":"Keyboard accessible","summary":"Keyboard users must be able to navigate to all the interactive elements on the page.","elements":[{"componentId":"ce13d0bb","selector":".block-dropdown:nth-child(1) > .dropholder > .dropdown.line","domSnippet":"&#60;div class&#61;&#34;dropdown line&#34;&#62;&#60;p&#62;Select&#60;&#47;p&#62;&#60;&#47;div&#62;","boundingBox":{"x":301,"y":610.9375,"height":23.9375,"width":398,"top":610.9375,"left":301,"right":699,"bottom":634.875}}],"knowledgeBaseLink":"https://knowledge.evinced.com/system-validations/keyboard-accessible","severityName":"Critical","tags":[{"id":"WCAG-2.1.1","description":"2.1.1 Keyboard  (Level A)","link":"https://www.w3.org/WAI/WCAG21/Understanding/keyboard.html"},{"id":"WCAG-A"},{"id":"WCAG2.0"}],"cause":"The element is missing the right tags or has incorrect tags.","effect":"The element is excluded from the keyboard tab sequence and is therefore inaccessible to keyboard users.","howToFix":"Use one of these approaches: \n* Approach 1 (recommended): Add a tag that shows the element&#039;s purpose. Interactive elements don&#039;t need anything extra because they are focusable by nature. \n* Approach 2: Add a `tabindex` attribute with the value of `0` to the element."},{"issueIndex":"3","pageUrl":"https://demo.evinced.com/","pageTitle":"Home | Evinced, Demo site","typeName":"Interactable role","summary":"Interactive elements, such as buttons, links, and inputs, must convey that they can be interacted with by using the proper semantics.","elements":[{"componentId":"ce13d0bb","selector":".block-dropdown:nth-child(2) > .dropholder > .dropdown.line","domSnippet":"&#60;div class&#61;&#34;dropdown line&#34;&#62;&#60;p&#62;Select&#60;&#47;p&#62;&#60;&#47;div&#62;","boundingBox":{"x":301,"y":715.9375,"height":23.9375,"width":398,"top":715.9375,"left":301,"right":699,"bottom":739.875}}],"knowledgeBaseLink":"https://knowledge.evinced.com/system-validations/interactable-role","severityName":"Critical","tags":[{"id":"WCAG-4.1.2","description":"4.1.2 Name, Role, Value  (Level A)","link":"https://www.w3.org/WAI/WCAG21/Understanding/name-role-value.html"},{"id":"WCAG-A"},{"id":"WCAG2.0"}],"cause":"Screen readers are unable to identify that the element is interactive due to missing or incorrect semantics.","effect":"Screen reader users may not find the content or may not realize that the the content is interactive.","howToFix":"Use native HTML interactive elements such as &lt;*button*&gt;, &lt;*a*&gt;, &lt;*select*&gt;, &lt;*input*&gt;. Alternatively, add the appropriate ARIA role that corresponds to the content purpose."},{"issueIndex":"4","pageUrl":"https://demo.evinced.com/","pageTitle":"Home | Evinced, Demo site","typeName":"Keyboard accessible","summary":"Keyboard users must be able to navigate to all the interactive elements on the page.","elements":[{"componentId":"ce13d0bb","selector":".block-dropdown:nth-child(2) > .dropholder > .dropdown.line","domSnippet":"&#60;div class&#61;&#34;dropdown line&#34;&#62;&#60;p&#62;Select&#60;&#47;p&#62;&#60;&#47;div&#62;","boundingBox":{"x":301,"y":715.9375,"height":23.9375,"width":398,"top":715.9375,"left":301,"right":699,"bottom":739.875}}],"knowledgeBaseLink":"https://knowledge.evinced.com/system-validations/keyboard-accessible","severityName":"Critical","tags":[{"id":"WCAG-2.1.1","description":"2.1.1 Keyboard  (Level A)","link":"https://www.w3.org/WAI/WCAG21/Understanding/keyboard.html"},{"id":"WCAG-A"},{"id":"WCAG2.0"}],"cause":"The element is missing the right tags or has incorrect tags.","effect":"The element is excluded from the keyboard tab sequence and is therefore inaccessible to keyboard users.","howToFix":"Use one of these approaches: \n* Approach 1 (recommended): Add a tag that shows the element&#039;s purpose. Interactive elements don&#039;t need anything extra because they are focusable by nature. \n* Approach 2: Add a `tabindex` attribute with the value of `0` to the element."},{"issueIndex":"5","pageUrl":"https://demo.evinced.com/","pageTitle":"Home | Evinced, Demo site","typeName":"Anchor without `href` attribute","summary":"Anchor elements (&lt;a&gt;) must have an `href` attribute to be recognized as a link.","elements":[{"componentId":"a2d2a84e","selector":".search-btn","domSnippet":"&#60;a class&#61;&#34;search&#45;btn&#34;&#62;Search&#60;&#47;a&#62;","boundingBox":{"x":290,"y":930,"height":85,"width":420,"top":930,"left":290,"right":710,"bottom":1015}}],"knowledgeBaseLink":"https://knowledge.evinced.com/system-validations/anchor-without-href","severityName":"Critical","tags":[{"id":"WCAG-4.1.2","description":"4.1.2 Name, Role, Value  (Level A)","link":"https://www.w3.org/WAI/WCAG21/Understanding/name-role-value.html"},{"id":"WCAG-A"},{"id":"WCAG2.0"}],"cause":"The &lt;a&gt; (anchor) element does not have an `href` attribute.","effect":"Screen readers on Windows will read the element as plain text without indicating it is a link. On Mac OS, VoiceOver will still read the anchor as a link, even if it&#039;s not. The element won&#039;t be included in the page&#039;s tab sequence by default, making it inaccessible using a keyboard.","howToFix":"* If the element should act as a link, add an `href` attribute that points to itself (&lt;a href=&quot;#&quot;&gt;) \n* If the element is not meant to be a link, change it to something more appropriate, like a button"},{"issueIndex":"6","pageUrl":"https://demo.evinced.com/","pageTitle":"Home | Evinced, Demo site","typeName":"Keyboard accessible","summary":"Keyboard users must be able to navigate to all the interactive elements on the page.","elements":[{"componentId":"a2d2a84e","selector":".search-btn","domSnippet":"&#60;a class&#61;&#34;search&#45;btn&#34;&#62;Search&#60;&#47;a&#62;","boundingBox":{"x":290,"y":930,"height":85,"width":420,"top":930,"left":290,"right":710,"bottom":1015}}],"knowledgeBaseLink":"https://knowledge.evinced.com/system-validations/keyboard-accessible","severityName":"Critical","tags":[{"id":"WCAG-2.1.1","description":"2.1.1 Keyboard  (Level A)","link":"https://www.w3.org/WAI/WCAG21/Understanding/keyboard.html"},{"id":"WCAG-A"},{"id":"WCAG2.0"}],"cause":"The element is missing the right tags or has incorrect tags.","effect":"The element is excluded from the keyboard tab sequence and is therefore inaccessible to keyboard users.","howToFix":"Use one of these approaches: \n* Approach 1 (recommended): Add a tag that shows the element&#039;s purpose. Interactive elements don&#039;t need anything extra because they are focusable by nature. \n* Approach 2: Add a `tabindex` attribute with the value of `0` to the element."}],"reportTimestampInMs":1767799080778,"sdkVersion":"Evinced SDK for Cypress 5.2.2","scale":0.5,"hideNotes":false}
+      const jsonData = {"issues":[{"issueIndex":"1","pageUrl":"https://demo.evinced.com/","pageTitle":"Home | Evinced, Demo site","typeName":"Interactable role","summary":"Interactive elements, such as buttons, links, and inputs, must convey that they can be interacted with by using the proper semantics.","elements":[{"componentId":"ce13d0bb","selector":".block-dropdown:nth-child(1) > .dropholder > .dropdown.line","domSnippet":"&#60;div class&#61;&#34;dropdown line&#34;&#62;&#60;p&#62;Select&#60;&#47;p&#62;&#60;&#47;div&#62;","boundingBox":{"width":398,"height":23.9375,"viewportTop":610.9375,"viewportLeft":301,"top":610.9375,"left":301,"bottom":634.875,"right":699,"x":301,"y":610.9375}}],"knowledgeBaseLink":"https://knowledge.evinced.com/system-validations/interactable-role","severityName":"Critical","tags":[{"id":"WCAG-4.1.2","description":"4.1.2 Name, Role, Value  (Level A)","link":"https://www.w3.org/WAI/WCAG21/Understanding/name-role-value.html"},{"id":"WCAG-A"},{"id":"WCAG-undefined"},{"id":"WCAG2.0"}],"regulations":{"Section_508":[{"type":"primary","name":"1194.21(d)","successCriteria":"1194.21(d)","url":""}],"EN_301_549":[{"type":"primary","name":"Name, Role, Value","successCriteria":"9.4.1.2","url":""}]},"cause":"Screen readers are unable to identify that the element is interactive due to missing or incorrect semantics.","effect":"Screen reader users may not find the content or may not realize that the the content is interactive.","howToFix":"Use native HTML interactive elements such as &lt;*button*&gt;, &lt;*a*&gt;, &lt;*select*&gt;, &lt;*input*&gt;. Alternatively, add the appropriate ARIA role that corresponds to the content purpose."},{"issueIndex":"2","pageUrl":"https://demo.evinced.com/","pageTitle":"Home | Evinced, Demo site","typeName":"Keyboard accessible","summary":"Keyboard users must be able to navigate to all the interactive elements on the page.","elements":[{"componentId":"ce13d0bb","selector":".block-dropdown:nth-child(1) > .dropholder > .dropdown.line","domSnippet":"&#60;div class&#61;&#34;dropdown line&#34;&#62;&#60;p&#62;Select&#60;&#47;p&#62;&#60;&#47;div&#62;","boundingBox":{"width":398,"height":23.9375,"viewportTop":610.9375,"viewportLeft":301,"top":610.9375,"left":301,"bottom":634.875,"right":699,"x":301,"y":610.9375}}],"knowledgeBaseLink":"https://knowledge.evinced.com/system-validations/keyboard-accessible","severityName":"Critical","tags":[{"id":"WCAG-2.1.1","description":"2.1.1 Keyboard  (Level A)","link":"https://www.w3.org/WAI/WCAG21/Understanding/keyboard.html"},{"id":"WCAG-A"},{"id":"WCAG-undefined"},{"id":"WCAG2.0"}],"regulations":{"Section_508":[{"type":"primary","name":"","successCriteria":"1194.21(a)","url":""}],"EN_301_549":[{"type":"primary","name":"Keyboard","successCriteria":"9.2.1.1","url":""}]},"cause":"The element is missing the right tags or has incorrect tags.","effect":"The element is excluded from the keyboard tab sequence and is therefore inaccessible to keyboard users.","howToFix":"Use one of these approaches: \n* Approach 1 (recommended): Add a tag that shows the element&#039;s purpose. Interactive elements don&#039;t need anything extra because they are focusable by nature. \n* Approach 2: Add a `tabindex` attribute with the value of `0` to the element."},{"issueIndex":"3","pageUrl":"https://demo.evinced.com/","pageTitle":"Home | Evinced, Demo site","typeName":"Interactable role","summary":"Interactive elements, such as buttons, links, and inputs, must convey that they can be interacted with by using the proper semantics.","elements":[{"componentId":"ce13d0bb","selector":".block-dropdown:nth-child(2) > .dropholder > .dropdown.line","domSnippet":"&#60;div class&#61;&#34;dropdown line&#34;&#62;&#60;p&#62;Select&#60;&#47;p&#62;&#60;&#47;div&#62;","boundingBox":{"width":398,"height":23.9375,"viewportTop":715.9375,"viewportLeft":301,"top":715.9375,"left":301,"bottom":739.875,"right":699,"x":301,"y":715.9375}}],"knowledgeBaseLink":"https://knowledge.evinced.com/system-validations/interactable-role","severityName":"Critical","tags":[{"id":"WCAG-4.1.2","description":"4.1.2 Name, Role, Value  (Level A)","link":"https://www.w3.org/WAI/WCAG21/Understanding/name-role-value.html"},{"id":"WCAG-A"},{"id":"WCAG-undefined"},{"id":"WCAG2.0"}],"regulations":{"Section_508":[{"type":"primary","name":"1194.21(d)","successCriteria":"1194.21(d)","url":""}],"EN_301_549":[{"type":"primary","name":"Name, Role, Value","successCriteria":"9.4.1.2","url":""}]},"cause":"Screen readers are unable to identify that the element is interactive due to missing or incorrect semantics.","effect":"Screen reader users may not find the content or may not realize that the the content is interactive.","howToFix":"Use native HTML interactive elements such as &lt;*button*&gt;, &lt;*a*&gt;, &lt;*select*&gt;, &lt;*input*&gt;. Alternatively, add the appropriate ARIA role that corresponds to the content purpose."},{"issueIndex":"4","pageUrl":"https://demo.evinced.com/","pageTitle":"Home | Evinced, Demo site","typeName":"Keyboard accessible","summary":"Keyboard users must be able to navigate to all the interactive elements on the page.","elements":[{"componentId":"ce13d0bb","selector":".block-dropdown:nth-child(2) > .dropholder > .dropdown.line","domSnippet":"&#60;div class&#61;&#34;dropdown line&#34;&#62;&#60;p&#62;Select&#60;&#47;p&#62;&#60;&#47;div&#62;","boundingBox":{"width":398,"height":23.9375,"viewportTop":715.9375,"viewportLeft":301,"top":715.9375,"left":301,"bottom":739.875,"right":699,"x":301,"y":715.9375}}],"knowledgeBaseLink":"https://knowledge.evinced.com/system-validations/keyboard-accessible","severityName":"Critical","tags":[{"id":"WCAG-2.1.1","description":"2.1.1 Keyboard  (Level A)","link":"https://www.w3.org/WAI/WCAG21/Understanding/keyboard.html"},{"id":"WCAG-A"},{"id":"WCAG-undefined"},{"id":"WCAG2.0"}],"regulations":{"Section_508":[{"type":"primary","name":"","successCriteria":"1194.21(a)","url":""}],"EN_301_549":[{"type":"primary","name":"Keyboard","successCriteria":"9.2.1.1","url":""}]},"cause":"The element is missing the right tags or has incorrect tags.","effect":"The element is excluded from the keyboard tab sequence and is therefore inaccessible to keyboard users.","howToFix":"Use one of these approaches: \n* Approach 1 (recommended): Add a tag that shows the element&#039;s purpose. Interactive elements don&#039;t need anything extra because they are focusable by nature. \n* Approach 2: Add a `tabindex` attribute with the value of `0` to the element."},{"issueIndex":"5","pageUrl":"https://demo.evinced.com/","pageTitle":"Home | Evinced, Demo site","typeName":"Anchor without `href` attribute","summary":"Anchor elements (&lt;a&gt;) must have an `href` attribute to be recognized as a link.","elements":[{"componentId":"a2d2a84e","selector":".search-btn","domSnippet":"&#60;a class&#61;&#34;search&#45;btn&#34;&#62;Search&#60;&#47;a&#62;","boundingBox":{"width":420,"height":85,"viewportTop":930,"viewportLeft":290,"top":930,"left":290,"bottom":1015,"right":710,"x":290,"y":930}}],"knowledgeBaseLink":"https://knowledge.evinced.com/system-validations/anchor-without-href","severityName":"Critical","tags":[{"id":"WCAG-4.1.2","description":"4.1.2 Name, Role, Value  (Level A)","link":"https://www.w3.org/WAI/WCAG21/Understanding/name-role-value.html"},{"id":"WCAG-A"},{"id":"WCAG-undefined"},{"id":"WCAG2.0"}],"regulations":{"Section_508":[{"type":"primary","name":"1194.21(d)","successCriteria":"1194.21(d)","url":""}],"EN_301_549":[{"type":"primary","name":"Name, Role, Value","successCriteria":"9.4.1.2","url":""}]},"cause":"The &lt;a&gt; (anchor) element does not have an `href` attribute.","effect":"Screen readers on Windows will read the element as plain text without indicating it is a link. On Mac OS, VoiceOver will still read the anchor as a link, even if it&#039;s not. The element won&#039;t be included in the page&#039;s tab sequence by default, making it inaccessible using a keyboard.","howToFix":"* If the element should act as a link, add an `href` attribute that points to itself (&lt;a href=&quot;#&quot;&gt;) \n* If the element is not meant to be a link, change it to something more appropriate, like a button"},{"issueIndex":"6","pageUrl":"https://demo.evinced.com/","pageTitle":"Home | Evinced, Demo site","typeName":"Keyboard accessible","summary":"Keyboard users must be able to navigate to all the interactive elements on the page.","elements":[{"componentId":"a2d2a84e","selector":".search-btn","domSnippet":"&#60;a class&#61;&#34;search&#45;btn&#34;&#62;Search&#60;&#47;a&#62;","boundingBox":{"width":420,"height":85,"viewportTop":930,"viewportLeft":290,"top":930,"left":290,"bottom":1015,"right":710,"x":290,"y":930}}],"knowledgeBaseLink":"https://knowledge.evinced.com/system-validations/keyboard-accessible","severityName":"Critical","tags":[{"id":"WCAG-2.1.1","description":"2.1.1 Keyboard  (Level A)","link":"https://www.w3.org/WAI/WCAG21/Understanding/keyboard.html"},{"id":"WCAG-A"},{"id":"WCAG-undefined"},{"id":"WCAG2.0"}],"regulations":{"Section_508":[{"type":"primary","name":"","successCriteria":"1194.21(a)","url":""}],"EN_301_549":[{"type":"primary","name":"Keyboard","successCriteria":"9.2.1.1","url":""}]},"cause":"The element is missing the right tags or has incorrect tags.","effect":"The element is excluded from the keyboard tab sequence and is therefore inaccessible to keyboard users.","howToFix":"Use one of these approaches: \n* Approach 1 (recommended): Add a tag that shows the element&#039;s purpose. Interactive elements don&#039;t need anything extra because they are focusable by nature. \n* Approach 2: Add a `tabindex` attribute with the value of `0` to the element."}],"reportTimestampInMs":1777456786127,"sdkVersion":"Evinced SDK for Cypress 5.7.2","scale":0.5,"hideNotes":false}
 
       let focusAfterClosed
       /**
@@ -723,8 +792,8 @@
 			             <div class="modalComponentItem">
 			                 Component: <span class="code">${getComponentName(el.componentId)}</span>
 			             </div>
-			             <div class="modalComponentItem text-overflow">
-			                 Selector: <span class="code">${el.selector}</span>
+			             <div class="modalComponentItem">
+			                 Selector: <span class="code overflow-anywhere">${el.selector}</span>
 			             </div>
 			             <div class="codeSnippetText" aria-label="code snippet">${el.domSnippet}</div>
 			         </div>
@@ -782,9 +851,25 @@
 								<span class="howToFixList">${convertMarkDown(issue.howToFix)}</span>
 							</div>
 							<div>
-								<div class="boldAttribute">WCAG Violations:</div>
+								${createSectionTitle('WCAG Violations', WCAG_TOOLTIP_TEXT)}
 								<span>${generateWCAGLinks(issue)}</span>
 							</div>
+							${
+                issue.regulations?.Section_508?.length
+                  ? `<div>
+								${createSectionTitle('Section 508', SECTION_508_TOOLTIP_TEXT)}
+								<span>${generateSection508Links(issue)}</span>
+							</div>`
+                  : ''
+              }
+							${
+                issue.regulations?.EN_301_549?.length
+                  ? `<div>
+								${createSectionTitle('EN 301 549', EN_301_549_TOOLTIP_TEXT)}
+								<span>${generateEN301549Links(issue)}</span>
+							</div>`
+                  : ''
+              }
 						</div>
 					</div>
 				`
@@ -903,13 +988,8 @@
           const showDetails = e => openIssueDetailsModal(issue, screenshotsMap, e.target, hideNotes)
           const row = table.insertRow()
 
-          // Issue number
-          const numberCell = row.insertCell(0)
-          numberCell.setAttribute('class', 'numeric-cell')
-          numberCell.innerHTML = issue.issueIndex
-
           // Issue type
-          const issueTypeCell = row.insertCell(1)
+          const issueTypeCell = row.insertCell(0)
           const isOtherType = isOtherIssueType(issue)
           const issueType = isOtherType ? 'Other - manual issue' : issue.typeName
 
@@ -927,21 +1007,21 @@
           issueTypeCell.appendChild(issueTypeLink)
 
           // Severity
-          const severityCell = row.insertCell(2)
+          const severityCell = row.insertCell(1)
           severityCell.innerHTML = issue.severityName
 
           // Components
           const componentIds = issue.elements.map(e => getComponentName(e.componentId))
-          const component = row.insertCell(3)
+          const component = row.insertCell(2)
           const componentUl = createUnorderedList(componentIds)
 
           // Selectors
           const selectors = issue.elements.map(e => e.selector)
-          const selector = row.insertCell(4)
+          const selector = row.insertCell(3)
           const selectorUl = createUnorderedList(selectors, true)
 
           // URL
-          const urlCell = row.insertCell(5)
+          const urlCell = row.insertCell(4)
           urlCell.style.minWidth = URL_CELL_WIDTH
           urlCell.style.maxWidth = URL_CELL_WIDTH
           const pageUrl = issue.pageUrl
@@ -954,14 +1034,14 @@
           urlCell.appendChild(linkEl)
 
           // Page Title
-          const pageTitleCell = row.insertCell(6)
+          const pageTitleCell = row.insertCell(5)
           pageTitleCell.innerHTML = issue.pageTitle
 
           component.appendChild(componentUl)
           selector.appendChild(selectorUl)
 
           // WCAG tags
-          const wcagCell = row.insertCell(7)
+          const wcagCell = row.insertCell(6)
           wcagCell.setAttribute('class', 'numeric-cell')
           const wcagUl = document.createElement('ul')
           const wcagObject = {}
@@ -984,7 +1064,7 @@
           wcagCell.appendChild(wcagUl)
 
           // Details button
-          const detailsCell = row.insertCell(8)
+          const detailsCell = row.insertCell(7)
           detailsCell.classList.add('detailsCell')
           const button = document.createElement('button')
           button.classList.add('clickable')

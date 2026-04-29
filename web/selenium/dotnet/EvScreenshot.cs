@@ -30,7 +30,7 @@ namespace EvincedCSharpTests
 
                 IReport result = driver.EvAnalyze();
 
-                NUnit.Framework.Assert.That(result.GetIssues(), Has.Count.EqualTo(0));
+                NUnit.Framework.Assert.That(result.GetIssues(), Has.Count.GreaterThan(0));
             }
             finally
             {

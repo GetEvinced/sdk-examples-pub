@@ -22,10 +22,10 @@ test.describe("Evinced Demo Page", () => {
     // customLabel accepts any key/value pairs.
     // unitId is a reserved key that groups tests together on the platform.
     evincedService.testRunInfo.customLabel({
-      unitId: "your-unit-id",
-      Repo: "your-repo-name",
-      Team: "your-team-name",
-      Framework: "Playwright",
+      unitId: "CI/CD",
+      repo: "examples",
+      team: "support",
+      framework: "playwright",
     });
 
     await evincedService.evStart();

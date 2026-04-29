@@ -30,7 +30,7 @@ public class EvincedSauceLabsExample {
 
         // Configure SauceLabs options
         Map<String, Object> sauceOptions = new HashMap<>();
-        sauceOptions.put("username", System.getenv("SAUCE_USERNAME"));
+        sauceOptions.put("username", System.getenv("SAUCE_USER"));
         sauceOptions.put("accessKey", System.getenv("SAUCE_ACCESS_KEY"));
         sauceOptions.put("name", "Simple Evinced Chrome Test:Start/Stop");
         browserOptions.setCapability("sauce:options", sauceOptions);
@@ -49,7 +49,7 @@ public class EvincedSauceLabsExample {
         System.out.println("Starting Evinced authenticated session");
         EvincedSDK.setOfflineCredentials(
             System.getenv("EVINCED_SERVICE_ID"),
-            System.getenv("EVINCED_AUTH_TOKEN")
+            System.getenv("EVINCED_WEB_OFFLINE_TOKEN")
         );
         evincedDriver = new EvincedWebDriver(driver, configuration);
 

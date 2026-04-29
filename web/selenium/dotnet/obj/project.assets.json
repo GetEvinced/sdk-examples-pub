@@ -2695,11 +2695,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/shane/Documents/support-golden-examples/evinced-dot-net/evinced-dot-net.csproj",
+      "projectUniqueName": "/Users/shane/Documents/support-golden-examples/web/selenium/dotnet/evinced-dot-net.csproj",
       "projectName": "evinced-dot-net",
-      "projectPath": "/Users/shane/Documents/support-golden-examples/evinced-dot-net/evinced-dot-net.csproj",
+      "projectPath": "/Users/shane/Documents/support-golden-examples/web/selenium/dotnet/evinced-dot-net.csproj",
       "packagesPath": "/Users/shane/.nuget/packages/",
-      "outputPath": "/Users/shane/Documents/support-golden-examples/evinced-dot-net/obj/",
+      "outputPath": "/Users/shane/Documents/support-golden-examples/web/selenium/dotnet/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/shane/.nuget/NuGet/NuGet.Config"
@@ -2708,7 +2708,7 @@
         "net7.0"
       ],
       "sources": {
-        "/Users/shane/Documents/support-golden-examples/evinced-dot-net/sdk": {},
+        "/Users/shane/Documents/support-golden-examples/web/selenium/dotnet/sdk": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {

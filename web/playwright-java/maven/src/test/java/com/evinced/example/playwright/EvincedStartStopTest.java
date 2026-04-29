@@ -1,7 +1,6 @@
 package com.evinced.example.playwright;
 
 import com.microsoft.playwright.Browser;
-import com.microsoft.playwright.Playwright;
 import com.microsoft.playwright.options.LoadState;
 
 import org.junit.jupiter.api.Test;
@@ -44,40 +43,32 @@ public class EvincedStartStopTest {
 
     @Test
     void evStartStop_capturesInteractions() {
-        try (Playwright playwright = Playwright.create()) {
-            EvincedSDK.setCredentials(
-                    System.getenv("EVINCED_SERVICE_ID"),
-                    System.getenv("EVINCED_API_KEY"));
+        Browser browser = PlaywrightTestSetup.browser;
+        EvPage page = EvPageFactory.create(browser.newPage());
 
-            Browser browser = playwright.chromium().launch();
-            try {
-                EvPage page = EvPageFactory.create(browser.newPage());
+        // Begin continuous accessibility scan
+        page.evStart();
 
-                // Begin continuous accessibility scan
-                page.evStart();
+        page.navigate("https://demo.evinced.com/");
+        page.waitForLoadState(LoadState.NETWORKIDLE);
 
-                page.navigate("https://demo.evinced.com/");
-                page.waitForLoadState(LoadState.NETWORKIDLE);
+        // Interact with the page — the scan captures issues across all states.
+        // The demo site SPA auto-navigates to results once both filters are set.
+        // Clicking the search button generates a date-relative URL whose API call
+        // never reaches NETWORKIDLE, so we rely on the SPA transition instead.
+        page.click(Selectors.HOUSE_DROPDOWN);
+        page.click(Selectors.TENT_OPTION);
+        page.click(Selectors.LOCATION_DROPDOWN);
+        page.click(Selectors.CANADA_OPTION);
 
-                // Interact with the page — the scan captures issues across all states
-                page.click(Selectors.HOUSE_DROPDOWN);
-                page.click(Selectors.TENT_OPTION);
-                page.click(Selectors.LOCATION_DROPDOWN);
-                page.click(Selectors.CANADA_OPTION);
-                page.click(Selectors.SEARCH_BUTTON);
-                page.waitForLoadState(LoadState.NETWORKIDLE);
+        // Stop the scan and retrieve results
+        Report report = page.evStop();
+        assertNotNull(report, "Evinced report should not be null");
 
-                // Stop the scan and retrieve results
-                Report report = page.evStop();
-                assertNotNull(report, "Evinced report should not be null");
+        System.out.println("Issues found: " + report.getIssues().size());
 
-                System.out.println("Issues found: " + report.getIssues().size());
-
-                // Save the HTML report
-                EvincedSDK.evSaveFile("./tmp/ev-startstop-report", report, FileFormat.HTML);
-            } finally {
-                browser.close();
-            }
-        }
+        // Save the HTML report
+        EvincedSDK.evSaveFile("./tmp/ev-startstop-report", report, FileFormat.HTML);
+        page.close();
     }
 }

@@ -46,7 +46,7 @@ public class EvHooks {
             // Set offline credentials from environment variables
             EvincedSDK.setOfflineCredentials(
                 System.getenv("EVINCED_SERVICE_ID"),
-                System.getenv("EVINCED_AUTH_TOKEN")
+                System.getenv("EVINCED_WEB_OFFLINE_TOKEN")
             );
 
             EvincedConfiguration config = new EvincedConfiguration();

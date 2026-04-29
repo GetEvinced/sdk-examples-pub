@@ -1,0 +1,6 @@
+{
+  "sdkLogging": {
+    "enable": "true",
+    "level": "debug"
+  }
+}

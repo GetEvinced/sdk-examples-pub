@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "7fIVuBrNFwZvhoNH0RDOx4lSHl3HOkyh4Mi41DeyiRSFb+ug7reocU6j/zGqumgxXhGAqwApeosPm4A9eGhgOQ==",
+  "dgSpecHash": "bWUsN0CFmn3tQQa/I9RMqfiCqNBM8a9R4Te/oamcIjPzNDeESAdFVt7l2ySEhJPTM4cj1U6jsKy8X1cF5/YBxw==",
   "success": true,
-  "projectFilePath": "/Users/shane/Documents/support-golden-examples/evinced-dot-net/evinced-dot-net.csproj",
+  "projectFilePath": "/Users/shane/Documents/support-golden-examples/web/selenium/dotnet/evinced-dot-net.csproj",
   "expectedPackageFiles": [
     "/Users/shane/.nuget/packages/coverlet.collector/3.2.0/coverlet.collector.3.2.0.nupkg.sha512",
     "/Users/shane/.nuget/packages/microsoft.applicationinsights/2.22.0/microsoft.applicationinsights.2.22.0.nupkg.sha512",

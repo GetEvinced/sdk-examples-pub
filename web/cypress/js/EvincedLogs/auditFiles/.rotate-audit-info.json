@@ -6,14 +6,14 @@
     "auditLog": "EvincedLogs//auditFiles/.rotate-audit-info.json",
     "files": [
         {
-            "date": 1767799064362,
-            "name": "EvincedLogs/evincedAllLogs-2026-01-07.log",
-            "hash": "2c8f0e7d299f7449a460d6c186d3531d70fb61b1d11510041ccc417d0e2d6b3f"
+            "date": 1777456770917,
+            "name": "EvincedLogs/evincedAllLogs-2026-04-29.log",
+            "hash": "9d797fef5f028348b98ee04740f84901f32141d99b61dffbd1f79d4b0b06280c"
         },
         {
-            "date": 1767799064364,
-            "name": "EvincedLogs/evincedErrorsLogs-2026-01-07.log",
-            "hash": "27129749fca21c2c7f8eea99ba08c9dfa29a11acfa293be1b44ccf3dbcc8a887"
+            "date": 1777456770919,
+            "name": "EvincedLogs/evincedErrorsLogs-2026-04-29.log",
+            "hash": "eff80cdb46dc30d50e8ae49a8f11865d3d4891be32a45d369b1bba5eab177f7c"
         }
     ],
     "hashType": "sha256"

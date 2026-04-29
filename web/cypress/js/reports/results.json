@@ -1,0 +1,677 @@
+{
+  "testId": "1b9a0986-fe5d-4a8e-afce-7c29c42092c9",
+  "issues": [
+    {
+      "id": "fb453995-1c67-422e-9fae-1797c714cad4",
+      "index": "I1",
+      "hidden": false,
+      "validation": {
+        "id": "38f01b45-898e-4448-9be4-c69a884f660a"
+      },
+      "skipIssue": false,
+      "additionalInformation": {},
+      "signature": "2ffa5563",
+      "canonicalSignature": "2ffa5563",
+      "wcagLevels": [
+        "2.0 A",
+        "2.1 A",
+        "2.2 A",
+        "2.0 AA",
+        "2.1 AA",
+        "2.2 AA",
+        "2.0 AAA",
+        "2.1 AAA",
+        "2.2 AAA"
+      ],
+      "version": "1.1",
+      "severity": {
+        "id": "CRITICAL",
+        "name": "Critical",
+        "newId": "3c68eb41-9227-481d-8eec-9dc8956b19c4"
+      },
+      "originalSeverity": {
+        "id": "CRITICAL",
+        "name": "Critical",
+        "newId": "3c68eb41-9227-481d-8eec-9dc8956b19c4"
+      },
+      "regulations": {
+        "Section_508": [
+          {
+            "type": "primary",
+            "name": "1194.21(d)",
+            "successCriteria": "1194.21(d)",
+            "url": ""
+          }
+        ],
+        "EN_301_549": [
+          {
+            "type": "primary",
+            "name": "Name, Role, Value",
+            "successCriteria": "9.4.1.2",
+            "url": ""
+          }
+        ]
+      },
+      "source": "EV-CORE",
+      "type": {
+        "id": "WRONG_SEMANTIC_ROLE",
+        "newId": "86649b9b-96e1-4abb-903a-5ec30f0af526",
+        "name": "Interactable role"
+      },
+      "elements": [
+        {
+          "id": "c64d7f2b-7100-49a0-a4c6-6ccad22d93e2",
+          "selector": ".block-dropdown:nth-child(1) > .dropholder > .dropdown.line",
+          "domSnippet": "<div class=\"dropdown line\"><p>Select</p></div>",
+          "signature": {},
+          "componentId": "ce13d0bb",
+          "componentDesc": {
+            "id": "ce13d0bb",
+            "tag": "div",
+            "classNames": "dropdown line",
+            "role": ""
+          },
+          "index": "S1",
+          "pageUrl": "https://demo.evinced.com/",
+          "pageTitle": "Home | Evinced, Demo site",
+          "boundingBox": {
+            "width": 398,
+            "height": 23.9375,
+            "viewportTop": 610.9375,
+            "viewportLeft": 301,
+            "top": 610.9375,
+            "left": 301,
+            "bottom": 634.875,
+            "right": 699,
+            "x": 301,
+            "y": 610.9375
+          },
+          "canonicalUrl": null
+        }
+      ],
+      "firstSeenTime": 1777456786034,
+      "lastSeenTime": 1777456786034,
+      "summary": "Interactive elements, such as buttons, links, and inputs, must convey that they can be interacted with by using the proper semantics.",
+      "description": "**Cause:** \nScreen readers are unable to identify that the element is interactive due to missing or incorrect semantics.\n**Effect:** \nScreen reader users may not find the content or may not realize that the the content is interactive.\n**Suggested Solutions:**\nUse native HTML interactive elements such as <*button*>, <*a*>, <*select*>, <*input*>. Alternatively, add the appropriate ARIA role that corresponds to the content purpose.",
+      "tags": [
+        {
+          "id": "WCAG-4.1.2",
+          "description": "4.1.2 Name, Role, Value  (Level A)",
+          "link": "https://www.w3.org/WAI/WCAG21/Understanding/name-role-value.html"
+        },
+        {
+          "id": "WCAG-A"
+        },
+        {
+          "id": "WCAG-undefined"
+        },
+        {
+          "id": "WCAG2.0"
+        }
+      ],
+      "knowledgeBaseLink": "https://knowledge.evinced.com/system-validations/interactable-role",
+      "isNeedsReview": false,
+      "isEvincedRecommended": true
+    },
+    {
+      "id": "a48c3c87-181e-4cf0-a0cb-8b6309107403",
+      "index": "I2",
+      "hidden": false,
+      "validation": {
+        "id": "2524985b-7ca4-4d05-a286-3cf9d1360222"
+      },
+      "skipIssue": false,
+      "additionalInformation": {},
+      "signature": "74c6fcce",
+      "canonicalSignature": "74c6fcce",
+      "wcagLevels": [
+        "2.0 A",
+        "2.1 A",
+        "2.2 A",
+        "2.0 AA",
+        "2.1 AA",
+        "2.2 AA",
+        "2.0 AAA",
+        "2.1 AAA",
+        "2.2 AAA"
+      ],
+      "version": "1.1",
+      "severity": {
+        "id": "CRITICAL",
+        "name": "Critical",
+        "newId": "3c68eb41-9227-481d-8eec-9dc8956b19c4"
+      },
+      "originalSeverity": {
+        "id": "CRITICAL",
+        "name": "Critical",
+        "newId": "3c68eb41-9227-481d-8eec-9dc8956b19c4"
+      },
+      "regulations": {
+        "Section_508": [
+          {
+            "type": "primary",
+            "name": "",
+            "successCriteria": "1194.21(a)",
+            "url": ""
+          }
+        ],
+        "EN_301_549": [
+          {
+            "type": "primary",
+            "name": "Keyboard",
+            "successCriteria": "9.2.1.1",
+            "url": ""
+          }
+        ]
+      },
+      "source": "EV-CORE",
+      "type": {
+        "id": "NOT_FOCUSABLE",
+        "newId": "724b3853-33d3-47b9-80bd-2401abcd5ad4",
+        "name": "Keyboard accessible"
+      },
+      "elements": [
+        {
+          "id": "c64d7f2b-7100-49a0-a4c6-6ccad22d93e2",
+          "selector": ".block-dropdown:nth-child(1) > .dropholder > .dropdown.line",
+          "domSnippet": "<div class=\"dropdown line\"><p>Select</p></div>",
+          "signature": {},
+          "componentId": "ce13d0bb",
+          "componentDesc": {
+            "id": "ce13d0bb",
+            "tag": "div",
+            "classNames": "dropdown line",
+            "role": ""
+          },
+          "index": "S1",
+          "pageUrl": "https://demo.evinced.com/",
+          "pageTitle": "Home | Evinced, Demo site",
+          "boundingBox": {
+            "width": 398,
+            "height": 23.9375,
+            "viewportTop": 610.9375,
+            "viewportLeft": 301,
+            "top": 610.9375,
+            "left": 301,
+            "bottom": 634.875,
+            "right": 699,
+            "x": 301,
+            "y": 610.9375
+          },
+          "canonicalUrl": null
+        }
+      ],
+      "firstSeenTime": 1777456786038,
+      "lastSeenTime": 1777456786038,
+      "summary": "Keyboard users must be able to navigate to all the interactive elements on the page.",
+      "description": "**Cause:** \nThe element is missing the right tags or has incorrect tags. \n**Effect:** \nThe element is excluded from the keyboard tab sequence and is therefore inaccessible to keyboard users. \n**Suggested Solutions:**\nUse one of these approaches: \n* Approach 1 (recommended): Add a tag that shows the element's purpose. Interactive elements don't need anything extra because they are focusable by nature. \n* Approach 2: Add a `tabindex` attribute with the value of `0` to the element.",
+      "tags": [
+        {
+          "id": "WCAG-2.1.1",
+          "description": "2.1.1 Keyboard  (Level A)",
+          "link": "https://www.w3.org/WAI/WCAG21/Understanding/keyboard.html"
+        },
+        {
+          "id": "WCAG-A"
+        },
+        {
+          "id": "WCAG-undefined"
+        },
+        {
+          "id": "WCAG2.0"
+        }
+      ],
+      "knowledgeBaseLink": "https://knowledge.evinced.com/system-validations/keyboard-accessible",
+      "isNeedsReview": false,
+      "isEvincedRecommended": true
+    },
+    {
+      "id": "e3e04f91-b271-4b42-bf4d-f6b732005e5d",
+      "index": "I3",
+      "hidden": false,
+      "validation": {
+        "id": "62ece172-6a55-4e2d-abc6-543b9bd0bca4"
+      },
+      "skipIssue": false,
+      "additionalInformation": {},
+      "signature": "43bc8aba",
+      "canonicalSignature": "43bc8aba",
+      "wcagLevels": [
+        "2.0 A",
+        "2.1 A",
+        "2.2 A",
+        "2.0 AA",
+        "2.1 AA",
+        "2.2 AA",
+        "2.0 AAA",
+        "2.1 AAA",
+        "2.2 AAA"
+      ],
+      "version": "1.1",
+      "severity": {
+        "id": "CRITICAL",
+        "name": "Critical",
+        "newId": "3c68eb41-9227-481d-8eec-9dc8956b19c4"
+      },
+      "originalSeverity": {
+        "id": "CRITICAL",
+        "name": "Critical",
+        "newId": "3c68eb41-9227-481d-8eec-9dc8956b19c4"
+      },
+      "regulations": {
+        "Section_508": [
+          {
+            "type": "primary",
+            "name": "1194.21(d)",
+            "successCriteria": "1194.21(d)",
+            "url": ""
+          }
+        ],
+        "EN_301_549": [
+          {
+            "type": "primary",
+            "name": "Name, Role, Value",
+            "successCriteria": "9.4.1.2",
+            "url": ""
+          }
+        ]
+      },
+      "source": "EV-CORE",
+      "type": {
+        "id": "WRONG_SEMANTIC_ROLE",
+        "newId": "86649b9b-96e1-4abb-903a-5ec30f0af526",
+        "name": "Interactable role"
+      },
+      "elements": [
+        {
+          "id": "a10f20a3-5452-42e1-80d9-5972addeddda",
+          "selector": ".block-dropdown:nth-child(2) > .dropholder > .dropdown.line",
+          "domSnippet": "<div class=\"dropdown line\"><p>Select</p></div>",
+          "signature": {},
+          "componentId": "ce13d0bb",
+          "componentDesc": {
+            "id": "ce13d0bb",
+            "tag": "div",
+            "classNames": "dropdown line",
+            "role": ""
+          },
+          "index": "S2",
+          "pageUrl": "https://demo.evinced.com/",
+          "pageTitle": "Home | Evinced, Demo site",
+          "boundingBox": {
+            "width": 398,
+            "height": 23.9375,
+            "viewportTop": 715.9375,
+            "viewportLeft": 301,
+            "top": 715.9375,
+            "left": 301,
+            "bottom": 739.875,
+            "right": 699,
+            "x": 301,
+            "y": 715.9375
+          },
+          "canonicalUrl": null
+        }
+      ],
+      "firstSeenTime": 1777456786034,
+      "lastSeenTime": 1777456786034,
+      "summary": "Interactive elements, such as buttons, links, and inputs, must convey that they can be interacted with by using the proper semantics.",
+      "description": "**Cause:** \nScreen readers are unable to identify that the element is interactive due to missing or incorrect semantics.\n**Effect:** \nScreen reader users may not find the content or may not realize that the the content is interactive.\n**Suggested Solutions:**\nUse native HTML interactive elements such as <*button*>, <*a*>, <*select*>, <*input*>. Alternatively, add the appropriate ARIA role that corresponds to the content purpose.",
+      "tags": [
+        {
+          "id": "WCAG-4.1.2",
+          "description": "4.1.2 Name, Role, Value  (Level A)",
+          "link": "https://www.w3.org/WAI/WCAG21/Understanding/name-role-value.html"
+        },
+        {
+          "id": "WCAG-A"
+        },
+        {
+          "id": "WCAG-undefined"
+        },
+        {
+          "id": "WCAG2.0"
+        }
+      ],
+      "knowledgeBaseLink": "https://knowledge.evinced.com/system-validations/interactable-role",
+      "isNeedsReview": false,
+      "isEvincedRecommended": true
+    },
+    {
+      "id": "ecd82fdf-58ad-401b-af0d-4a7cc0ba060d",
+      "index": "I4",
+      "hidden": false,
+      "validation": {
+        "id": "85d10bc2-a656-40f2-af89-9ff0d0b07ddf"
+      },
+      "skipIssue": false,
+      "additionalInformation": {},
+      "signature": "a9e99c77",
+      "canonicalSignature": "a9e99c77",
+      "wcagLevels": [
+        "2.0 A",
+        "2.1 A",
+        "2.2 A",
+        "2.0 AA",
+        "2.1 AA",
+        "2.2 AA",
+        "2.0 AAA",
+        "2.1 AAA",
+        "2.2 AAA"
+      ],
+      "version": "1.1",
+      "severity": {
+        "id": "CRITICAL",
+        "name": "Critical",
+        "newId": "3c68eb41-9227-481d-8eec-9dc8956b19c4"
+      },
+      "originalSeverity": {
+        "id": "CRITICAL",
+        "name": "Critical",
+        "newId": "3c68eb41-9227-481d-8eec-9dc8956b19c4"
+      },
+      "regulations": {
+        "Section_508": [
+          {
+            "type": "primary",
+            "name": "",
+            "successCriteria": "1194.21(a)",
+            "url": ""
+          }
+        ],
+        "EN_301_549": [
+          {
+            "type": "primary",
+            "name": "Keyboard",
+            "successCriteria": "9.2.1.1",
+            "url": ""
+          }
+        ]
+      },
+      "source": "EV-CORE",
+      "type": {
+        "id": "NOT_FOCUSABLE",
+        "newId": "724b3853-33d3-47b9-80bd-2401abcd5ad4",
+        "name": "Keyboard accessible"
+      },
+      "elements": [
+        {
+          "id": "a10f20a3-5452-42e1-80d9-5972addeddda",
+          "selector": ".block-dropdown:nth-child(2) > .dropholder > .dropdown.line",
+          "domSnippet": "<div class=\"dropdown line\"><p>Select</p></div>",
+          "signature": {},
+          "componentId": "ce13d0bb",
+          "componentDesc": {
+            "id": "ce13d0bb",
+            "tag": "div",
+            "classNames": "dropdown line",
+            "role": ""
+          },
+          "index": "S2",
+          "pageUrl": "https://demo.evinced.com/",
+          "pageTitle": "Home | Evinced, Demo site",
+          "boundingBox": {
+            "width": 398,
+            "height": 23.9375,
+            "viewportTop": 715.9375,
+            "viewportLeft": 301,
+            "top": 715.9375,
+            "left": 301,
+            "bottom": 739.875,
+            "right": 699,
+            "x": 301,
+            "y": 715.9375
+          },
+          "canonicalUrl": null
+        }
+      ],
+      "firstSeenTime": 1777456786038,
+      "lastSeenTime": 1777456786038,
+      "summary": "Keyboard users must be able to navigate to all the interactive elements on the page.",
+      "description": "**Cause:** \nThe element is missing the right tags or has incorrect tags. \n**Effect:** \nThe element is excluded from the keyboard tab sequence and is therefore inaccessible to keyboard users. \n**Suggested Solutions:**\nUse one of these approaches: \n* Approach 1 (recommended): Add a tag that shows the element's purpose. Interactive elements don't need anything extra because they are focusable by nature. \n* Approach 2: Add a `tabindex` attribute with the value of `0` to the element.",
+      "tags": [
+        {
+          "id": "WCAG-2.1.1",
+          "description": "2.1.1 Keyboard  (Level A)",
+          "link": "https://www.w3.org/WAI/WCAG21/Understanding/keyboard.html"
+        },
+        {
+          "id": "WCAG-A"
+        },
+        {
+          "id": "WCAG-undefined"
+        },
+        {
+          "id": "WCAG2.0"
+        }
+      ],
+      "knowledgeBaseLink": "https://knowledge.evinced.com/system-validations/keyboard-accessible",
+      "isNeedsReview": false,
+      "isEvincedRecommended": true
+    },
+    {
+      "id": "3212e496-b3d1-4156-96d1-3b187358e36c",
+      "index": "I5",
+      "hidden": false,
+      "validation": {
+        "id": "fc70de27-94af-4f19-b292-bae9a30e69dc"
+      },
+      "skipIssue": false,
+      "additionalInformation": {},
+      "signature": "1a46f48d",
+      "canonicalSignature": "1a46f48d",
+      "wcagLevels": [
+        "2.0 A",
+        "2.1 A",
+        "2.2 A",
+        "2.0 AA",
+        "2.1 AA",
+        "2.2 AA",
+        "2.0 AAA",
+        "2.1 AAA",
+        "2.2 AAA"
+      ],
+      "version": "1.1",
+      "severity": {
+        "id": "CRITICAL",
+        "name": "Critical",
+        "newId": "3c68eb41-9227-481d-8eec-9dc8956b19c4"
+      },
+      "originalSeverity": {
+        "id": "CRITICAL",
+        "name": "Critical",
+        "newId": "3c68eb41-9227-481d-8eec-9dc8956b19c4"
+      },
+      "regulations": {
+        "Section_508": [
+          {
+            "type": "primary",
+            "name": "1194.21(d)",
+            "successCriteria": "1194.21(d)",
+            "url": ""
+          }
+        ],
+        "EN_301_549": [
+          {
+            "type": "primary",
+            "name": "Name, Role, Value",
+            "successCriteria": "9.4.1.2",
+            "url": ""
+          }
+        ]
+      },
+      "source": "EV-CORE",
+      "type": {
+        "id": "ANCHOR_WITHOUT_HREF",
+        "newId": "5243d9b7-2c3e-4ca3-83d4-d141ca98d39d",
+        "name": "Anchor without `href` attribute"
+      },
+      "elements": [
+        {
+          "id": "b81e48cc-6d03-4812-8a65-eb512ba50338",
+          "selector": ".search-btn",
+          "domSnippet": "<a class=\"search-btn\">Search</a>",
+          "signature": {},
+          "componentId": "a2d2a84e",
+          "componentDesc": {
+            "id": "a2d2a84e",
+            "tag": "a",
+            "classNames": "search-btn",
+            "role": ""
+          },
+          "index": "S3",
+          "pageUrl": "https://demo.evinced.com/",
+          "pageTitle": "Home | Evinced, Demo site",
+          "boundingBox": {
+            "width": 420,
+            "height": 85,
+            "viewportTop": 930,
+            "viewportLeft": 290,
+            "top": 930,
+            "left": 290,
+            "bottom": 1015,
+            "right": 710,
+            "x": 290,
+            "y": 930
+          },
+          "canonicalUrl": null
+        }
+      ],
+      "firstSeenTime": 1777456786034,
+      "lastSeenTime": 1777456786034,
+      "summary": "Anchor elements (<a>) must have an `href` attribute to be recognized as a link.",
+      "description": "**Cause:** \n The <a> (anchor) element does not have an `href` attribute. \n**Effect:** \nScreen readers on Windows will read the element as plain text without indicating it is a link. On Mac OS, VoiceOver will still read the anchor as a link, even if it's not. The element won't be included in the page's tab sequence by default, making it inaccessible using a keyboard. \n**Suggested Solutions:**\n* If the element should act as a link, add an `href` attribute that points to itself (<a href=\"#\">) \n* If the element is not meant to be a link, change it to something more appropriate, like a button",
+      "tags": [
+        {
+          "id": "WCAG-4.1.2",
+          "description": "4.1.2 Name, Role, Value  (Level A)",
+          "link": "https://www.w3.org/WAI/WCAG21/Understanding/name-role-value.html"
+        },
+        {
+          "id": "WCAG-A"
+        },
+        {
+          "id": "WCAG-undefined"
+        },
+        {
+          "id": "WCAG2.0"
+        }
+      ],
+      "knowledgeBaseLink": "https://knowledge.evinced.com/system-validations/anchor-without-href",
+      "isNeedsReview": false,
+      "isEvincedRecommended": true
+    },
+    {
+      "id": "74f30d6a-b389-4c49-af09-a66e6f15bedd",
+      "index": "I6",
+      "hidden": false,
+      "validation": {
+        "id": "ae43ae36-0965-4fc0-827d-1b10f0480dc2"
+      },
+      "skipIssue": false,
+      "additionalInformation": {},
+      "signature": "64cae8b1",
+      "canonicalSignature": "64cae8b1",
+      "wcagLevels": [
+        "2.0 A",
+        "2.1 A",
+        "2.2 A",
+        "2.0 AA",
+        "2.1 AA",
+        "2.2 AA",
+        "2.0 AAA",
+        "2.1 AAA",
+        "2.2 AAA"
+      ],
+      "version": "1.1",
+      "severity": {
+        "id": "CRITICAL",
+        "name": "Critical",
+        "newId": "3c68eb41-9227-481d-8eec-9dc8956b19c4"
+      },
+      "originalSeverity": {
+        "id": "CRITICAL",
+        "name": "Critical",
+        "newId": "3c68eb41-9227-481d-8eec-9dc8956b19c4"
+      },
+      "regulations": {
+        "Section_508": [
+          {
+            "type": "primary",
+            "name": "",
+            "successCriteria": "1194.21(a)",
+            "url": ""
+          }
+        ],
+        "EN_301_549": [
+          {
+            "type": "primary",
+            "name": "Keyboard",
+            "successCriteria": "9.2.1.1",
+            "url": ""
+          }
+        ]
+      },
+      "source": "EV-CORE",
+      "type": {
+        "id": "NOT_FOCUSABLE",
+        "newId": "724b3853-33d3-47b9-80bd-2401abcd5ad4",
+        "name": "Keyboard accessible"
+      },
+      "elements": [
+        {
+          "id": "b81e48cc-6d03-4812-8a65-eb512ba50338",
+          "selector": ".search-btn",
+          "domSnippet": "<a class=\"search-btn\">Search</a>",
+          "signature": {},
+          "componentId": "a2d2a84e",
+          "componentDesc": {
+            "id": "a2d2a84e",
+            "tag": "a",
+            "classNames": "search-btn",
+            "role": ""
+          },
+          "index": "S3",
+          "pageUrl": "https://demo.evinced.com/",
+          "pageTitle": "Home | Evinced, Demo site",
+          "boundingBox": {
+            "width": 420,
+            "height": 85,
+            "viewportTop": 930,
+            "viewportLeft": 290,
+            "top": 930,
+            "left": 290,
+            "bottom": 1015,
+            "right": 710,
+            "x": 290,
+            "y": 930
+          },
+          "canonicalUrl": null
+        }
+      ],
+      "firstSeenTime": 1777456786038,
+      "lastSeenTime": 1777456786038,
+      "summary": "Keyboard users must be able to navigate to all the interactive elements on the page.",
+      "description": "**Cause:** \nThe element is missing the right tags or has incorrect tags. \n**Effect:** \nThe element is excluded from the keyboard tab sequence and is therefore inaccessible to keyboard users. \n**Suggested Solutions:**\nUse one of these approaches: \n* Approach 1 (recommended): Add a tag that shows the element's purpose. Interactive elements don't need anything extra because they are focusable by nature. \n* Approach 2: Add a `tabindex` attribute with the value of `0` to the element.",
+      "tags": [
+        {
+          "id": "WCAG-2.1.1",
+          "description": "2.1.1 Keyboard  (Level A)",
+          "link": "https://www.w3.org/WAI/WCAG21/Understanding/keyboard.html"
+        },
+        {
+          "id": "WCAG-A"
+        },
+        {
+          "id": "WCAG-undefined"
+        },
+        {
+          "id": "WCAG2.0"
+        }
+      ],
+      "knowledgeBaseLink": "https://knowledge.evinced.com/system-validations/keyboard-accessible",
+      "isNeedsReview": false,
+      "isEvincedRecommended": true
+    }
+  ]
+}

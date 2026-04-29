@@ -11,9 +11,9 @@ namespace EvincedCSharpTests
     /// <summary>
     /// evHooks pattern — per-test lifecycle wrapping with [SetUp] / [TearDown].
     ///
-    /// Each test gets a fresh driver and scan session. [SetUp] starts the continuous
-    /// scan and [TearDown] stops it, saves the report, then tears down the driver —
-    /// even when the test throws.
+    /// Each test gets a fresh driver and scan session. [SetUp] navigates to the
+    /// starting page and begins continuous scanning. [TearDown] stops the scan,
+    /// saves the report, and tears down the driver — even when the test throws.
     ///
     /// The .NET Selenium SDK does not currently expose a labels API.
     /// When a labels API becomes available, add label calls inside [SetUp] to tag
@@ -36,6 +36,12 @@ namespace EvincedCSharpTests
 
             baseDriver = new ChromeDriver();
             driver = EvincedDriverFactory.Create(baseDriver);
+
+            // Navigate to the starting page before beginning the scan so the SDK
+            // can inject into an already-loaded document.
+            WebDriverWait wait = new WebDriverWait(baseDriver, TimeSpan.FromSeconds(10));
+            driver.Navigate().GoToUrl("https://demo.evinced.com/");
+            wait.Until(d => d.FindElement(By.CssSelector("main")));
 
             // Begin continuous scan for this test
             driver.EvStart();
@@ -62,7 +68,8 @@ namespace EvincedCSharpTests
             }
             finally
             {
-                driver?.Quit();
+                // Use baseDriver.Quit() only — driver.Quit() (the proxy) calls
+                // stopAnalysis() internally and would double-stop after EvStop().
                 baseDriver?.Quit();
             }
         }
@@ -70,12 +77,8 @@ namespace EvincedCSharpTests
         [Test]
         public void LandingPageAccessibility()
         {
-            WebDriverWait wait = new WebDriverWait(baseDriver, TimeSpan.FromSeconds(10));
-
-            driver.Navigate().GoToUrl("https://demo.evinced.com/");
-            wait.Until(d => d.FindElement(By.CssSelector("main")));
-
-            // [TearDown] will stop the scan and save the report automatically
+            // Page was already loaded in SetUp. Nothing else to do here —
+            // [TearDown] stops the scan and saves the report automatically.
         }
 
         [Test]
@@ -83,10 +86,8 @@ namespace EvincedCSharpTests
         {
             WebDriverWait wait = new WebDriverWait(baseDriver, TimeSpan.FromSeconds(10));
 
-            driver.Navigate().GoToUrl("https://demo.evinced.com/");
-            wait.Until(d => d.FindElement(By.CssSelector("main")));
-
-            // Interact with the search form
+            // Open the "What type" dropdown and select an option.
+            // Only one dropdown is filled so the demo site does not auto-navigate.
             var whatDropdown = wait.Until(d => d.FindElement(
                 By.XPath("//*[@id='gatsby-focus-wrapper']/main/div[1]/div[3]/div[1]/div/div[1]/p")));
             whatDropdown.Click();
@@ -98,17 +99,6 @@ namespace EvincedCSharpTests
             var whereDropdown = wait.Until(d => d.FindElement(
                 By.XPath("//*[@id='gatsby-focus-wrapper']/main/div[1]/div[3]/div[2]/div/div[1]/p")));
             whereDropdown.Click();
-
-            var eastCoastOption = wait.Until(d => d.FindElement(
-                By.XPath("//*[@id='gatsby-focus-wrapper']/main/div[1]/div[3]/div[2]/div/ul/li[3]")));
-            eastCoastOption.Click();
-
-            var searchButton = wait.Until(d => d.FindElement(
-                By.XPath("//*[@id='gatsby-focus-wrapper']/main/div[1]/div[3]/a")));
-            searchButton.Click();
-
-            wait.Until(d => d.FindElement(
-                By.XPath("//*[@id='gatsby-focus-wrapper']/main/h1/span")));
 
             // [TearDown] will stop the scan and save the report automatically
         }
