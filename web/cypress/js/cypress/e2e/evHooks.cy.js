@@ -1,19 +1,34 @@
 context("Evinced Demo Site tests", () => {
   beforeEach(() => {
+    // Add standard labels — applied to every test in this context block
+    cy.addLabel({
+      testName: Cypress.currentTest.title,
+      environment: "QA",
+      gitBranch: "main"
+    });
+
+    // Add custom labels — unitId groups tests in the Evinced Platform;
+    // all other keys are arbitrary metadata for your team
+    cy.customLabel({
+      unitId: "Digital",
+      "Repo": "Examples",
+      "Team": "Support"
+    });
+
     // Start the Evinced engine
     cy.evStart();
   });
 
   afterEach(() => {
-    // Conclude the scan, print issues to cy.log with logIssues and print the report JSON object to browser's console
-    cy.evStop({ logIssues: true }).should((report) => {
+    // Conclude the scan, print issues to cy.log with logIssues and print the report JSON object to browser's console.
+    // uploadToPlatform is opt-in — uncomment to send results to the Evinced Platform.
+    cy.evStop({
+      logIssues: true,
+      // uploadToPlatform: true,
+    }).then((report) => {
       console.log(JSON.stringify(report, null, 2));
+      cy.evSaveFile(report, "html", "cypress/reports/hooks-report.html");
     });
-
-    // The way to assert that tests should have issues or not
-    // cy.evStop().should((issues) => {
-    //     expect(issues).to.be.empty();
-    // });
   });
 
   it("Search Test", () => {

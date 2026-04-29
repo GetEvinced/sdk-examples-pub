@@ -29,10 +29,13 @@ Evinced.setCredentials({
   secret: Cypress.env("secret"),
 });
 
-Evinced.setUploadToPlatformConfig({
-  enableUploadToPlatform: true,
-  setUploadToPlatformDefault: true,
-});
+// Upload to the Evinced Platform is opt-in.
+// Uncomment the block below to enable platform upload globally.
+// When enabled, individual tests can still override with uploadToPlatform in cy.evStop().
+// Evinced.setUploadToPlatformConfig({
+//   enableUploadToPlatform: true,
+//   setUploadToPlatformDefault: true,
+// });
 
 // ONLY USED OFFLINE CREDENTIALS IF YOU NEED TO ISOLATE AN ISSUE
 

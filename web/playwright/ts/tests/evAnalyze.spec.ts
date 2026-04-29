@@ -10,6 +10,7 @@ test.describe("Evinced evAnalyze", () => {
     await page.goto("https://demo.evinced.com/");
     const issues: Issue[] = await evincedService.evAnalyze();
     await evincedService.evSaveFile(issues, "html", evReport);
+    await evincedService.evSaveFile(issues, "json", "./test-results/evAnalyze.json");
     expect(existsSync(evReport)).toBeTruthy();
   });
 });
