@@ -21,4 +21,3 @@ describe("Tab List component accessibility test", () => {
     console.log("Evinced Test Results =", results);
   });
 });
-``

@@ -26,6 +26,6 @@ describe("Carousel Accessibility Test", () => {
       }
     );
 
-    // expect(results.length).toBe(18);
+    expect(results.length).toBeGreaterThan(0);
   });
 });
