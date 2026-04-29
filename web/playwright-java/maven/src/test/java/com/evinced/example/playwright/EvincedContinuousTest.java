@@ -42,6 +42,9 @@ public class EvincedContinuousTest {
     static void launchBrowser() {
         playwright = Playwright.create();
         browser = playwright.chromium().launch();
+        // To enable uploading results to the Evinced Platform, configure your credentials:
+        // EvincedSDK.setCredentials(new Credentials(serviceAccountId, serviceAccountSecret));
+        // Results are saved locally unless credentials are set.
         EvincedSDK.setCredentials(System.getenv("EVINCED_SERVICE_ID"),
                 System.getenv("EVINCED_API_KEY"));
 

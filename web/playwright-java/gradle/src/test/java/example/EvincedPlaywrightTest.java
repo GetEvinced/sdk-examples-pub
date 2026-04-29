@@ -5,20 +5,13 @@ import com.evinced.EvPageFactory;
 import com.evinced.EvincedSDK;
 import com.evinced.Report;
 import com.evinced.FileFormat;
-import com.evinced.impl.Global;
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.Playwright;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class EvincedPlaywrightTest {
-
-    @BeforeAll
-    static void setup() {
-        Global.config.setEnableScreenshots(true);
-    }
 
     @Test
     void accessibilityScan_singleRun() {

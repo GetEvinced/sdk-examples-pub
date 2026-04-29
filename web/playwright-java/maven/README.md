@@ -6,9 +6,12 @@ This repository demonstrates the use of the Evinced Java Playwright SDK with exa
 
 | File | Description |
 |------|-------------|
-| [FirstTest.java](src/test/java/com/evinced/example/playwright/FirstTest.java) | Sample test without Evinced SDK |
-| [SingleRunTest.java](src/test/java/com/evinced/example/playwright/SingleRunTest.java) | Sample test using Evinced in Single Run Mode |
-| [EvincedContinuousTest.java](src/test/java/com/evinced/example/playwright/EvincedContinuousTest.java) | Sample test using Evinced in Continuous Mode |
+| [FirstTest.java](src/test/java/com/evinced/example/playwright/FirstTest.java) | Plain Playwright test — no Evinced SDK |
+| [EvincedSingleRunTest.java](src/test/java/com/evinced/example/playwright/EvincedSingleRunTest.java) | Basic `evAnalyze` usage — one-shot scan with issue count assertion |
+| [EvincedAnalyzeTest.java](src/test/java/com/evinced/example/playwright/EvincedAnalyzeTest.java) | **evAnalyze pattern** — one-shot scan, saves HTML report |
+| [EvincedStartStopTest.java](src/test/java/com/evinced/example/playwright/EvincedStartStopTest.java) | **evStart/evStop pattern** — continuous scan across UI interactions, saves HTML report |
+| [EvincedContinuousTest.java](src/test/java/com/evinced/example/playwright/EvincedContinuousTest.java) | Continuous scan with multiple tests and aggregated report |
+| [EvincedHooksTest.java](src/test/java/com/evinced/example/playwright/EvincedHooksTest.java) | **evHooks pattern** — `@BeforeEach`/`@AfterEach` lifecycle wrapping, per-test reports + aggregated report |
 
 ## Setup
 
