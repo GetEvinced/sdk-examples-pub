@@ -44,8 +44,18 @@ The [debug manifest][6] has the permission requests for internet and storage as 
 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 ```
 
-## Instrumented test example 
-There are some useful test structures in the [ExampleEvincedTest][4] file, namely `clickTabAndVerifyScreen` which does not require developers to add syntactic sugar to production code in order to test clicking and waiting for a Tab. This pattern could be extended to other accessibility tests. 
+## Test classes
+
+### [ExampleEvincedTest][4] — one-shot scan
+The primary example. Calls `analyze()` manually at each screen state and stores all results, then flushes a single consolidated report via `reportStored()` in `@AfterClass`. Contains the `clickTabAndVerifyScreen` helper that clicks a Compose Tab and waits for the target screen without any production-code changes.
+
+### [ContinuousEvincedTest][7] — continuous scan mode
+Calls `startAnalyze()` in `@Before` and `stopAnalyze()` in `@After` so that Evinced automatically tracks every view-hierarchy change during a test without manual `analyze()` calls at each step. Each test produces its own per-test report. Best suited to flows with many intermediate screen states.
+
+### [ConfiguredEvincedTest][8] — custom configuration
+Shows how to apply `InitOptions` once in `@BeforeClass` to set global SDK behaviour (compliance mapping to WCAG/Section 508, report naming, CSV and meaningful-labels export). Also demonstrates:
+- `addTestCaseMetadata()` for per-test labels visible in the Evinced dashboard
+- Passing a per-scan `EvincedConfig` with `excludeFilters` directly to `analyze()` to suppress a known false-positive on a specific screen
 
 [0]: https://developer.evinced.com/sdks-for-mobile-apps/espresso-sdk
 [1]: https://developer.evinced.com/sdks-for-mobile-apps/espresso-sdk#setup
@@ -54,3 +64,5 @@ There are some useful test structures in the [ExampleEvincedTest][4] file, namel
 [4]: /app/src/androidTest/java/com/evinced/sampleapp/ExampleEvincedTest.kt
 [5]: /app/build.gradle.kts
 [6]: /app/src/debug/AndroidManifest.xml
+[7]: /app/src/androidTest/java/com/evinced/sampleapp/ContinuousEvincedTest.kt
+[8]: /app/src/androidTest/java/com/evinced/sampleapp/ConfiguredEvincedTest.kt

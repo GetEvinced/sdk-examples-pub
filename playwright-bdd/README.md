@@ -1,62 +1,141 @@
-# Playwright BDD Test Setup
+# Playwright BDD + Evinced SDK
 
-This repository uses [Playwright](https://playwright.dev) with [playwright-bdd](https://github.com/vitalets/playwright-bdd), a tool that enables writing browser automation tests using Gherkin-style `.feature` files and step definitions.
+This project demonstrates integrating the [Evinced JS Playwright SDK](https://www.evinced.com/docs/sdk/playwright-js) with [playwright-bdd](https://github.com/vitalets/playwright-bdd), which lets you write browser tests using Gherkin `.feature` files with Cucumber-style step definitions.
 
-The tests are defined in the `.features-gen` directory using `.feature` files such as `sample.feature`. These files follow a Given/When/Then syntax to describe behavior in a readable, business-oriented way.
+Each `.feature` file illustrates one Evinced SDK usage pattern. Step definitions live alongside the features in `tests/steps/`.
 
-A corresponding `steps.js` file contains the actual JavaScript implementations of each Gherkin step. The `playwright-bdd` system automatically reads the `.feature` file, matches the steps to the definitions in `steps.js`, and generates a test spec behind the scenes that Playwright can execute.
+---
 
-For example, if `sample.feature` contains:
+## Setup
 
-```gherkin
-Feature: Navigation
-
-  Scenario: Open Playwright homepage
-    Given I am on home page
-    When I click link "Docs"
-    Then I see in title "Playwright"
+```bash
+npm install
+npx playwright install --with-deps chromium
 ```
 
-Then `steps.js` should contain:
-import { expect } from "@playwright/test";
-import { createBdd } from "playwright-bdd";
-import { EvincedSDK } from "@evinced/js-playwright-sdk";
-import { existsSync } from "node:fs";
+Set your Evinced credentials as environment variables (required for authentication via `global.settings.js`):
 
-const { Given, When, Then, Before, After } = createBdd();
+```bash
+export EVINCED_SERVICE_ID=your-service-id
+export EVINCED_API_KEY=your-api-key
+```
 
-let evinced;
+To run all tests:
 
-Before(async ({ page }) => {
-evinced = new EvincedSDK(page);
-await evinced.evStart();
-});
+```bash
+npm test
+# equivalent: npx bddgen && npx playwright test
+```
 
-Given("I am on home page", async ({ page }) => {
-await page.goto("https://playwright.dev");
-});
+---
 
-When("I click link {string}", async ({ page }, name) => {
-await page.getByRole("link", { name }).click();
-});
+## Feature Files
 
-Then("I see in title {string}", async ({ page }, keyword) => {
-await expect(page).toHaveTitle(new RegExp(keyword));
-});
+### 1. `ev-analyze.feature` — One-Shot Scan
 
-After(async () => {
-if (evinced) {
-const issues = await evinced.evStop();
-await evinced.evSaveFile(issues, "html", "./evinced-report.html");
+**Step definitions:** `tests/steps/evAnalyzeSteps.js`
 
-    console.log(
-      `Evinced report saved. Issues found: ${issues.length}. Report path: ./evinced-report.html`
-    );
+Demonstrates `evAnalyze()`: a single snapshot scan of the current page state. No `evStart`/`evStop` is needed. Both an HTML and JSON report are saved after the scan.
 
-}
-});
+```gherkin
+Scenario: Scan the demo home page with evAnalyze
+  Given I navigate to the Evinced demo home page
+  Then I run an Evinced evAnalyze scan and save reports
+```
 
-Once both the .feature file and step definitions are in place, running npx playwright test will automatically execute the test as a native Playwright test.
+Reports saved to `evinced-reports/evAnalyze.html` and `evinced-reports/evAnalyze.json`.
 
-This approach provides a clean separation between the test scenarios (written in plain English) and the underlying automation logic (written in JavaScript), making tests easier to write, understand, and maintain.
+---
 
+### 2. `ev-start-stop.feature` — Continuous Scan with Labels
+
+**Step definitions:** `tests/steps/evStartStopSteps.js`
+
+Demonstrates `evStart()`/`evStop()` for continuous monitoring across user interactions. Labels (`addLabel`, `customLabel`) attach metadata that appears on the Evinced Platform. Includes an `enableUploadToPlatform` opt-in comment.
+
+```gherkin
+Scenario: Scan the demo site while interacting with filters
+  Given I start an Evinced continuous scan with labels
+  And I open the Evinced demo site
+  When I select the "backyard" property type filter
+  And I select the "middle America" location filter
+  Then I stop the Evinced scan and save the report
+```
+
+Report saved to `evinced-reports/evStartStop.html`.
+
+---
+
+### 3. `evinced-demo.feature` — Hooks Pattern (Before/After)
+
+**Step definitions:** `tests/steps/evincedDemoSteps.js`
+
+Demonstrates the `@Before`/`@After` Cucumber hook pattern. The `Before` hook initialises the SDK and attaches labels before each scenario. The `After` hook stops the scan and saves both HTML and JSON reports named after the scenario title.
+
+This is the recommended approach when you want Evinced scanning applied automatically across many scenarios without repeating setup logic in every step.
+
+```gherkin
+Scenario: Search for Remote Arizona
+  Given I am on the demo Evinced site
+  When I select "backyard" from the "type" dropdown
+  And I select "middle America" from the "where" dropdown
+  And I click the "Search" button
+  Then I see the option "Remote Arizona"
+```
+
+Reports saved to `evinced-reports/evinced-report-<scenario-title>.html/.json`.
+
+---
+
+### 4. `sample.feature` — Basic Hooks Pattern (Playwright.dev)
+
+**Step definitions:** `tests/steps/sampleSteps.js`
+
+A secondary example of the `Before`/`After` hook pattern applied to the Playwright documentation site. Useful for verifying the SDK works with any URL.
+
+```gherkin
+Scenario: Check get started link
+  Given I am on home page
+  When I click link "Get started"
+  Then I see in title "Installation"
+```
+
+---
+
+## Project Structure
+
+```
+playwright-bdd/
+├── global.settings.js          # Evinced credentials (setCredentials)
+├── playwright.config.js        # Playwright + BDD config
+├── tests/
+│   ├── features/
+│   │   ├── ev-analyze.feature       # evAnalyze one-shot pattern
+│   │   ├── ev-start-stop.feature    # evStart/evStop + labels pattern
+│   │   ├── evinced-demo.feature     # Before/After hooks pattern
+│   │   └── sample.feature           # Before/After hooks (alt site)
+│   └── steps/
+│       ├── evAnalyzeSteps.js        # Steps for ev-analyze.feature
+│       ├── evStartStopSteps.js      # Steps for ev-start-stop.feature
+│       ├── evincedDemoSteps.js      # Steps for evinced-demo.feature
+│       └── sampleSteps.js           # Steps for sample.feature
+└── evinced-reports/            # Generated reports (gitignored)
+```
+
+---
+
+## How playwright-bdd Works
+
+`playwright-bdd` reads `.feature` files, matches each Gherkin step to a definition in a `steps/` file, and generates native Playwright spec files under `.features-gen/`. Running `npx playwright test` then executes those generated specs exactly like any other Playwright test.
+
+The Cucumber `Before`/`After` hooks from `createBdd()` map to Playwright's `beforeEach`/`afterEach`, so they run around every scenario automatically.
+
+---
+
+## Upload to Platform
+
+To send results to the [Evinced Platform](https://www.evinced.com/platform):
+
+1. Set `enableUploadToPlatform: true` in `setUploadToPlatformConfig()` (top of the relevant steps file).
+2. Pass `{ uploadToPlatform: true }` to `evStop()` where applicable.
+3. Ensure `EVINCED_SERVICE_ID` and `EVINCED_API_KEY` are set in your environment.

@@ -1,15 +1,47 @@
+/**
+ * evHooks — Before/After Cucumber hook pattern with labels and evSaveFile.
+ *
+ * The Before hook initialises the Evinced SDK and attaches labels (metadata)
+ * before each scenario. The After hook stops the scan and saves both an HTML
+ * and a JSON report named after the scenario title.
+ *
+ * Labels appear on the Evinced Platform when uploadToPlatform is enabled.
+ */
+
 import { expect, testInfo as info } from "@playwright/test";
 import { createBdd } from "playwright-bdd";
-import { EvincedSDK } from "@evinced/js-playwright-sdk";
+import {
+  EvincedSDK,
+  setUploadToPlatformConfig,
+} from "@evinced/js-playwright-sdk";
 import path from "node:path";
 import fs from "node:fs";
 
 const { Given, When, Then, Before, After } = createBdd();
 
+// Set enableUploadToPlatform to true to upload results to the Evinced Platform.
+// Requires EVINCED_SERVICE_ID and EVINCED_API_KEY environment variables.
+setUploadToPlatformConfig({ enableUploadToPlatform: false });
+
 let evinced;
 
 Before(async ({ page }) => {
   evinced = new EvincedSDK(page);
+
+  // addLabel attaches well-known metadata fields to results on the Platform.
+  evinced.testRunInfo.addLabel({
+    environment: "CI/CD",
+    gitBranch: "main",
+  });
+
+  // customLabel accepts any key/value pairs.
+  // unitId is a reserved key that groups tests together on the Platform.
+  evinced.testRunInfo.customLabel({
+    unitId: "bdd-examples",
+    repo: "support-golden-examples",
+    framework: "playwright-bdd",
+  });
+
   await evinced.evStart();
 });
 
@@ -55,23 +87,26 @@ After(async () => {
       fs.mkdirSync(reportDir, { recursive: true });
     }
 
-    let filename = `evinced-report.html`;
+    // Derive a safe filename from the scenario title, falling back to a timestamp.
+    let basename = `evinced-report`;
     try {
       const testName = info()
         .title.replace(/\s+/g, "-")
         .replace(/[^\w-]/g, "");
-      filename = `evinced-report-${testName}.html`;
+      if (testName) basename = `evinced-report-${testName}`;
     } catch {
       const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
-      filename = `evinced-report-${timestamp}.html`;
+      basename = `evinced-report-${timestamp}`;
     }
 
-    const filePath = path.join(reportDir, filename);
+    const htmlPath = path.join(reportDir, `${basename}.html`);
+    const jsonPath = path.join(reportDir, `${basename}.json`);
 
-    await evinced.evSaveFile(issues, "html", filePath);
+    await evinced.evSaveFile(issues, "html", htmlPath);
+    await evinced.evSaveFile(issues, "json", jsonPath);
 
     console.log(
-      `Evinced report saved. Issues: ${issues.length}. Path: ${filePath}`
+      `Evinced reports saved. Issues: ${issues.length}. HTML: ${htmlPath} | JSON: ${jsonPath}`
     );
   }
 });
