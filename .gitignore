@@ -43,8 +43,6 @@ react-unit-tester/.cache
 js-selenium-web/logs
 tmp
 
-.gitignore
-/.claude
-.claude
-/docs
-./.claude
+# IDE / tooling
+.vscode/
+.claude/
