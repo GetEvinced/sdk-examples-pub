@@ -1,6 +1,5 @@
 import { Builder } from "selenium-webdriver";
 import * as chrome from "selenium-webdriver/chrome.js";
-import chromedriver from "chromedriver";
 import pkg from "@evinced/js-selenium-sdk";
 const { EvincedSDK, setCredentials } = pkg;
 
@@ -27,12 +26,9 @@ describe("Demo page — evHooks", () => {
   options.addArguments("--headless");
 
   beforeEach(async () => {
-    const service = new chrome.ServiceBuilder(chromedriver.path);
-
     driver = await new Builder()
       .forBrowser("chrome")
       .setChromeOptions(options)
-      .setChromeService(service)
       .build();
 
     evincedService = new EvincedSDK(driver);

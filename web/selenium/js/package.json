@@ -15,7 +15,6 @@
   "type": "module",
   "dependencies": {
     "@evinced/js-selenium-sdk": "2.6.0",
-    "chromedriver": "latest",
     "mocha": "^11.1.0",
     "selenium-webdriver": "^4.29.0"
   }
