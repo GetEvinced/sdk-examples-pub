@@ -1,6 +1,9 @@
 import { expect, browser, $ } from "@wdio/globals";
+import EvincedService from "@evinced/webdriverio-sdk";
+const { setUploadToPlatformConfig } = (EvincedService as any).default;
 
-// Upload to platform is configured in wdio.conf.js via the Evinced service options
+// Keep upload off by default — set true to send results to the Evinced Platform
+setUploadToPlatformConfig({ enableUploadToPlatform: false });
 
 describe("Evinced WDIO — evStart / evStop (continuous scan)", () => {
   it("Scans across DOM changes while navigating the booking flow", async () => {
