@@ -1,6 +1,9 @@
 {
+  "scripts": {
+    "test": "testcafe chrome tests"
+  },
   "devDependencies": {
     "@evinced/js-testcafe-sdk": "1.9.0",
-    "testcafe": "^3.7.2" 
+    "testcafe": "^3.7.2"
   }
 }
