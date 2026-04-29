@@ -1,8 +1,6 @@
 import { expect, browser, $ } from "@wdio/globals";
-import { setUploadToPlatformConfig } from "@evinced/webdriverio-sdk";
 
-// To enable upload, set enableUploadToPlatform: true
-setUploadToPlatformConfig({ enableUploadToPlatform: false });
+// Upload to platform is configured in wdio.conf.js via the Evinced service options
 
 describe("Evinced WDIO — evStart / evStop (continuous scan)", () => {
   it("Scans across DOM changes while navigating the booking flow", async () => {
