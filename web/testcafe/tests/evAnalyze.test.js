@@ -12,13 +12,15 @@ test("Testing evAnalyze", async (t) => {
     //adding labels
     evinced.addLabel({ 
         testName: t.test.name,
-        environment: "Developmemt"
+        environment: "Development"
     });
 
     // Use evAnalyze to generate a unique local report 
     const issues = await evinced.evAnalyze();
 
-    // Store results in the a directory with the test name/date to maintain unique reports 
-    await evinced.evSaveFile(issues, 'html', `tests/results/evinced/${t.test.name}/${Date()}.html`);
+    // Store results in a directory with the test name/date to maintain unique reports
+    const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
+    await evinced.evSaveFile(issues, 'html', `tests/results/evinced/${t.test.name}/${timestamp}.html`);
+    await evinced.evSaveFile(issues, 'json', `tests/results/evinced/${t.test.name}/${timestamp}.json`);
 });
 

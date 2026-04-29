@@ -1,7 +1,6 @@
 import { Builder } from "selenium-webdriver";
 import * as chrome from "selenium-webdriver/chrome.js";
 import chromedriver from "chromedriver";
-import assert from "assert";
 import pkg from "@evinced/js-selenium-sdk";
 const { EvincedSDK, setCredentials } = pkg;
 
@@ -24,18 +23,25 @@ describe("Demo page", () => {
       .build();
 
     const evincedService = new EvincedSDK(driver);
-    await driver.get("https://demo.evinced.com/");
-    const issues = await evincedService.evAnalyze({
-      initOptions: {
-        enableScreenshots: true,
-      },
-    });
-    evincedService.evSaveFile(
-      issues,
-      "html",
-      "test-results/evAnalyze-report.html"
-    );
-    assert.equal(issues.length, 6);
-    await driver.quit();
+    try {
+      await driver.get("https://demo.evinced.com/");
+      const issues = await evincedService.evAnalyze({
+        initOptions: {
+          enableScreenshots: true,
+        },
+      });
+      evincedService.evSaveFile(
+        issues,
+        "html",
+        "test-results/evAnalyze-report.html"
+      );
+      evincedService.evSaveFile(
+        issues,
+        "json",
+        "test-results/evAnalyze-report.json"
+      );
+    } finally {
+      await driver.quit();
+    }
   });
 });

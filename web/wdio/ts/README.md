@@ -20,4 +20,13 @@ To run the tests, ensure you are in the "js-wdio-web" directory and use the foll
 
 ## Testing Framework
 
-This repository utilizes [WebdriverIO](https://webdriver.io/) to test React-based components that follow best practices with Evinced. 
+This repository utilizes [WebdriverIO](https://webdriver.io/) to test React-based components that follow best practices with Evinced.
+
+## Test Files
+
+| File | Description |
+|------|-------------|
+| `test/specs/evAnalyze.ts` | Single point-in-time scan with `evAnalyze`; saves HTML and JSON reports |
+| `test/specs/evStartStop.ts` | Continuous scan using inline `evStart`/`evStop` to capture DOM changes across user interactions |
+| `test/specs/evHooks.ts` | `beforeEach`/`afterEach` hooks pattern — automatically wraps every test with a continuous scan and saves a per-test HTML report |
+| `test/specs/evFailIfCritical.ts` | Scans the page, filters results to Critical severity, and asserts zero critical issues — suitable for CI gating |

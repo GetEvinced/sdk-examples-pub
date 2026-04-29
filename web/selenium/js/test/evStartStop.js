@@ -3,7 +3,7 @@ import * as chrome from "selenium-webdriver/chrome.js";
 import chromedriver from "chromedriver";
 import assert from "assert";
 import pkg from "@evinced/js-selenium-sdk";
-const { EvincedSDK, setCredentials } = pkg;
+const { EvincedSDK, setCredentials, setUploadToPlatformConfig } = pkg;
 
 await setCredentials({
   serviceId: process.env.EVINCED_SERVICE_ID,
@@ -23,16 +23,27 @@ describe("Demo page", () => {
       .setChromeService(service)
       .build();
 
+    // Keep upload off by default — set true to send results to the Evinced Platform
+    setUploadToPlatformConfig({ enableUploadToPlatform: false });
+
     const evincedService = new EvincedSDK(driver);
-    await evincedService.evStart();
-    await driver.get("https://demo.evinced.com/");
-    const issues = await evincedService.evStop();
-    evincedService.evSaveFile(
-      issues,
-      "html",
-      "test-results/evStartStop-report.html"
-    );
-    assert.equal(issues.length, 6);
-    await driver.quit();
+    try {
+      await evincedService.evStart();
+      await driver.get("https://demo.evinced.com/");
+      const issues = await evincedService.evStop();
+      evincedService.evSaveFile(
+        issues,
+        "html",
+        "test-results/evStartStop-report.html"
+      );
+      evincedService.evSaveFile(
+        issues,
+        "json",
+        "test-results/evStartStop-report.json"
+      );
+      assert.equal(issues.length, 6);
+    } finally {
+      await driver.quit();
+    }
   });
 });

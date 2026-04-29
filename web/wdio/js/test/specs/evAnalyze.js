@@ -1,19 +1,22 @@
-import { expect, browser, $ } from "@wdio/globals";
+import { browser } from "@wdio/globals";
 import assert from "assert";
 
-describe("Using the Evinced WDIO SDK", () => {
+describe("Evinced WDIO — evAnalyze (single scan)", () => {
   it("Should show issues on the Evinced demo page", async () => {
-    await browser.url(`https://demo.evinced.com/`);
+    await browser.url("https://demo.evinced.com/");
 
-    // Calling the evAnalyze method here will start the SDK to scan the page for accessibility issues
+    // evAnalyze performs a single point-in-time scan of the current page state
     const issues = await browser.evAnalyze();
 
-    // The variable issues is an array so we are able to filter on the issues that are being logged from it
-    // This way we can see if there are things we should be concerned about
+    // Save results to HTML and JSON for review/archiving
+    await browser.evSaveFile(issues, "html", "./test/evAnalyze-report.html");
+    await browser.evSaveFile(issues, "json", "./test/evAnalyze-report.json");
+
+    // Filter to critical issues and assert — the demo page has known issues so
+    // this assertion deliberately expects failures to demonstrate the workflow
     const criticalIssues = issues.filter(
       (issue) => issue.severity.name === "Critical"
     );
-    // In our case, we want it to equal 0 but the test will deliberately fail as there are issues present on the page
-    await assert(criticalIssues.length !== 0, "found critical issues");
+    assert(criticalIssues.length !== 0, "found critical issues");
   });
 });
