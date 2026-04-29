@@ -35,3 +35,34 @@ The fixture handles:
 - Creating the Appium driver session before all tests `scope="module"`
 - Passes driver with `yield`
 - Quitting the session after tests complete
+
+## Running the tests
+
+```bash
+pytest tests/
+```
+
+## Test files
+
+| File | Pattern | Description |
+|------|---------|-------------|
+| `tests/test_analyze_example.py` | One-shot scan with filter | Creates an `EvincedAppiumDefaultRunner`, calls `analyze()` then `report()` with a `ReportFilter` that excludes Minor-severity issues. |
+| `tests/test_multi_screen_example.py` | Multi-screen / continuous | Reuses one runner context manager across two navigation steps; calls `analyze()` per screen, then `report()` to collect all results. |
+| `tests/test_configured_example.py` | Config + filters | Demonstrates `EvincedConfig` with `exclude_filters` at the config level rather than at report time. |
+
+## SDK API summary
+
+| Symbol | Description |
+|--------|-------------|
+| `LicenseManager().setup_credentials(service_id, api_key)` | Authenticate (called in `conftest.py`) |
+| `EvincedAppiumDefaultRunner(driver, init_options=...)` | Context manager — wraps driver for the duration of the `with` block |
+| `runner.analyze()` | Capture the current screen state |
+| `runner.report()` | Generate and return a report from all captured screens |
+| `EvincedConfig(exclude_filters=[], include_filters=[])` | Scan configuration |
+| `ReportFilter([Severity.minor])` | Issue filter by severity |
+| `InitOptions(evinced_config=...)` | Bundles config into runner init |
+
+> **Note:** There is no `evStart`/`evStop` or `evAnalyze` in the mobile SDK.
+> The context manager pattern with multiple `analyze()` calls is the
+> continuous-mode equivalent. There is no separate labels API — use
+> `InitOptions.report_name` or CI environment variables to tag runs.

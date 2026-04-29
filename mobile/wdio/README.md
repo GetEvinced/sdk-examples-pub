@@ -1,23 +1,44 @@
-# Evinced WDIO SDK
+# Evinced WDIO Mobile SDK
 
-## 100% Test Coverage Using All Methods
+## Overview
 
-This repository ensures 100% test coverage using all available testing methods.
+This example demonstrates the Evinced WDIO Mobile SDK running on Sauce Labs. It uses `evincedWdioSDK.report()` (the mobile API) to generate an accessibility report at the end of each test.
 
-## Usage
+## Test Files
 
-To run the tests, ensure you are in the "js-wdio-mobile" directory and use the following command:
+- `test/specs/mobileTest.js` — launches the Evinced demo Android app on a Sauce Labs device and calls `evincedWdioSDK.report()`
+- `test/specs/webTest.js` — runs a web login test via the Appium driver and calls `evincedWdioSDK.report()` (excluded from the default run via `wdio.conf.js`)
 
 ## Getting started
 
 1. Clone the repository
-2. Install dependencies 
+2. Ensure you are in the `mobile/wdio` directory
+3. Install dependencies:
     ```bash
     npm install
     ```
-3. Ensure you add your `.npmrc` file and credentials
-4. If everything installed, you are ready to run `npm test`
+4. Add your `.npmrc` file with Evinced registry credentials
+5. Set the required environment variables:
+    ```bash
+    export SAUCE_USER=<your Sauce Labs username>
+    export SAUCE_ACCESS_KEY=<your Sauce Labs access key>
+    export EVINCED_SERVICE_ID=<your Evinced service ID>
+    export EVINCED_API_KEY=<your Evinced API key>
+    ```
+6. Run the tests:
+    ```bash
+    npm run wdio
+    ```
+
+## Sauce Labs Configuration
+
+Tests run on Sauce Labs using the `@wdio/sauce-service`. The configuration in `wdio.conf.js` uses:
+
+- `services: [["sauce"]]` — Sauce Labs service
+- `region: "us"` — Sauce Labs US region
+- `user` / `key` — read from `SAUCE_USER` / `SAUCE_ACCESS_KEY` environment variables
+- `"appium:app": "storage:filename=com.evinced.demoapp-MK.apk"` — app uploaded to Sauce Labs app storage
 
 ## Testing Framework
 
-This repository utilizes [WebdriverIO](https://webdriver.io/) to test React-based components that follow best practices with Evinced. This test also runs on Sauce Labs, please refer to the `wdio.conf.js/ts` file and check the `services` key to understand how the connection is established.
+This example uses [WebdriverIO](https://webdriver.io/) with the Mocha framework and Appium targeting an Android emulator on Sauce Labs.
