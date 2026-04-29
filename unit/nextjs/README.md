@@ -21,6 +21,39 @@ npx --package=@evinced/unit-tester login
 
 Once you have run the above command you'll be asked to validate a code between the browser and your terminal and you'll be good to go
 
+## Test Files
+
+| File | SDK Method | Notes |
+|------|-----------|-------|
+| `components/Accordion.test.js` | `analyzeAccordion` | |
+| `components/Breadcrumbs.test.js` | `analyzeBreadcrumb` | |
+| `components/Button.test.js` | `analyzeButton` | |
+| `components/Carousel.test.js` | `analyzeCarousel` | |
+| `components/Checkbox.test.js` | `analyzeCheckbox` | |
+| `components/Combobox.test.js` | `analyzeCombobox` | |
+| `components/Datagrid.test.js` | `analyzeDataGrid` | |
+| `components/Disclosure.test.js` | `analyzeDisclosure` | |
+| `components/Feed.test.js` | `analyzeFeed` | |
+| `components/LabelCheck.test.js` | `analyzeButton` | Validates that the component has a correct accessible label |
+| `components/Link.test.js` | `analyzeLink` | |
+| `components/Listbox.test.js` | `analyzeListbox` | |
+| `components/Menu.test.js` | `analyzeMenu` | |
+| `components/MenuButton.test.js` | `analyzeMenuButton` | |
+| `components/Meter.test.js` | `analyzeMeter` | |
+| `components/Modal.test.js` | `analyzeModal` | |
+| `components/MultipleComponents.test.js` | `analyzeButton` | Iterates over multiple button elements in one test |
+| `components/MultiThumbSlider.test.js` | `analyzeMultiThumbSlider` | |
+| `components/RadioGroup.test.js` | `analyzeRadioGroup` | |
+| `components/SiteNavigation.test.js` | `analyzeSiteNavigation` | |
+| `components/Slider.test.js` | `analyzeSlider` | |
+| `components/SpinButton.test.js` | `analyzeSpinButton` | |
+| `components/Switch.test.js` | `analyzeSwitch` | |
+| `components/Table.test.js` | `analyzeTable` | |
+| `components/TabList.test.js` | `analyzeTabList` | |
+| `components/TextInput.test.js` | `analyzeTextInput` | |
+| `components/ToggleButton.test.js` | `analyzeToggleButton` | |
+| `components/ToggleSwitch.test.js` | `analyzeSwitch` | |
+
 ## Testing Framework
 
 This repository utilizes [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) and Jest to test React-based components that follow best practices.

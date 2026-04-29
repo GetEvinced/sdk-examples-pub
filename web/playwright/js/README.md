@@ -12,5 +12,15 @@ This repository demonstrates the use of the Evinced SDK with examples in both Ty
 3. Ensure you add your `.npmrc` file and credentials
 4. If everything installed, you are ready to run `npx playwright test`
 
+## Test Files
+
+| File | Description |
+|------|-------------|
+| `tests/evAnalyze.spec.js` | Single-shot accessibility scan using `evAnalyze()`. Saves results as HTML and JSON. |
+| `tests/evStartStop.spec.js` | Continuous scan using `evStart()` / `evStop()`. Shows how to attach labels and opt in to platform upload. |
+| `tests/evHooks.spec.js` | Multiple tests using Playwright `beforeEach`/`afterEach` hooks. Shows labels and platform upload on every test. |
+| `tests/evFailIfCritical.spec.js` | Filters issues by severity and asserts on count. Use this pattern to fail builds on critical issues. |
+| `tests/evFixture.spec.js` | Demonstrates the Playwright fixture pattern — wraps every test with continuous scanning via a shared `evincedContMode` fixture. |
+
 ## To note
 The SDK makes use of all features that are available through the Evinced SDK, we have screenshots, test reports, hooks, use of each available method, and parallel testing. The typescript example also makes use of a cool aggregated reports feature with screenshots.
