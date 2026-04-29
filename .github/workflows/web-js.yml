@@ -1,0 +1,99 @@
+name: Web SDK Tests — JavaScript/TypeScript
+
+on:
+  push:
+    branches: [sdk-examples-pub-v2, main]
+    paths:
+      - 'web/playwright/js/**'
+      - 'web/playwright/ts/**'
+      - 'web/cypress/js/**'
+      - 'web/cypress/ts/**'
+      - 'web/wdio/js/**'
+      - 'web/wdio/ts/**'
+      - 'web/selenium/js/**'
+      - 'web/testcafe/**'
+      - '.github/workflows/web-js.yml'
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        example:
+          - { folder: "web/playwright/js", runner: "playwright" }
+          - { folder: "web/playwright/ts", runner: "playwright" }
+          - { folder: "web/cypress/js",    runner: "cypress" }
+          - { folder: "web/cypress/ts",    runner: "cypress" }
+          - { folder: "web/wdio/js",       runner: "wdio" }
+          - { folder: "web/wdio/ts",       runner: "wdio" }
+          - { folder: "web/selenium/js",   runner: "selenium" }
+          - { folder: "web/testcafe",      runner: "testcafe" }
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Configure .npmrc
+        run: echo "${{ secrets.EVINCED_NPM_TOKEN }}" > ~/.npmrc
+
+      - name: Install Chrome
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y google-chrome-stable
+
+      - name: Install dependencies
+        working-directory: ${{ matrix.example.folder }}
+        run: npm install
+
+      - name: Install matching Chromedriver
+        if: matrix.example.runner == 'selenium'
+        working-directory: ${{ matrix.example.folder }}
+        run: |
+          CHROME_VERSION=$(google-chrome --version | grep -oP '\d+' | head -1)
+          npm install chromedriver@$CHROME_VERSION
+
+      - name: Install Playwright browsers
+        if: matrix.example.runner == 'playwright'
+        working-directory: ${{ matrix.example.folder }}
+        run: npx playwright install --with-deps chromium
+
+      - name: Run tests
+        working-directory: ${{ matrix.example.folder }}
+        env:
+          EVINCED_SERVICE_ID: ${{ secrets.EVINCED_SERVICE_ID }}
+          EVINCED_API_KEY: ${{ secrets.EVINCED_API_KEY }}
+        run: |
+          case "${{ matrix.example.runner }}" in
+            playwright) npx playwright test ;;
+            cypress)    npm run test ;;
+            wdio)       npm run wdio ;;
+            selenium)   npm test ;;
+            testcafe)   npm test ;;
+          esac
+
+      - name: Upload HTML reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: report-${{ matrix.example.folder }}
+          path: ${{ matrix.example.folder }}/**/*.html
+          retention-days: 14
+
+      - name: Notify Slack
+        if: always()
+        uses: act10ns/slack@v2
+        with:
+          status: ${{ job.status }}
+          channel: "#workflows"
+          message: "${{ matrix.example.folder }} — ${{ job.status }}"
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
