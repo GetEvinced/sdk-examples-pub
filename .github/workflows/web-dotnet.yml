@@ -1,0 +1,57 @@
+name: Web SDK Tests — .NET
+
+on:
+  push:
+    branches: [sdk-examples-pub-v2, main]
+    paths:
+      - 'web/selenium/dotnet/**'
+      - '.github/workflows/web-dotnet.yml'
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Install Chrome
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y google-chrome-stable
+
+      - name: Restore dependencies
+        working-directory: web/selenium/dotnet
+        run: dotnet restore
+
+      - name: Run tests
+        working-directory: web/selenium/dotnet
+        env:
+          EVINCED_SERVICE_ID: ${{ secrets.EVINCED_SERVICE_ID }}
+          EVINCED_API_KEY: ${{ secrets.EVINCED_API_KEY }}
+        run: dotnet test --logger "trx;LogFileName=results.trx"
+
+      - name: Upload reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: report-selenium-dotnet
+          path: web/selenium/dotnet/**/*.trx
+          retention-days: 14
+
+      - name: Notify Slack
+        if: always()
+        uses: act10ns/slack@v2
+        with:
+          status: ${{ job.status }}
+          channel: "#workflows"
+          message: "web/selenium/dotnet — ${{ job.status }}"
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}

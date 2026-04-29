@@ -1,0 +1,74 @@
+name: Web SDK Tests — Java
+
+on:
+  push:
+    branches: [sdk-examples-pub-v2, main]
+    paths:
+      - 'web/playwright-java/**'
+      - 'web/selenium/java/**'
+      - '.github/workflows/web-java.yml'
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        example:
+          - { folder: "web/playwright-java/maven",  build: "maven" }
+          - { folder: "web/playwright-java/gradle", build: "gradle" }
+          - { folder: "web/selenium/java",          build: "maven" }
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: temurin
+
+      - name: Install Chrome
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y google-chrome-stable
+
+      - name: Run tests (Maven)
+        if: matrix.example.build == 'maven'
+        working-directory: ${{ matrix.example.folder }}
+        env:
+          EVINCED_SERVICE_ID: ${{ secrets.EVINCED_SERVICE_ID }}
+          EVINCED_API_KEY: ${{ secrets.EVINCED_API_KEY }}
+        run: mvn test -B
+
+      - name: Run tests (Gradle)
+        if: matrix.example.build == 'gradle'
+        working-directory: ${{ matrix.example.folder }}
+        env:
+          EVINCED_SERVICE_ID: ${{ secrets.EVINCED_SERVICE_ID }}
+          EVINCED_API_KEY: ${{ secrets.EVINCED_API_KEY }}
+        run: ./gradlew test
+
+      - name: Upload reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: report-${{ matrix.example.folder }}
+          path: |
+            ${{ matrix.example.folder }}/target/surefire-reports/
+            ${{ matrix.example.folder }}/build/reports/
+          retention-days: 14
+
+      - name: Notify Slack
+        if: always()
+        uses: act10ns/slack@v2
+        with:
+          status: ${{ job.status }}
+          channel: "#workflows"
+          message: "${{ matrix.example.folder }} — ${{ job.status }}"
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}

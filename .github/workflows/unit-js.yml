@@ -1,0 +1,79 @@
+name: Unit Tester Tests — JavaScript
+
+on:
+  push:
+    branches: [sdk-examples-pub-v2, main]
+    paths:
+      - 'unit/**'
+      - 'lit-unit-tester/**'
+      - 'vitest-react-unit-tester/**'
+      - 'vitest-browser-unit-tester/**'
+      - 'wtr-unit-tester/**'
+      - 'playwright-bdd/**'
+      - '.github/workflows/unit-js.yml'
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        example:
+          - unit/react
+          - unit/nextjs
+          - unit/angular/testbed
+          - unit/angular/testing-library
+          - lit-unit-tester
+          - vitest-react-unit-tester
+          - vitest-browser-unit-tester
+          - wtr-unit-tester
+          - playwright-bdd
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Configure .npmrc
+        run: echo "${{ secrets.EVINCED_NPM_TOKEN }}" > ~/.npmrc
+
+      - name: Install dependencies
+        working-directory: ${{ matrix.example }}
+        run: npm install
+
+      - name: Install Playwright browsers
+        if: matrix.example == 'playwright-bdd'
+        working-directory: ${{ matrix.example }}
+        run: npx playwright install --with-deps chromium
+
+      - name: Run tests
+        working-directory: ${{ matrix.example }}
+        env:
+          EVINCED_SERVICE_ID: ${{ secrets.EVINCED_SERVICE_ID }}
+          EVINCED_API_KEY: ${{ secrets.EVINCED_API_KEY }}
+        run: npm test
+
+      - name: Upload reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: report-${{ matrix.example }}
+          path: ${{ matrix.example }}/**/*.html
+          retention-days: 14
+
+      - name: Notify Slack
+        if: always()
+        uses: act10ns/slack@v2
+        with:
+          status: ${{ job.status }}
+          channel: "#workflows"
+          message: "${{ matrix.example }} — ${{ job.status }}"
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
