@@ -6,9 +6,8 @@ import com.evinced.EvincedSDK;
 import com.evinced.Report;
 import com.evinced.FileFormat;
 import com.evinced.impl.Global;
-import com.evinced.impl.config.EvConfig;
 import com.microsoft.playwright.Browser;
-import com.microsoft.playwright.Playwright;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -16,26 +15,22 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class EvincedPlaywrightScreenshotTest {
 
+    private static Browser browser;
+
     @BeforeAll
     static void setup() {
+        browser = PlaywrightTestSetup.playwright.chromium().launch();
         Global.config.setEnableScreenshots(true);
+    }
+
+    @AfterAll
+    static void teardown() {
+        // browser.close() hangs in SDK 1.6.1 after scans; JVM exit cleans up.
     }
 
     @Test
     void accessibilityScan_withScreenshots() {
-
-        EvincedSDK.setCredentials(
-                System.getenv("EVINCED_SERVICE_ID"),
-                System.getenv("EVINCED_API_KEY")
-        );
-
-        Playwright playwright = Playwright.create();
-        Browser browser = playwright.chromium().launch();
-
         EvPage page = EvPageFactory.create(browser.newPage());
-
-        // EvConfig config = new EvConfig();
-        // config.setEnableScreenshots(true);
 
         page.evStart();
 
@@ -52,8 +47,6 @@ public class EvincedPlaywrightScreenshotTest {
         );
 
         assertNotNull(report);
-
-        browser.close();
-        playwright.close();
+        // page.close() hangs in SDK 1.6.1 after scans; JVM exit cleans up.
     }
 }

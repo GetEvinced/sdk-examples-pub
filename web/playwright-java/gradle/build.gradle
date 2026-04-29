@@ -29,4 +29,8 @@ dependencies {
 
 test {
     useJUnitPlatform()
+    // Fork a new JVM for every test class. SDK 1.6.1 maintains JVM-global scan
+    // state that causes evStop() to hang when multiple classes share one JVM.
+    forkEvery = 1
+    maxParallelForks = 1
 }

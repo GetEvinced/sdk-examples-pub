@@ -6,8 +6,9 @@ import com.evinced.EvincedSDK;
 import com.evinced.FileFormat;
 import com.evinced.Report;
 import com.microsoft.playwright.Browser;
-import com.microsoft.playwright.Playwright;
 import com.microsoft.playwright.options.LoadState;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -26,6 +27,18 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
  */
 public class EvincedStartStopTest {
 
+    private static Browser browser;
+
+    @BeforeAll
+    static void launchBrowser() {
+        browser = PlaywrightTestSetup.playwright.chromium().launch();
+    }
+
+    @AfterAll
+    static void closeBrowser() {
+        // browser.close() hangs in SDK 1.6.1 after scans; JVM exit cleans up.
+    }
+
     private interface Selectors {
         String HOUSE_DROPDOWN =
                 "#gatsby-focus-wrapper > main > div.wrapper-banner > div.filter-container > div:nth-child(1) > div > div.dropdown.line";
@@ -35,50 +48,39 @@ public class EvincedStartStopTest {
                 "#gatsby-focus-wrapper > main > div.wrapper-banner > div.filter-container > div:nth-child(2) > div > div.dropdown.line";
         String CANADA_OPTION =
                 "#gatsby-focus-wrapper > main > div.wrapper-banner > div.filter-container > div:nth-child(2) > div > ul > li:nth-child(1)";
-        String SEARCH_BUTTON =
-                "#gatsby-focus-wrapper > main > div.wrapper-banner > div.filter-container > a";
     }
 
     @Test
     void evStartStop_capturesInteractions() {
-        EvincedSDK.setCredentials(
-                System.getenv("EVINCED_SERVICE_ID"),
-                System.getenv("EVINCED_API_KEY"));
+        EvPage page = EvPageFactory.create(browser.newPage());
 
-        try (Playwright playwright = Playwright.create()) {
-            Browser browser = playwright.chromium().launch();
-            try {
-                EvPage page = EvPageFactory.create(browser.newPage());
+        // Begin continuous accessibility scan
+        page.evStart();
 
-                // Begin continuous accessibility scan
-                page.evStart();
+        page.navigate("https://demo.evinced.com/");
+        page.waitForLoadState(LoadState.NETWORKIDLE);
 
-                page.navigate("https://demo.evinced.com/");
-                page.waitForLoadState(LoadState.NETWORKIDLE);
+        // Interact with the page — the scan captures issues across all states.
+        // The demo site SPA auto-navigates to results once both filters are set.
+        // Clicking the search button generates a date-relative URL whose API call
+        // never reaches NETWORKIDLE, so we rely on the SPA transition instead.
+        page.click(Selectors.HOUSE_DROPDOWN);
+        page.click(Selectors.TENT_OPTION);
+        page.click(Selectors.LOCATION_DROPDOWN);
+        page.click(Selectors.CANADA_OPTION);
 
-                // Interact with the page — the scan captures issues across all states
-                page.click(Selectors.HOUSE_DROPDOWN);
-                page.click(Selectors.TENT_OPTION);
-                page.click(Selectors.LOCATION_DROPDOWN);
-                page.click(Selectors.CANADA_OPTION);
-                page.click(Selectors.SEARCH_BUTTON);
-                page.waitForLoadState(LoadState.NETWORKIDLE);
+        // Stop the scan and retrieve results
+        Report report = page.evStop();
+        assertNotNull(report, "Evinced report should not be null");
 
-                // Stop the scan and retrieve results
-                Report report = page.evStop();
-                assertNotNull(report, "Evinced report should not be null");
+        System.out.println("Issues found: " + report.getIssues().size());
 
-                System.out.println("Issues found: " + report.getIssues().size());
-
-                // Save the HTML report
-                EvincedSDK.evSaveFile(
-                        "build/evinced-report-startstop",
-                        report,
-                        FileFormat.HTML
-                );
-            } finally {
-                browser.close();
-            }
-        }
+        // Save the HTML report
+        EvincedSDK.evSaveFile(
+                "build/evinced-report-startstop",
+                report,
+                FileFormat.HTML
+        );
+        // page.close() hangs in SDK 1.6.1 after scans; JVM exit cleans up.
     }
 }
