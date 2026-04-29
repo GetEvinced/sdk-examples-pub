@@ -26,6 +26,7 @@ To run the tests, ensure you are in the "js-selenium-web" directory and use the 
 | `test/evStartStop.js` | Continuous scan with `evStart`/`evStop`; saves HTML and JSON reports |
 | `test/evHooks.js` | Mocha `beforeEach`/`afterEach` hooks wrapping multiple tests; `evStart` in setup, `evStop` + file save in teardown |
 | `test/evUploadToPlatform.js` | Demonstrates opt-in upload to Evinced Platform via `uploadToPlatform: true` on a single scan |
+| `test/evFailIfCritical.js` | Filters issues by severity and asserts on count. Use this pattern to fail builds on critical issues. |
 
 ## Testing Framework
 

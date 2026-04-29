@@ -17,6 +17,7 @@ https://developer.evinced.com/sdks-for-web-apps/testcafe-js-sdk#getstarted
 | File | Description |
 |------|-------------|
 | `tests/evAnalyze.test.js` | Single-page scan using `evAnalyze`; saves HTML and JSON reports with labels |
-| `tests/evStartevStop.test.js` | Continuous scan with `evStart`/`evStop` across user interactions; saves HTML report |
+| `tests/evStartStop.test.js` | Continuous scan with `evStart`/`evStop` across user interactions; saves HTML report |
 | `tests/evHooks.test.js` | Fixture-level `beforeEach`/`afterEach` hooks; `evStart` in setup, `evStop` + HTML/JSON save in teardown (`uploadToPlatform` opt-in, off by default) |
+| `tests/evFailIfCritical.test.js` | Filters issues by severity and asserts on count. Use this pattern to fail builds on critical issues. |
 | `tests/skipValidations.test.js` | Demonstrates filtering issues by selector, URL regex, and validation type via `skipValidations` |

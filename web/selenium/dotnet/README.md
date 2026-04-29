@@ -7,10 +7,10 @@ Developer Docs: https://developer.evinced.com/sdks-for-web-apps/selenium-csharp-
 
 | Class | Pattern | Description |
 |---|---|---|
-| `EvAnalyzeTest` | evAnalyze | One-shot scan: navigate, call `EvAnalyze()`, assert zero issues |
-| `EvDemoInteractionTest` | evStartStop | Continuous scan: `EvStart()` before interactions, `EvStop()` after, save HTML + JSON reports |
-| `EvHooksTest` | evHooks | `[SetUp]`/`[TearDown]` lifecycle — each test gets a fresh session; report saved in `[TearDown]` |
-| `EvScreenshotTest` | screenshot | Combines a browser screenshot with an `EvAnalyze()` scan |
+| `EvAnalyze` | evAnalyze | One-shot scan: navigate, call `EvAnalyze()`, assert zero issues |
+| `EvStartStop` | evStartStop | Continuous scan: `EvStart()` before interactions, `EvStop()` after, save HTML + JSON reports |
+| `EvHooks` | evHooks | `[SetUp]`/`[TearDown]` lifecycle — each test gets a fresh session; report saved in `[TearDown]` |
+| `EvScreenshot` | screenshot | Combines a browser screenshot with an `EvAnalyze()` scan |
 
 ## Shared helpers
 
