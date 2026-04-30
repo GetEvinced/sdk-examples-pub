@@ -1,7 +1,8 @@
 package example;
 
 import java.net.URL;
-import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.openqa.selenium.remote.DesiredCapabilities;
 
@@ -13,25 +14,35 @@ import io.appium.java_client.remote.MobileCapabilityType;
 /**
  * Shared Appium setup for all test classes.
  *
- * The APK lives in mobile/appium/python/ and is referenced via a relative
- * path from the Maven project root (mobile/appium/java/).
+ * Connects to Sauce Labs. The APK must be uploaded to Sauce Labs storage
+ * (storage:filename=com.evinced.demoapp-MK.apk) before running — the
+ * mobile-jvm.yml CI workflow handles this automatically.
+ *
+ * For local runs: upload the APK once via the Sauce Labs Storage API or UI,
+ * then set SAUCE_USER and SAUCE_ACCESS_KEY and run mvn test.
  */
 class TestSetup {
 
     static EvincedAppiumAndroidDriver createDriver() throws Exception {
-        String apkPath = Paths.get(System.getProperty("user.dir"),
-                "..", "python", "com.evinced.demoapp-MK.apk")
-                .toAbsolutePath().normalize().toString();
-
         DesiredCapabilities caps = new DesiredCapabilities();
         caps.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
         caps.setCapability(MobileCapabilityType.AUTOMATION_NAME, "UIAutomator2");
-        caps.setCapability(MobileCapabilityType.DEVICE_NAME, "Pixel_9_Pro_XL_API_35");
-        caps.setCapability("app", apkPath);
-        caps.setCapability("noReset", true);
-        caps.setCapability("uiautomator2ServerLaunchTimeout", 60000);
+        caps.setCapability(MobileCapabilityType.DEVICE_NAME, "Android GoogleAPI Emulator");
+        caps.setCapability(MobileCapabilityType.PLATFORM_VERSION, "15.0");
+        caps.setCapability("app", "storage:filename=com.evinced.demoapp-MK.apk");
+        caps.setCapability("noReset", false);
+        caps.setCapability("appium:uiautomator2ServerLaunchTimeout", 60000);
 
-        return new EvincedAppiumAndroidDriver(new URL("http://127.0.0.1:4723/"), caps);
+        Map<String, Object> sauceOptions = new HashMap<>();
+        sauceOptions.put("username", System.getenv("SAUCE_USER"));
+        sauceOptions.put("accessKey", System.getenv("SAUCE_ACCESS_KEY"));
+        sauceOptions.put("appiumVersion", "2.11.0");
+        sauceOptions.put("build", "Examples Repository");
+        sauceOptions.put("name", "Java Appium Evinced Tests");
+        caps.setCapability("sauce:options", sauceOptions);
+
+        return new EvincedAppiumAndroidDriver(
+                new URL("https://ondemand.us-west-1.saucelabs.com/wd/hub"), caps);
     }
 
     static void setupCredentials(EvincedAppiumSdk sdk) {

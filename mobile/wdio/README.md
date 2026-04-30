@@ -3,10 +3,14 @@
 ## Prerequisites
 
 - Node.js 18+
+- Evinced service account credentials (`EVINCED_SERVICE_ID` and `EVINCED_API_KEY`) or your own. Feel free to also edit the config or use `wdio.conf.js` to run locally.
+
+**For local runs only:**
 - Android Studio with an emulator configured (`Pixel_9_Pro_XL_API_35` AVD by default)
 - Appium server installed (`npm install -g appium`)
 - Appium UIAutomator2 driver (`appium driver install uiautomator2`)
-- Evinced service account credentials (`EVINCED_SERVICE_ID` and `EVINCED_API_KEY`)
+
+The `.npmrc` file must contain your Evinced registry credentials to install `@evinced/wdio-mobile-sdk`.
 
 ## Setup
 
@@ -17,9 +21,9 @@ export EVINCED_SERVICE_ID=your_service_id
 export EVINCED_API_KEY=your_api_key
 ```
 
-The `.npmrc` file must contain your Evinced registry credentials to install `@evinced/wdio-mobile-sdk`.
-
 ## Running the tests
+
+### Locally (against a local Appium server + emulator)
 
 1. Start Appium: `appium`
 2. Start your emulator: `~/Library/Android/sdk/emulator/emulator -avd Pixel_9_Pro_XL_API_35`
@@ -31,6 +35,29 @@ The `.npmrc` file must contain your Evinced registry credentials to install `@ev
    ```bash
    npx wdio run ./wdio.conf.js --spec test/specs/example.spec.js
    ```
+
+### On Sauce Labs
+
+Set your Sauce Labs credentials and run against `wdio.sauce.conf.js`:
+
+```bash
+export SAUCE_USER=your_sauce_username
+export SAUCE_ACCESS_KEY=your_sauce_access_key
+
+npm run wdio:sauce
+```
+
+The Sauce Labs config (`wdio.sauce.conf.js`) uses `storage:filename=com.evinced.demoapp-MK.apk` to reference the demo app, so the APK must be uploaded to Sauce Labs storage before running. In CI this is handled automatically by a pre-test step that calls the Sauce Labs Storage API:
+
+```bash
+curl -u "$SAUCE_USER:$SAUCE_ACCESS_KEY" \
+  -X POST "https://api.us-west-1.saucelabs.com/v1/storage/upload" \
+  -H "Content-Type: multipart/form-data" \
+  -F "payload=@com.evinced.demoapp-MK.apk" \
+  -F "name=com.evinced.demoapp-MK.apk"
+```
+
+For local Sauce Labs runs, upload the APK manually once using the same command (or via the Sauce Labs UI) and the `storage:filename=` reference will resolve on subsequent runs.
 
 ## Test files
 
