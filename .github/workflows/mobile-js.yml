@@ -29,6 +29,18 @@ jobs:
         working-directory: mobile/wdio
         run: npm install
 
+      - name: Upload APK to Sauce Labs storage
+        working-directory: mobile/wdio
+        env:
+          SAUCE_USER: ${{ secrets.SAUCE_USER }}
+          SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
+        run: |
+          curl -u "$SAUCE_USER:$SAUCE_ACCESS_KEY" \
+            -X POST "https://api.us-west-1.saucelabs.com/v1/storage/upload" \
+            -H "Content-Type: multipart/form-data" \
+            -F "payload=@com.evinced.demoapp-MK.apk" \
+            -F "name=com.evinced.demoapp-MK.apk"
+
       - name: Run tests on Sauce Labs
         working-directory: mobile/wdio
         env:
