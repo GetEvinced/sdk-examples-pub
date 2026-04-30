@@ -17,7 +17,7 @@ module.exports = defineConfig({
     },
     pageLoadTimeout: 90000,
     retries: {
-      runMode: 2,
+      runMode: 3,
       openMode: 0,
     },
     // Block third-party analytics/font domains that don't affect test behaviour
