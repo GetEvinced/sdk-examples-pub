@@ -20,7 +20,7 @@ def driver():
     caps = UiAutomator2Options()
     caps.platform_name = "Android"
     caps.device_name = "API_36"
-    caps.app = os.environ["APP_PATH"]
+    caps.app = os.path.join(os.path.dirname(__file__), "..", "com.evinced.demoapp-MK.apk")
 
     driver = webdriver.Remote("http://127.0.0.1:4723", options=caps)
     yield driver
