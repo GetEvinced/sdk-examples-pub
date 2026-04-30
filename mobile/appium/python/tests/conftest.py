@@ -1,7 +1,7 @@
 import pytest
 import os
 from appium import webdriver
-from appium.options import AppiumOptions
+from appium.options.android import UiAutomator2Options
 from evinced_appium_sdk import LicenseManager
 
 SERVICE_ID = os.environ["EVINCED_SERVICE_ID"]
@@ -15,11 +15,11 @@ SAUCE_ACCESS_KEY = os.environ.get("SAUCE_ACCESS_KEY")
 def driver():
     LicenseManager().setup_credentials(service_id=SERVICE_ID, api_key=API_KEY)
 
-    options = AppiumOptions()
-    options.set_capability("platformName", "Android")
-    options.set_capability("appium:automationName", "UiAutomator2")
+    options = UiAutomator2Options()
 
     if SAUCE_USER and SAUCE_ACCESS_KEY:
+        # Use set_capability for Appium-prefixed caps — property setters on
+        # UiAutomator2Options don't all serialize into to_capabilities().
         options.set_capability("appium:deviceName", "Android GoogleAPI Emulator")
         options.set_capability("appium:platformVersion", "15.0")
         options.set_capability("appium:app", "storage:filename=com.evinced.demoapp-MK.apk")
