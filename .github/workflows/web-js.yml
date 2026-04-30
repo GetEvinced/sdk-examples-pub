@@ -66,6 +66,10 @@ jobs:
         working-directory: ${{ matrix.example.folder }}
         run: npx playwright install --with-deps chromium
 
+      - name: Wait for demo site
+        if: matrix.example.runner == 'cypress'
+        run: npx --yes wait-on --timeout 120000 --interval 5000 https://demo.evinced.com
+
       - name: Run tests
         working-directory: ${{ matrix.example.folder }}
         env:
