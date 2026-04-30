@@ -1,7 +1,7 @@
 import pytest
 import os
 from appium import webdriver
-from appium.options.android import UiAutomator2Options
+from appium.options import AppiumOptions
 from evinced_appium_sdk import LicenseManager
 
 SERVICE_ID = os.environ["EVINCED_SERVICE_ID"]
@@ -15,26 +15,28 @@ SAUCE_ACCESS_KEY = os.environ.get("SAUCE_ACCESS_KEY")
 def driver():
     LicenseManager().setup_credentials(service_id=SERVICE_ID, api_key=API_KEY)
 
-    caps = UiAutomator2Options()
-    caps.platform_name = "Android"
-    caps.automation_name = "UIAutomator2"
+    options = AppiumOptions()
+    options.set_capability("platformName", "Android")
+    options.set_capability("appium:automationName", "UiAutomator2")
 
     if SAUCE_USER and SAUCE_ACCESS_KEY:
-        caps.device_name = "Android GoogleAPI Emulator"
-        caps.platform_version = "15.0"
-        caps.app = "storage:filename=com.evinced.demoapp-MK.apk"
-        caps.set_capability("sauce:options", {
+        options.set_capability("appium:deviceName", "Android GoogleAPI Emulator")
+        options.set_capability("appium:platformVersion", "15.0")
+        options.set_capability("appium:app", "storage:filename=com.evinced.demoapp-MK.apk")
+        options.set_capability("sauce:options", {
+            "username": SAUCE_USER,
+            "accessKey": SAUCE_ACCESS_KEY,
             "appiumVersion": "2.11.0",
             "build": "Examples Repository",
             "name": "Python Appium Evinced Tests",
         })
-        url = f"https://{SAUCE_USER}:{SAUCE_ACCESS_KEY}@ondemand.us-west-1.saucelabs.com/wd/hub"
+        url = "https://ondemand.us-west-1.saucelabs.com/wd/hub"
     else:
-        caps.device_name = "API_36"
-        caps.app = os.path.join(os.path.dirname(__file__), "..", "com.evinced.demoapp-MK.apk")
+        options.set_capability("appium:deviceName", "API_36")
+        options.set_capability("appium:app", os.path.join(os.path.dirname(__file__), "..", "com.evinced.demoapp-MK.apk"))
         url = "http://127.0.0.1:4723"
 
-    d = webdriver.Remote(url, options=caps)
+    d = webdriver.Remote(url, options=options)
     yield d
     try:
         d.quit()
