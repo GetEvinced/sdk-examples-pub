@@ -37,3 +37,17 @@ targets:
         SWIFT_VERSION: "5.9"
         PRODUCT_BUNDLE_IDENTIFIER: com.evinced.examples.uitests
         TEST_TARGET_NAME: EvincedXCUIExamplesApp
+
+schemes:
+  EvincedXCUIExamplesApp:
+    build:
+      targets:
+        EvincedXCUIExamplesApp: all
+        EvincedXCUIExamplesUITests: [test]
+    test:
+      targets:
+        - EvincedXCUIExamplesUITests
+    run:
+      config: Debug
+    archive:
+      config: Release
