@@ -13,7 +13,8 @@ suites:
       instrumentationArgs:
         EVINCED_SERVICE_ID: $EVINCED_SERVICE_ID
         EVINCED_API_KEY: $EVINCED_API_KEY
-    emulators:
-      - name: Android GoogleAPI Emulator
-        platformVersions:
-          - "15.0"
+    devices:
+      - name: "Google Pixel.*"
+        platformVersion: "14"
+        options:
+          deviceType: PHONE
