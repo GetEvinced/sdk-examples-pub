@@ -47,3 +47,8 @@ tmp
 .vscode/
 .claude/
 docs
+
+# Dated/rotated log files
+**/EvincedLogs/evincedAllLogs-*.log
+**/EvincedLogs/evincedErrorsLogs-*.log
+**/*.log.-*.gz

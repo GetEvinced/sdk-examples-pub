@@ -5,41 +5,34 @@ from evinced_appium_sdk import EvincedAppiumDefaultRunner, InitOptions
 
 def test_multi_screen_example(driver):
     """
-    Demonstrates scanning multiple screens in one test by calling analyze()
-    after each navigation step, then calling report() to collect all results.
+    Demonstrates scanning multiple screens in one test: call analyze() after
+    each navigation step, then report_stored() to get one report per snapshot.
 
-    This is the closest equivalent to web evStart/evStop continuous mode:
-    the context manager keeps the runner alive across multiple screens, and
-    each analyze() call captures the current screen state.
-
-    NOTE: The Python mobile SDK does not expose a separate startAnalyze /
-    stopAnalyze API — use the context manager pattern with multiple analyze()
-    calls instead.
+    This is the closest equivalent to web evStart/evStop: the context manager
+    keeps the runner alive across screens, each analyze() captures that state,
+    and report_stored() returns a list — one entry per analyze() call.
     """
     init_options = InitOptions()
 
-    with EvincedAppiumDefaultRunner(driver, init_options=init_options) as runner:
-        # --- Screen 1: app launch / home screen ---
+    with EvincedAppiumDefaultRunner(driver, init_options) as runner:
+        # Screen 1: app launch / home screen
         time.sleep(3)
         runner.analyze()
 
-        # --- Screen 2: navigate deeper in the app ---
-        # Replace the locator below with one that matches your app under test
+        # Screen 2: navigate deeper in the app
         try:
             nav_element = driver.find_element(AppiumBy.ACCESSIBILITY_ID, "Next")
             nav_element.click()
             time.sleep(2)
         except Exception:
-            # If the element isn't present, skip navigation and still scan
             pass
         runner.analyze()
 
-        # Collect all captured scan results as a single report
-        report = runner.report()
+        # report_stored() returns a list — one report per analyze() call
+        reports = runner.report_stored()
 
-    # The report contains issues from both screens; assert none were found
-    assert not report.has_issues(), (
-        f"Accessibility issues found across screens. "
-        f"Total issues: {report.total_issues}. "
-        "See the generated Evinced report for details."
-    )
+    for i, report in enumerate(reports):
+        assert not report.has_issues(), (
+            f"Accessibility issues found on screen {i + 1}. "
+            "See the generated Evinced report for details."
+        )
