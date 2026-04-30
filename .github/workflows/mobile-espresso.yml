@@ -35,12 +35,15 @@ jobs:
       - name: Inspect test APK
         working-directory: mobile/espresso-gradle
         run: |
-          ls -lh app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
+          APK=app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
+          ls -lh $APK
           AAPT=$(find $ANDROID_HOME/build-tools -name "aapt" -type f | sort -V | tail -1)
-          echo "=== Instrumentation target ==="
-          $AAPT dump xmltree app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk AndroidManifest.xml | grep -A5 instrumentation || true
-          echo "=== DEX class count ==="
-          $AAPT list app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk | grep -c "\.dex" || true
+          echo "=== APK entries ==="
+          unzip -l $APK | grep -E "\.dex|AndroidManifest"
+          echo "=== Instrumentation manifest ==="
+          $AAPT dump xmltree $APK AndroidManifest.xml | grep -E "instrumentation|package|runner" || true
+          echo "=== Test classes in DEX ==="
+          unzip -p $APK classes.dex | strings | grep -E "^Lcom/evinced/examples" | sort || true
 
       - name: Upload demo APK to Sauce Labs storage
         env:
