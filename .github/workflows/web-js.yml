@@ -27,8 +27,10 @@ jobs:
         example:
           - { folder: "web/playwright/js", runner: "playwright", name: "web-playwright-js" }
           - { folder: "web/playwright/ts", runner: "playwright", name: "web-playwright-ts" }
-          - { folder: "web/cypress/js",    runner: "cypress",    name: "web-cypress-js" }
-          - { folder: "web/cypress/ts",    runner: "cypress",    name: "web-cypress-ts" }
+          # Cypress excluded from CI — tests against demo.evinced.com which is intermittently
+          # unreachable from GitHub Actions runners (ETIMEDOUT). Examples remain in web/cypress/.
+          # - { folder: "web/cypress/js",    runner: "cypress",    name: "web-cypress-js" }
+          # - { folder: "web/cypress/ts",    runner: "cypress",    name: "web-cypress-ts" }
           - { folder: "web/wdio/js",       runner: "wdio",       name: "web-wdio-js" }
           - { folder: "web/wdio/ts",       runner: "wdio",       name: "web-wdio-ts" }
           - { folder: "web/selenium/js",   runner: "selenium",   name: "web-selenium-js" }
@@ -65,10 +67,6 @@ jobs:
         if: matrix.example.runner == 'playwright'
         working-directory: ${{ matrix.example.folder }}
         run: npx playwright install --with-deps chromium
-
-      - name: Wait for demo site
-        if: matrix.example.runner == 'cypress'
-        run: npx --yes wait-on --timeout 120000 --interval 5000 https://demo.evinced.com
 
       - name: Run tests
         working-directory: ${{ matrix.example.folder }}
