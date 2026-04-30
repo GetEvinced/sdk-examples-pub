@@ -35,7 +35,7 @@ jobs:
         working-directory: web/selenium/dotnet
         env:
           EVINCED_SERVICE_ID: ${{ secrets.EVINCED_SERVICE_ID }}
-          EVINCED_API_KEY: ${{ secrets.EVINCED_API_KEY }}
+          EVINCED_WEB_OFFLINE_TOKEN: ${{ secrets.EVINCED_WEB_OFFLINE_TOKEN }}
         run: dotnet test --logger "trx;LogFileName=results.trx"
 
       - name: Upload reports
