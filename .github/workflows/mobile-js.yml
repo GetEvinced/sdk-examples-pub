@@ -35,11 +35,19 @@ jobs:
           SAUCE_USER: ${{ secrets.SAUCE_USER }}
           SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
         run: |
-          curl -u "$SAUCE_USER:$SAUCE_ACCESS_KEY" \
-            -X POST "https://api.us-west-1.saucelabs.com/v1/storage/upload" \
-            -H "Content-Type: multipart/form-data" \
-            -F "payload=@com.evinced.demoapp-MK.apk" \
-            -F "name=com.evinced.demoapp-MK.apk"
+          COUNT=$(curl -sf -u "$SAUCE_USER:$SAUCE_ACCESS_KEY" \
+            "https://api.us-west-1.saucelabs.com/v1/storage/files?q=com.evinced.demoapp-MK.apk" | \
+            jq '.totalItems // 0')
+          if [ "$COUNT" -eq "0" ]; then
+            echo "APK not found in Sauce Labs storage, uploading..."
+            curl -u "$SAUCE_USER:$SAUCE_ACCESS_KEY" \
+              -X POST "https://api.us-west-1.saucelabs.com/v1/storage/upload" \
+              -H "Content-Type: multipart/form-data" \
+              -F "payload=@com.evinced.demoapp-MK.apk" \
+              -F "name=com.evinced.demoapp-MK.apk"
+          else
+            echo "APK already in Sauce Labs storage (${COUNT} file(s)), skipping upload."
+          fi
 
       - name: Run tests on Sauce Labs
         working-directory: mobile/wdio
