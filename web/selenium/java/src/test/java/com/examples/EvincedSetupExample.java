@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import com.evinced.common.impl.configuration.LoggingConfiguration;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 import com.evinced.dto.configuration.EvincedConfiguration;
 import com.evinced.dto.results.Report;
@@ -31,7 +32,9 @@ public class EvincedSetupExample
     @Before
     public void setup() {
         WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless=new", "--no-sandbox", "--disable-dev-shm-usage");
+        driver = new ChromeDriver(options);
 
         // Add time for unique log folder per run
         LocalDate date = LocalDate.now();

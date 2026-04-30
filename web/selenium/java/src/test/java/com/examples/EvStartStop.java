@@ -11,6 +11,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -30,7 +31,9 @@ public class EvStartStop {
     @Test
     public void evStartStopExample() {
         WebDriverManager.chromedriver().setup();
-        ChromeDriver baseDriver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless=new", "--no-sandbox", "--disable-dev-shm-usage");
+        ChromeDriver baseDriver = new ChromeDriver(options);
 
         // Set offline credentials from environment variables
         EvincedSDK.setOfflineCredentials(

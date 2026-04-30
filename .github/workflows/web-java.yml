@@ -51,7 +51,11 @@ jobs:
           EVINCED_WEB_OFFLINE_TOKEN: ${{ secrets.EVINCED_WEB_OFFLINE_TOKEN }}
           EVINCED_ARTIFACTORY_USER: ${{ secrets.EVINCED_ARTIFACTORY_USER }}
           EVINCED_ARTIFACTORY_TOKEN: ${{ secrets.EVINCED_ARTIFACTORY_TOKEN }}
-        run: mvn test -B
+          SAUCE_USER: ${{ secrets.SAUCE_USER }}
+          SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
+        run: |
+          mkdir -p tmp
+          mvn test -B
 
       - name: Make gradlew executable
         if: matrix.example.build == 'gradle'
@@ -66,7 +70,9 @@ jobs:
           EVINCED_API_KEY: ${{ secrets.EVINCED_API_KEY }}
           EVINCED_ARTIFACTORY_USER: ${{ secrets.EVINCED_ARTIFACTORY_USER }}
           EVINCED_ARTIFACTORY_TOKEN: ${{ secrets.EVINCED_ARTIFACTORY_TOKEN }}
-        run: ./gradlew test
+        run: |
+          mkdir -p tmp
+          ./gradlew test
 
       - name: Upload reports
         if: always()

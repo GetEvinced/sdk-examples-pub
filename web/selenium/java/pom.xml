@@ -125,7 +125,6 @@
             <includes>
               <include>**/*.java</include>
             </includes>
-
           </configuration>
         </plugin>
         <plugin>
