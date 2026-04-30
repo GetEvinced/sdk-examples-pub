@@ -10,8 +10,8 @@ const { expect } = chai
 chai.use(evincedChaiPlugin)
 
 configure({
-  serviceAccountId: globalThis.__VITEST_ENV__?.AUTH_SERVICE_ID,
-  serviceAccountSecret: globalThis.__VITEST_ENV__?.AUTH_SECRET,
+  serviceAccountId: globalThis.__VITEST_ENV__?.EVINCED_SERVICE_ID,
+  serviceAccountSecret: globalThis.__VITEST_ENV__?.EVINCED_API_KEY,
 })
 
 function mountHtml(html) {

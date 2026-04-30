@@ -4,8 +4,8 @@ import { captureBrowserLog } from '@evinced/unit-tester/bin/browser-log-capture.
 const isDebug = process.env.DEBUG === 'true'
 
 const envForBrowser = {
-  AUTH_SERVICE_ID: process.env.AUTH_SERVICE_ID ?? '',
-  AUTH_SECRET: process.env.AUTH_SECRET ?? ''
+  EVINCED_SERVICE_ID: process.env.EVINCED_SERVICE_ID ?? '',
+  EVINCED_API_KEY: process.env.EVINCED_API_KEY ?? ''
 }
 
 export default {

@@ -9,11 +9,11 @@ import * as chai from 'https://esm.sh/chai@4'
 const { expect } = chai
 chai.use(evincedChaiPlugin)
 
-const { AUTH_SERVICE_ID, AUTH_SECRET } = window.__WTR_ENV__ ?? {}
+const { EVINCED_SERVICE_ID, EVINCED_API_KEY } = window.__WTR_ENV__ ?? {}
 
 configure({
-  serviceAccountId: AUTH_SERVICE_ID,
-  serviceAccountSecret: AUTH_SECRET,
+  serviceAccountId: EVINCED_SERVICE_ID,
+  serviceAccountSecret: EVINCED_API_KEY,
 })
 
 function mountHtml(html) {

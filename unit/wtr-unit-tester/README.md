@@ -30,4 +30,4 @@ To use authenticated Evinced APIs, install the SDK (e.g. via `.npmrc`; contact E
 npx --package=@evinced/unit-tester login
 ```
 
-You can also pass `AUTH_SERVICE_ID` and `AUTH_SECRET` via environment variables; they are exposed in the browser as `window.__WTR_ENV__`.
+You can also pass `EVINCED_SERVICE_ID` and `EVINCED_API_KEY` via environment variables; they are exposed in the browser as `window.__WTR_ENV__`.
