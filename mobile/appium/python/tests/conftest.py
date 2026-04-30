@@ -24,13 +24,11 @@ def driver():
         caps.platform_version = "15.0"
         caps.app = "storage:filename=com.evinced.demoapp-MK.apk"
         caps.set_capability("sauce:options", {
-            "username": SAUCE_USER,
-            "accessKey": SAUCE_ACCESS_KEY,
             "appiumVersion": "2.11.0",
             "build": "Examples Repository",
             "name": "Python Appium Evinced Tests",
         })
-        url = "https://ondemand.us-west-1.saucelabs.com/wd/hub"
+        url = f"https://{SAUCE_USER}:{SAUCE_ACCESS_KEY}@ondemand.us-west-1.saucelabs.com/wd/hub"
     else:
         caps.device_name = "API_36"
         caps.app = os.path.join(os.path.dirname(__file__), "..", "com.evinced.demoapp-MK.apk")
