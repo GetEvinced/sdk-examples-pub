@@ -81,7 +81,7 @@ jobs:
           esac
 
       - name: Upload HTML reports
-        if: always()
+        if: always() && matrix.example.runner != 'testcafe'
         uses: actions/upload-artifact@v4
         with:
           name: report-${{ matrix.example.name }}
