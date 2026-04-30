@@ -74,7 +74,7 @@ describe('Checkbox - Browser Vitest Test', () => {
 
       expect(results).to.be.an('array')
       expect(results).to.haveResult({
-        test: 'checkbox name',
+        test: 'accessible name',
         pass: false
       })
     })
