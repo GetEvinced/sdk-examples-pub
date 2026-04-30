@@ -37,6 +37,7 @@ jobs:
       - name: Install saucectl
         run: |
           curl -fsSL https://saucelabs.github.io/saucectl/install | bash
+          sudo mv ./bin/saucectl /usr/local/bin/saucectl
           saucectl --version
 
       - name: Run XCUITests on Sauce Labs
