@@ -6,9 +6,9 @@ public static class EvincedConfig
     public static void Initialize()
     {
         string serviceId = Environment.GetEnvironmentVariable("EVINCED_SERVICE_ID");
-        string authToken = Environment.GetEnvironmentVariable("EVINCED_WEB_OFFLINE_TOKEN");
+        string apiKey = Environment.GetEnvironmentVariable("EVINCED_API_KEY");
 
-        EvincedSDK.SetOfflineCredentials(serviceId, authToken);
+        EvincedSDK.SetCredentials(serviceId, apiKey);
 
         // To upload results to the Evinced Platform, set UploadToPlatform to true:
         // EvincedSDK.UploadToPlatform = true;
