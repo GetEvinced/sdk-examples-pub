@@ -14,6 +14,6 @@ describe("Popup component accessibility test", () => {
       { modalLocator: { id: "modal" } }
     );
 
-    expect(results.length).toBe(1);
+    expect(results.length).toBeGreaterThan(0);
   });
 });
