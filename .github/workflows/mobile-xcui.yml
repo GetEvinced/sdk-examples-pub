@@ -27,12 +27,17 @@ jobs:
       - name: Build for testing
         working-directory: mobile/xcui
         run: |
+          echo "=== Available schemes ==="
+          xcodebuild -project EvincedXCUIExamples.xcodeproj -list
+          echo "=== Building ==="
           xcodebuild build-for-testing \
             -project EvincedXCUIExamples.xcodeproj \
             -scheme EvincedXCUIExamplesApp \
             -sdk iphonesimulator \
             -destination 'generic/platform=iOS Simulator' \
             -derivedDataPath DerivedData
+          echo "=== Build products ==="
+          find DerivedData/Build/Products -maxdepth 3 -name "*.app" | sort
 
       - name: Install saucectl
         run: |
