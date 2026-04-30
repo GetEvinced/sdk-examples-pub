@@ -16,7 +16,7 @@ namespace EvincedCSharpTests
         {
             EvincedConfig.Initialize();
 
-            ChromeDriver baseDriver = new ChromeDriver();
+            ChromeDriver baseDriver = EvincedConfig.CreateDriver();
             IEvincedDriver driver = EvincedDriverFactory.Create(baseDriver);
 
             try

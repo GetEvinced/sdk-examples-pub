@@ -34,7 +34,7 @@ namespace EvincedCSharpTests
             // Reads EVINCED_SERVICE_ID and EVINCED_WEB_OFFLINE_TOKEN from environment variables
             EvincedConfig.Initialize();
 
-            baseDriver = new ChromeDriver();
+            baseDriver = EvincedConfig.CreateDriver();
             driver = EvincedDriverFactory.Create(baseDriver);
 
             // Navigate to the starting page before beginning the scan so the SDK

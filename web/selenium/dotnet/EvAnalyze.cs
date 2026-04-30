@@ -15,7 +15,7 @@ namespace EvincedCSharpTests
             EvincedConfig.Initialize();
 
             // Initialize Evinced WebDriver which wraps a ChromeDriver instance
-            IEvincedDriver driver = EvincedDriverFactory.Create(new ChromeDriver());
+            IEvincedDriver driver = EvincedDriverFactory.Create(EvincedConfig.CreateDriver());
 
             try
             {
