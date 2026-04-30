@@ -10,6 +10,12 @@ espresso:
 suites:
   - name: Evinced Espresso Tests
     testOptions:
+      class:
+        - com.evinced.examples.EvincedExampleTest
+        - com.evinced.examples.EvincedContinuousTest
+        - com.evinced.examples.EvincedMultiScreenTest
+        - com.evinced.examples.EvincedConfiguredTest
+        - com.evinced.examples.EvincedPlatformUploadTest
       instrumentationArgs:
         EVINCED_SERVICE_ID: $EVINCED_SERVICE_ID
         EVINCED_API_KEY: $EVINCED_API_KEY
