@@ -9,6 +9,7 @@ package-lock.json
 
 # Evinced generated reports
 evinced-reports/
+evinced_reports/
 js-wdio-mobile/evinced-reports
 playwright-bdd/evinced-reports
 
