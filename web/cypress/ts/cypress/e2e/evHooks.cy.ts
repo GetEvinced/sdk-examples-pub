@@ -1,5 +1,9 @@
 context("Evinced Demo Site tests", () => {
   beforeEach(() => {
+    // Visit the page before starting the Evinced engine — evStart requires an
+    // active page context and will fail on about:blank
+    cy.visit("https://demo.evinced.com/");
+
     // Add standard labels — applied to every test in this context block
     cy.addLabel({
       testName: Cypress.currentTest.title,
@@ -25,14 +29,13 @@ context("Evinced Demo Site tests", () => {
     cy.evStop({
       logIssues: true,
       // uploadToPlatform: true,
-    }).then((report) => {
-      console.log(JSON.stringify(report, null, 2));
-      cy.evSaveFile(report, "html", "cypress/reports/hooks-report.html");
+    }).then((issues) => {
+      cy.evSaveFile(issues, "html", "cypress/reports/hooks-report.html");
     });
   });
 
   it("Search Test", () => {
-    cy.visit("https://demo.evinced.com/");
+    // Page already loaded in beforeEach
     const BASE_FORM_SELECTOR =
       "#gatsby-focus-wrapper > main > div.wrapper-banner > div.filter-container";
     const SELECT_HOME_DROPDOWN = `${BASE_FORM_SELECTOR} > div:nth-child(1) > div > div.dropdown.line`;

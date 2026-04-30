@@ -17,7 +17,11 @@ export default defineConfig({
         return launchOptions;
       });
     },
-    pageLoadTimeout: 120000,
+    pageLoadTimeout: 60000,
+    retries: {
+      runMode: 2,
+      openMode: 0,
+    },
   },
   env: {
     serviceId: process.env.EVINCED_SERVICE_ID,

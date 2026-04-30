@@ -16,6 +16,10 @@ module.exports = defineConfig({
       });
     },
     pageLoadTimeout: 60000,
+    retries: {
+      runMode: 2,
+      openMode: 0,
+    },
   },
   env: {
     serviceId: process.env.EVINCED_SERVICE_ID,
