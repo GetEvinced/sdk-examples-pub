@@ -77,7 +77,7 @@ Requires macOS, Xcode 13+, and [XcodeGen](https://github.com/yonaskolb/XcodeGen)
 
 ---
 
-## Unit
+## Unit Tester
 
 Examples for accessibility testing at the component level, integrated directly into your unit test suite.
 
