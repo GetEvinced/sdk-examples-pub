@@ -66,3 +66,7 @@ Report report = evincedSdk.report(PlatformUpload.ENABLED);
 
 > **Note:** There is no `evStart`/`evStop` or `evAnalyze` in the mobile SDK.
 > Use `startAnalyze()`/`stopAnalyze()` for continuous mode and `report()` for one-shot scans.
+
+## Docs
+
+[Evinced Appium Java SDK documentation](https://developer.evinced.com/sdks-for-mobile-apps/appium-sdk-java-doc)

@@ -1,32 +1,72 @@
-# Evinced WDIO SDK
+# Evinced WebdriverIO TypeScript SDK Examples
 
-## 100% Test Coverage Using All Methods
+Accessibility testing examples using the [Evinced WebdriverIO SDK](https://developer.evinced.com/sdks-for-web-apps/webdriverio-sdk) with TypeScript.
 
-This repository ensures 100% test coverage using all available testing methods.
+## Prerequisites
 
-## Usage
+- Node.js 18+
+- WebdriverIO 8+
+- Chrome installed
+- Evinced service account credentials (`EVINCED_SERVICE_ID` and `EVINCED_API_KEY`)
+- `.npmrc` configured with Evinced registry credentials to install `@evinced/webdriverio-sdk`
 
-To run the tests, ensure you are in the "js-wdio-web" directory and use the following command:
+## Setup
 
-## Getting started
+### 1. Configure the npm registry
 
-1. Clone the repository
-2. Install dependencies 
-    ```bash
-    npm install
-    ```
-3. Ensure you add your `.npmrc` file and credentials
-4. If everything installed, you are ready to run `npm test`
+Add to `.npmrc` in this directory:
 
-## Testing Framework
+```
+@evinced:registry=https://evinced.jfrog.io/artifactory/api/npm/restricted-npm/
+//evinced.jfrog.io/artifactory/api/npm/restricted-npm/:_authToken=<your-token>
+```
 
-This repository utilizes [WebdriverIO](https://webdriver.io/) to test React-based components that follow best practices with Evinced.
+### 2. Install dependencies
 
-## Test Files
+```bash
+npm install
+```
 
-| File | Description |
-|------|-------------|
-| `test/specs/evAnalyze.ts` | Single point-in-time scan with `evAnalyze`; saves HTML and JSON reports |
-| `test/specs/evStartStop.ts` | Continuous scan using inline `evStart`/`evStop` to capture DOM changes across user interactions |
-| `test/specs/evHooks.ts` | `beforeEach`/`afterEach` hooks pattern — automatically wraps every test with a continuous scan and saves a per-test HTML report |
-| `test/specs/evFailIfCritical.ts` | Scans the page, filters results to Critical severity, and asserts zero critical issues — suitable for CI gating |
+### 3. Set credentials
+
+```bash
+export EVINCED_SERVICE_ID=your_service_id
+export EVINCED_API_KEY=your_api_key
+```
+
+Credentials are set in the WDIO config file via `setCredentials()`.
+
+## Running the tests
+
+```bash
+npm test
+```
+
+Run a single spec:
+
+```bash
+npx wdio run wdio.conf.ts --spec test/specs/evAnalyze.ts
+```
+
+## Test files
+
+| File | Pattern | Description |
+|------|---------|-------------|
+| `test/specs/evAnalyze.ts` | Single scan | Calls `browser.evAnalyze()` to scan the page; saves HTML and JSON reports |
+| `test/specs/evStartStop.ts` | Continuous scan | Uses `browser.evStart()` / `browser.evStop()` to capture DOM changes across interactions |
+| `test/specs/evHooks.ts` | Framework hooks | `beforeEach`/`afterEach` automatically wrap every test with a continuous scan and save a per-test HTML report |
+| `test/specs/evFailIfCritical.ts` | Severity filter | Filters results to critical issues and asserts zero are present; suitable for CI gating |
+
+## SDK API summary
+
+| Method | Description |
+|--------|-------------|
+| `setCredentials({ serviceId, secret })` | Authenticate once in WDIO config |
+| `browser.evAnalyze(options?)` | Single-page scan; returns `Issue[]` |
+| `browser.evStart(options?)` | Start continuous DOM monitoring |
+| `browser.evStop(options?)` | Stop monitoring; returns all collected `Issue[]` |
+| `browser.evSaveFile(issues, format, path)` | Save report to disk (`html`, `json`, `sarif`, `csv`) |
+
+## Docs
+
+[Evinced WebdriverIO SDK documentation](https://developer.evinced.com/sdks-for-web-apps/webdriverio-sdk)

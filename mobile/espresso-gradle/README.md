@@ -13,13 +13,13 @@ dependency in Maven-based CI pipelines; it cannot build or run Android tests.
 - Android emulator configured (`Pixel_9_Pro_XL_API_35` AVD by default)
 - Demo APK installed on the emulator:
   ```bash
-  adb install mobile/appium/python/com.evinced.demoapp-MK.apk
+  adb install mobile/wdio/com.evinced.demoapp-MK.apk
   ```
 - Evinced service account credentials (`EVINCED_SERVICE_ID` and `EVINCED_API_KEY`)
 
 ## Setup
 
-1. Open the `mobile/espresso/` folder in Android Studio — it will sync Gradle and download dependencies automatically.
+1. Open the `mobile/espresso-gradle/` folder in Android Studio — it will sync Gradle and download dependencies automatically.
 2. Connect your emulator (`adb devices` should list it).
 3. Install the demo APK if not already installed (see Prerequisites).
 
@@ -55,7 +55,7 @@ adb pull <path_from_logcat> ./evinced-reports
 | `EvincedExampleTest.java` | One-shot scan | Calls `evincedEngine.report()` to scan the current screen immediately. |
 | `EvincedMultiScreenTest.java` | Multi-screen | Calls `analyze()` at each screen checkpoint then `reportStored()` to collect one `Report` per state. |
 | `EvincedContinuousTest.java` | Continuous | Calls `startAnalyze()` to begin automatic scanning, interacts with the app, then `stopAnalyze()` to collect all reports. |
-| `EvincedConfiguredTest.java` | Config + metadata | Uses `IssueFilter` + `EvincedConfig` to exclude NeedsReview-severity issues, and `addTestCaseMetadata()` to attach custom labels. |
+| `EvincedConfiguredTest.java` | Config + metadata | Uses `IssueFilter` + `EvincedConfig` to exclude Minor-severity issues, and `addTestCaseMetadata()` to attach custom labels. |
 | `EvincedPlatformUploadTest.java` | Platform upload | Shows `ENABLED_BY_DEFAULT` (all scans upload automatically) and per-call upload via `report(PlatformUpload.ENABLED)`. |
 
 ## How it works
@@ -92,11 +92,15 @@ EvincedEngine evincedEngine = EvincedEngine.getInstance(instrumentation, initOpt
 evincedEngine.report(PlatformUpload.ENABLED);
 ```
 
+## Docs
+
+[Evinced Espresso / UIAutomator SDK documentation](https://developer.evinced.com/sdks-for-mobile-apps/espresso-sdk)
+
 ## Filtering issues
 
 ```java
 IssueFilter filter = new IssueFilter()
-    .severity(Severity.NeedsReview);
+    .severity(Severity.MINOR);
 EvincedConfig config = new EvincedConfig()
     .excludeFilters(filter);
 InitOptions initOptions = new InitOptions()

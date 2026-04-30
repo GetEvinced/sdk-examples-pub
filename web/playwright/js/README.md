@@ -1,26 +1,76 @@
-# Evinced JS/TS Playwright SDK
+# Evinced Playwright JS SDK Examples
 
-This repository demonstrates the use of the Evinced SDK with examples in both TypeScript and JavaScript. These examples showcase best practices for integrating the SDK and running accessibility tests efficiently, including support for CI/CD pipelines.
+Accessibility testing examples using the [Evinced Playwright JS SDK](https://developer.evinced.com/sdks-for-web-apps/playwright-js-sdk) with JavaScript.
 
-## Getting started
+## Prerequisites
 
-1. Clone the repository
-2. Install dependencies 
-    ```bash
-    npm install
-    ```
-3. Ensure you add your `.npmrc` file and credentials
-4. If everything installed, you are ready to run `npx playwright test`
+- Node.js 18+
+- Playwright 1.25+
+- Evinced service account credentials (`EVINCED_SERVICE_ID` and `EVINCED_API_KEY`)
+- `.npmrc` configured with Evinced registry credentials to install `@evinced/js-playwright-sdk`
 
-## Test Files
+## Setup
 
-| File | Description |
-|------|-------------|
-| `tests/evAnalyze.spec.js` | Single-shot accessibility scan using `evAnalyze()`. Saves results as HTML and JSON. |
-| `tests/evStartStop.spec.js` | Continuous scan using `evStart()` / `evStop()`. Shows how to attach labels and opt in to platform upload. |
-| `tests/evHooks.spec.js` | Multiple tests using Playwright `beforeEach`/`afterEach` hooks. Shows labels and platform upload on every test. |
-| `tests/evFailIfCritical.spec.js` | Filters issues by severity and asserts on count. Use this pattern to fail builds on critical issues. |
-| `tests/evFixture.spec.js` | Demonstrates the Playwright fixture pattern — wraps every test with continuous scanning via a shared `evincedContMode` fixture. |
+### 1. Configure the npm registry
 
-## To note
-The SDK makes use of all features that are available through the Evinced SDK, we have screenshots, test reports, hooks, use of each available method, and parallel testing. The typescript example also makes use of a cool aggregated reports feature with screenshots.
+Add to `.npmrc` in this directory:
+
+```
+@evinced:registry=https://evinced.jfrog.io/artifactory/api/npm/restricted-npm/
+//evinced.jfrog.io/artifactory/api/npm/restricted-npm/:_authToken=<your-token>
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Set credentials
+
+```bash
+export EVINCED_SERVICE_ID=your_service_id
+export EVINCED_API_KEY=your_api_key
+```
+
+Credentials are set once in the global setup file via `setCredentials()`.
+
+## Running the tests
+
+```bash
+npx playwright test
+```
+
+Run a single spec:
+
+```bash
+npx playwright test tests/evAnalyze.spec.js
+```
+
+## Test files
+
+| File | Pattern | Description |
+|------|---------|-------------|
+| `tests/evAnalyze.spec.js` | Single scan | Creates an `EvincedSDK` instance and calls `evAnalyze()` to scan the page; saves HTML and JSON reports |
+| `tests/evStartStop.spec.js` | Continuous scan | Uses `evStart()` / `evStop()` to capture DOM changes across interactions; shows opt-in platform upload |
+| `tests/evHooks.spec.js` | Framework hooks | `beforeEach`/`afterEach` wrap multiple tests with continuous scanning and labels |
+| `tests/evFailIfCritical.spec.js` | Severity filter | Filters issues by severity and asserts that no critical issues exist; suitable for CI gating |
+| `tests/evFixture.spec.js` | Playwright fixture | Wraps every test with continuous scanning via a shared `evincedContMode` fixture |
+
+## SDK API summary
+
+| Method | Description |
+|--------|-------------|
+| `setCredentials({ serviceId, secret })` | Authenticate once in global setup |
+| `new EvincedSDK(page)` | Create a per-test SDK instance |
+| `evincedService.evAnalyze(options?)` | Single-page scan; returns `Issue[]` |
+| `evincedService.evStart(options?)` | Start continuous DOM monitoring |
+| `evincedService.evStop(options?)` | Stop monitoring; returns all collected `Issue[]` |
+| `evincedService.evSaveFile(issues, format, path)` | Save report to disk (`html`, `json`, `sarif`, `csv`) |
+| `evincedService.testRunInfo.addLabel({ testName, ... })` | Attach built-in labels to the report |
+| `evincedService.testRunInfo.customLabel({ key: value })` | Attach custom key-value labels |
+| `setUploadToPlatformConfig({ enableUploadToPlatform })` | Enable platform upload globally |
+
+## Docs
+
+[Evinced Playwright JS SDK documentation](https://developer.evinced.com/sdks-for-web-apps/playwright-js-sdk)

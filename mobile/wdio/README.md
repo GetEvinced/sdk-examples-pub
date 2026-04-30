@@ -100,6 +100,10 @@ await evincedSdk.report();
 await evincedSdk.report(false, undefined, PlatformUpload.ENABLED);
 ```
 
+## Docs
+
+[Evinced WebdriverIO Mobile SDK documentation](https://developer.evinced.com/sdks-for-mobile-apps/wdio-mobile-sdk)
+
 ## Filtering issues
 
 Severity and issue type filters take an object, not a plain string:

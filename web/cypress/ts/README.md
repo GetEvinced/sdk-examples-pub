@@ -1,35 +1,76 @@
-# Evinced Cypress SDK
+# Evinced Cypress TypeScript SDK Examples
 
-## 100% Test Coverage Using All Methods
+Accessibility testing examples using the [Evinced Cypress SDK](https://developer.evinced.com/sdks-for-web-apps/cypress-sdk) with TypeScript.
 
-This repository ensures 100% test coverage using all available testing methods.
+## Prerequisites
 
-## Usage
+- Node.js 18+
+- Cypress 10+
+- Evinced service account credentials (`EVINCED_SERVICE_ID` and `EVINCED_API_KEY`)
+- `.npmrc` configured with Evinced registry credentials to install `@evinced/cypress-sdk`
 
-To run the tests, ensure you are in the "ts-cypress" directory and use the following command:
+## Setup
 
-## Getting started
+### 1. Configure the npm registry
 
-1. Clone the repository
-2. Install dependencies 
-    ```bash
-    npm install
-    ```
-3. Ensure you add your `.npmrc` file and credentials
-4. If everything installed, you are ready to run `npx cypress run`
+Add to `.npmrc` in this directory:
 
-To run individual tests run `npx cypress run --spec "cypress/e2e/your-test-file.cy.ts"`
+```
+@evinced:registry=https://evinced.jfrog.io/artifactory/api/npm/restricted-npm/
+//evinced.jfrog.io/artifactory/api/npm/restricted-npm/:_authToken=<your-token>
+```
 
-## Test Files
+### 2. Install dependencies
 
-| File | Description |
-|------|-------------|
-| `evAnalyze.cy.ts` | Single-scan pattern using `cy.evAnalyze()` — visits a page, scans, and asserts on issue count |
-| `evStartStop.cy.ts` | Continuous scan using `cy.evStart()` / `cy.evStop()` with labels; platform upload shown as opt-in |
-| `evHooks.cy.ts` | Framework hooks pattern — `beforeEach`/`afterEach` wrap multiple tests with labels and continuous scanning |
-| `evSaveFile.cy.ts` | Saves scan results to disk in both HTML and JSON formats using `cy.evSaveFile()` |
-| `evFailIfCritical.cy.ts` | Filters issues by severity and asserts that no critical issues are present |
+```bash
+npm install
+```
 
-## Testing Framework
+### 3. Set credentials
 
-This repository utilizes [Cypress](https://docs.cypress.io/app/end-to-end-testing/writing-your-first-end-to-end-test) to test React-based components that follow best practices with Evinced.
+```bash
+export CYPRESS_EVINCED_SERVICE_ID=your_service_id
+export CYPRESS_EVINCED_API_KEY=your_api_key
+```
+
+Credentials are picked up in `cypress/support/e2e.ts` via `Evinced.setCredentials()`.
+
+## Running the tests
+
+```bash
+npx cypress run
+```
+
+Run a single spec:
+
+```bash
+npx cypress run --spec "cypress/e2e/evAnalyze.cy.ts"
+```
+
+## Test files
+
+| File | Pattern | Description |
+|------|---------|-------------|
+| `evAnalyze.cy.ts` | Single scan | Calls `cy.evAnalyze()` to scan the page and asserts on issue count |
+| `evStartStop.cy.ts` | Continuous scan | Uses `cy.evStart()` / `cy.evStop()` to capture DOM changes across interactions; shows opt-in platform upload |
+| `evHooks.cy.ts` | Framework hooks | `beforeEach`/`afterEach` wrap multiple tests with continuous scanning and labels |
+| `evSaveFile.cy.ts` | Save reports | Saves scan results to HTML and JSON using `cy.evSaveFile()` |
+| `evFailIfCritical.cy.ts` | Severity filter | Filters issues by severity and asserts that no critical issues exist |
+
+## SDK API summary
+
+| Method | Description |
+|--------|-------------|
+| `Evinced.init(options?)` | Initialize once in `cypress/support/e2e.ts` |
+| `Evinced.setCredentials({ serviceId, secret })` | Authenticate with online credentials |
+| `cy.evAnalyze(options?)` | Single-page scan; returns `Issue[]` |
+| `cy.evStart(options?)` | Start continuous DOM monitoring |
+| `cy.evStop(options?)` | Stop monitoring; returns all collected `Issue[]` |
+| `cy.evSaveFile(issues, format, path)` | Save report to disk (`html`, `json`, `sarif`, `csv`) |
+| `cy.evGetUploadTestUrl()` | Get the Evinced Platform URL for the uploaded report |
+| `cy.addLabel({ testName, environment, ... })` | Attach built-in labels to the report |
+| `cy.customLabel({ key: value })` | Attach custom key-value labels |
+
+## Docs
+
+[Evinced Cypress SDK documentation](https://developer.evinced.com/sdks-for-web-apps/cypress-sdk)

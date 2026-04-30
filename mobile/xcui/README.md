@@ -35,7 +35,7 @@ From Xcode press **⌘ U**, or from the command line:
 ```bash
 xcodebuild test \
   -project EvincedXCUIExamples.xcodeproj \
-  -scheme EvincedXCUIExamples \
+  -scheme EvincedXCUIExamplesApp \
   -destination "platform=iOS Simulator,name=iPhone 15" \
   -testenv EVINCED_SERVICE_ID=$EVINCED_SERVICE_ID \
   -testenv EVINCED_API_KEY=$EVINCED_API_KEY
@@ -46,7 +46,7 @@ Run a single test class:
 ```bash
 xcodebuild test \
   -project EvincedXCUIExamples.xcodeproj \
-  -scheme EvincedXCUIExamples \
+  -scheme EvincedXCUIExamplesApp \
   -destination "platform=iOS Simulator,name=iPhone 15" \
   -only-testing:EvincedXCUIExamplesUITests/EvincedExampleTests \
   -testenv EVINCED_SERVICE_ID=$EVINCED_SERVICE_ID \
@@ -99,6 +99,10 @@ EvincedEngine.options.config = EvincedConfig(excludeFilters: [filter])
 let typeFilter = IssueFilter(issueTypes: .tappableArea)
 EvincedEngine.options.config = EvincedConfig(excludeFilters: [typeFilter])
 ```
+
+## Docs
+
+[Evinced XCUITest SDK documentation](https://developer.evinced.com/sdks-for-mobile-apps/xcui-sdk)
 
 ## Why XcodeGen
 

@@ -64,3 +64,16 @@ The `-s` flag shows issue counts printed by each test.
 | `EvincedConfig(exclude_filters=[], include_filters=[])` | Scan configuration |
 | `ReportFilter([Severity.minor])` | Filter issues by severity |
 | `InitOptions(evinced_config=...)` | Bundles config for the runner |
+
+## Private registry
+
+The `evinced-appium-sdk` package is hosted on the Evinced private PyPI. Your `pip` must be configured with Evinced Artifactory credentials to install it:
+
+```bash
+export PIP_EXTRA_INDEX_URL=https://<EVINCED_ARTIFACTORY_USER>:<EVINCED_ARTIFACTORY_TOKEN>@evinced.jfrog.io/artifactory/api/pypi/private-python-local/simple
+pip install -r requirements.txt
+```
+
+## Docs
+
+[Evinced Appium Python SDK documentation](https://developer.evinced.com/sdks-for-mobile-apps/appium-sdk-python-doc)

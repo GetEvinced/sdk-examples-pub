@@ -1,32 +1,66 @@
-# Evinced Java Playwright SDK
+# Evinced Playwright Java SDK Examples — Maven
 
-This repository demonstrates the use of the Evinced Java Playwright SDK with examples in Java. These examples showcase best practices for integrating the SDK and running accessibility tests efficiently, including support for CI/CD pipelines.
+Accessibility testing examples using the [Evinced Playwright Java SDK](https://developer.evinced.com/sdks-for-web-apps/playwright-java-sdk) with Maven and JUnit 5.
 
-## Example Test Files
+## Prerequisites
 
-| File | Description |
-|------|-------------|
-| [FirstTest.java](src/test/java/com/evinced/example/playwright/FirstTest.java) | Plain Playwright test — no Evinced SDK |
-| [EvincedSingleRunTest.java](src/test/java/com/evinced/example/playwright/EvincedSingleRunTest.java) | Basic `evAnalyze` usage — one-shot scan with issue count assertion |
-| [EvincedAnalyzeTest.java](src/test/java/com/evinced/example/playwright/EvincedAnalyzeTest.java) | **evAnalyze pattern** — one-shot scan, saves HTML report |
-| [EvincedStartStopTest.java](src/test/java/com/evinced/example/playwright/EvincedStartStopTest.java) | **evStart/evStop pattern** — continuous scan across UI interactions, saves HTML report |
-| [EvincedContinuousTest.java](src/test/java/com/evinced/example/playwright/EvincedContinuousTest.java) | Continuous scan with multiple tests and aggregated report |
-| [EvincedHooksTest.java](src/test/java/com/evinced/example/playwright/EvincedHooksTest.java) | **evHooks pattern** — `@BeforeEach`/`@AfterEach` lifecycle wrapping, per-test reports + aggregated report |
+- Java 11+
+- Maven
+- Evinced service account credentials:
+  - `EVINCED_SERVICE_ID` — your service account ID
+  - `EVINCED_API_KEY` — your API key
+
+The SDK is fetched from the Evinced JFrog Artifactory Maven repository. Configure `~/.m2/settings.xml` with your Artifactory credentials — see `settings.xml.m2-example` in this directory for the required format.
 
 ## Setup
 
-### Get Evinced
+Set environment variables before running:
 
-See [settings.xml.m2-example](settings.xml.m2-example) for configuration details on setting up a remote Maven repository to fetch the Evinced Java Playwright SDK.
-
-### Configuration
-
-[Evinced Playwright Java SDK Documentation](https://developer.evinced.com/sdks-for-web-apps/playwright-java-sdk)
-
-### Evinced Report Directory
-
-Create a temporary directory at the root of this project, as it's required by the sample continuous test.
-
+```bash
+export EVINCED_SERVICE_ID=your_service_id
+export EVINCED_API_KEY=your_api_key
 ```
+
+Create the temporary directory required by the continuous test:
+
+```bash
 mkdir tmp
 ```
+
+## Running the tests
+
+```bash
+mvn clean test
+```
+
+Run a single class:
+
+```bash
+mvn test -Dtest=EvincedAnalyzeTest
+```
+
+## Test files
+
+| File | Pattern | Description |
+|------|---------|-------------|
+| `EvincedSingleRunTest.java` | Single scan | Minimal `evAnalyze` usage — one-shot scan with issue count assertion |
+| `EvincedAnalyzeTest.java` | Single scan | Calls `evPage.evAnalyze()` to scan the page; saves HTML report |
+| `EvincedStartStopTest.java` | Continuous scan | Uses `evPage.evStart()` / `evPage.evStop()` to capture DOM changes across interactions; saves HTML report |
+| `EvincedContinuousTest.java` | Multi-test continuous | Continuous scan across multiple tests with an aggregated report |
+| `EvincedHooksTest.java` | JUnit 5 lifecycle | `@BeforeEach`/`@AfterEach` wrap each test; per-test reports plus an aggregated report |
+
+## SDK API summary
+
+| Method | Description |
+|--------|-------------|
+| `EvincedSDK.setCredentials(serviceId, apiKey)` | Authenticate with online credentials |
+| `new EvPage(page)` | Wrap a Playwright `Page` with the Evinced page |
+| `evPage.evAnalyze(options?)` | Single-page scan; returns `List<Issue>` |
+| `evPage.evStart(options?)` | Start continuous DOM monitoring |
+| `evPage.evStop(options?)` | Stop monitoring; returns `List<Issue>` |
+| `EvincedSDK.evSaveFile(path, issues, format)` | Save report to disk (`HTML`, `JSON`, `SARIF`, `CSV`) |
+| `EvincedSDK.enableUploadToPlatform(true)` | Enable upload to the Evinced Platform |
+
+## Docs
+
+[Evinced Playwright Java SDK documentation](https://developer.evinced.com/sdks-for-web-apps/playwright-java-sdk)
