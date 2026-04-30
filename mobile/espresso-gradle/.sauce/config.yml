@@ -5,9 +5,16 @@ sauce:
 espresso:
   app: ./app/build/outputs/apk/debug/app-debug.apk
   testApp: ./app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
+  otherApps:
+    - storage:filename=com.evinced.demoapp-MK.apk
 suites:
   - name: Evinced Espresso Tests
-    emulators:
-      - name: "Android GoogleAPI Emulator"
-        platformVersions:
-          - "15.0"
+    testOptions:
+      instrumentationArgs:
+        EVINCED_SERVICE_ID: $EVINCED_SERVICE_ID
+        EVINCED_API_KEY: $EVINCED_API_KEY
+    devices:
+      - name: "Google Pixel.*"
+        platformVersion: "14"
+        options:
+          deviceType: PHONE
