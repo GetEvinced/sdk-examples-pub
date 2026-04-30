@@ -10,6 +10,7 @@ espresso:
 suites:
   - name: Evinced Espresso Tests
     testOptions:
+      package: com.evinced.examples
       instrumentationArgs:
         EVINCED_SERVICE_ID: $EVINCED_SERVICE_ID
         EVINCED_API_KEY: $EVINCED_API_KEY
