@@ -41,6 +41,11 @@ jobs:
         working-directory: ${{ matrix.example }}
         run: npm install
 
+      - name: Install Playwright browsers
+        if: matrix.example == 'unit/vitest-browser-unit-tester' || matrix.example == 'unit/wtr-unit-tester'
+        working-directory: ${{ matrix.example }}
+        run: npx playwright install --with-deps chromium
+
       - name: Run tests
         working-directory: ${{ matrix.example }}
         env:
