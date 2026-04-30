@@ -12,9 +12,7 @@ export default defineConfig({
       on("before:browser:launch", (browser: any = {}, launchOptions) => {
         launchOptions.args.push(
           "--no-sandbox",
-          "--disable-dev-shm-usage",
-          "--disable-gpu",
-          "--disable-software-rasterizer"
+          "--disable-dev-shm-usage"
         );
         return launchOptions;
       });

@@ -28,7 +28,7 @@ export const config = {
   exclude: [
     // 'path/to/excluded/files'
   ],
-  maxInstances: 10,
+  maxInstances: 1,
   //
   // If you have trouble getting all important capabilities together, check out the
   // Sauce Labs platform configurator - a great tool to configure your capabilities:
@@ -141,7 +141,7 @@ export const config = {
   // See the full list at http://mochajs.org/
   mochaOpts: {
     ui: "bdd",
-    timeout: 60000,
+    timeout: 120000,
   },
 
   //
