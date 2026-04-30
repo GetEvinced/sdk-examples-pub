@@ -22,8 +22,29 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Upload APK to Sauce Labs storage
+        env:
+          SAUCE_USER: ${{ secrets.SAUCE_USER }}
+          SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
+        run: |
+          COUNT=$(curl -sf -u "$SAUCE_USER:$SAUCE_ACCESS_KEY" \
+            "https://api.us-west-1.saucelabs.com/v1/storage/files?q=com.evinced.demoapp-MK.apk" | \
+            jq '.totalItems // 0')
+          if [ "$COUNT" -eq "0" ]; then
+            echo "APK not found in Sauce Labs storage, uploading..."
+            curl -u "$SAUCE_USER:$SAUCE_ACCESS_KEY" \
+              -X POST "https://api.us-west-1.saucelabs.com/v1/storage/upload" \
+              -H "Content-Type: multipart/form-data" \
+              -F "payload=@mobile/wdio/com.evinced.demoapp-MK.apk" \
+              -F "name=com.evinced.demoapp-MK.apk"
+          else
+            echo "APK already in Sauce Labs storage (${COUNT} file(s)), skipping upload."
+          fi
+
       - name: Install dependencies
         working-directory: mobile/appium/python
+        env:
+          PIP_EXTRA_INDEX_URL: https://${{ secrets.EVINCED_ARTIFACTORY_USER }}:${{ secrets.EVINCED_ARTIFACTORY_TOKEN }}@evinced.jfrog.io/artifactory/api/pypi/private-python-local/simple
         run: pip install -r requirements.txt
 
       - name: Run tests on Sauce Labs
