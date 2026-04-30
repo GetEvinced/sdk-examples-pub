@@ -25,14 +25,14 @@ jobs:
       fail-fast: false
       matrix:
         example:
-          - { folder: "web/playwright/js", runner: "playwright" }
-          - { folder: "web/playwright/ts", runner: "playwright" }
-          - { folder: "web/cypress/js",    runner: "cypress" }
-          - { folder: "web/cypress/ts",    runner: "cypress" }
-          - { folder: "web/wdio/js",       runner: "wdio" }
-          - { folder: "web/wdio/ts",       runner: "wdio" }
-          - { folder: "web/selenium/js",   runner: "selenium" }
-          - { folder: "web/testcafe",      runner: "testcafe" }
+          - { folder: "web/playwright/js", runner: "playwright", name: "web-playwright-js" }
+          - { folder: "web/playwright/ts", runner: "playwright", name: "web-playwright-ts" }
+          - { folder: "web/cypress/js",    runner: "cypress",    name: "web-cypress-js" }
+          - { folder: "web/cypress/ts",    runner: "cypress",    name: "web-cypress-ts" }
+          - { folder: "web/wdio/js",       runner: "wdio",       name: "web-wdio-js" }
+          - { folder: "web/wdio/ts",       runner: "wdio",       name: "web-wdio-ts" }
+          - { folder: "web/selenium/js",   runner: "selenium",   name: "web-selenium-js" }
+          - { folder: "web/testcafe",      runner: "testcafe",   name: "web-testcafe" }
 
     steps:
       - uses: actions/checkout@v4
@@ -84,7 +84,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: report-${{ matrix.example.folder }}
+          name: report-${{ matrix.example.name }}
           path: ${{ matrix.example.folder }}/**/*.html
           retention-days: 14
 

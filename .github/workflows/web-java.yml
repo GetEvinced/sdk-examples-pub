@@ -19,9 +19,9 @@ jobs:
       fail-fast: false
       matrix:
         example:
-          - { folder: "web/playwright-java/maven",  build: "maven" }
-          - { folder: "web/playwright-java/gradle", build: "gradle" }
-          - { folder: "web/selenium/java",          build: "maven" }
+          - { folder: "web/playwright-java/maven",  build: "maven",  name: "web-playwright-java-maven" }
+          - { folder: "web/playwright-java/gradle", build: "gradle", name: "web-playwright-java-gradle" }
+          - { folder: "web/selenium/java",          build: "maven",  name: "web-selenium-java" }
 
     steps:
       - uses: actions/checkout@v4
@@ -57,7 +57,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: report-${{ matrix.example.folder }}
+          name: report-${{ matrix.example.name }}
           path: |
             ${{ matrix.example.folder }}/target/surefire-reports/
             ${{ matrix.example.folder }}/build/reports/

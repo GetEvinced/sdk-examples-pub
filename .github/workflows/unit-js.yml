@@ -60,11 +60,16 @@ jobs:
           EVINCED_API_KEY: ${{ secrets.EVINCED_API_KEY }}
         run: npm test
 
+      - name: Compute artifact name
+        if: always()
+        id: artifact
+        run: echo "name=$(echo '${{ matrix.example }}' | tr '/' '-')" >> $GITHUB_OUTPUT
+
       - name: Upload reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: report-${{ matrix.example }}
+          name: report-${{ steps.artifact.outputs.name }}
           path: ${{ matrix.example }}/**/*.html
           retention-days: 14
 
