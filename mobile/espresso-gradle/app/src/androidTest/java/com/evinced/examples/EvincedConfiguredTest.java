@@ -27,7 +27,7 @@ public class EvincedConfiguredTest {
     @BeforeClass
     public static void setup() throws InterruptedException {
         IssueFilter excludeFilter = new IssueFilter()
-                .severity(Severity.Minor);
+                .severity(Severity.MINOR);
         EvincedConfig config = new EvincedConfig()
                 .excludeFilters(excludeFilter);
         InitOptions initOptions = new InitOptions()
@@ -44,6 +44,6 @@ public class EvincedConfiguredTest {
 
         Report report = evincedEngine.report();
         assertNotNull("Report should not be null", report);
-        System.out.println("Issues found (excluding Minor): " + report.getTotal());
+        System.out.println("Issues found (excluding MINOR): " + report.getTotal());
     }
 }
