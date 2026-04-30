@@ -31,6 +31,11 @@ jobs:
         with:
           java-version: 17
           distribution: temurin
+          # Generates ~/.m2/settings.xml that authenticates the evinced-artifactory server.
+          # server-username / server-password are env var *names* Maven interpolates at build time.
+          server-id: evinced-artifactory
+          server-username: EVINCED_ARTIFACTORY_USER
+          server-password: EVINCED_ARTIFACTORY_TOKEN
 
       - name: Install Chrome
         run: |
@@ -43,7 +48,15 @@ jobs:
         env:
           EVINCED_SERVICE_ID: ${{ secrets.EVINCED_SERVICE_ID }}
           EVINCED_API_KEY: ${{ secrets.EVINCED_API_KEY }}
+          EVINCED_WEB_OFFLINE_TOKEN: ${{ secrets.EVINCED_WEB_OFFLINE_TOKEN }}
+          EVINCED_ARTIFACTORY_USER: ${{ secrets.EVINCED_ARTIFACTORY_USER }}
+          EVINCED_ARTIFACTORY_TOKEN: ${{ secrets.EVINCED_ARTIFACTORY_TOKEN }}
         run: mvn test -B
+
+      - name: Make gradlew executable
+        if: matrix.example.build == 'gradle'
+        working-directory: ${{ matrix.example.folder }}
+        run: chmod +x gradlew
 
       - name: Run tests (Gradle)
         if: matrix.example.build == 'gradle'
@@ -51,6 +64,8 @@ jobs:
         env:
           EVINCED_SERVICE_ID: ${{ secrets.EVINCED_SERVICE_ID }}
           EVINCED_API_KEY: ${{ secrets.EVINCED_API_KEY }}
+          EVINCED_ARTIFACTORY_USER: ${{ secrets.EVINCED_ARTIFACTORY_USER }}
+          EVINCED_ARTIFACTORY_TOKEN: ${{ secrets.EVINCED_ARTIFACTORY_TOKEN }}
         run: ./gradlew test
 
       - name: Upload reports

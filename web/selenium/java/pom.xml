@@ -18,8 +18,8 @@
 
   <repositories>
     <repository>
-        <id>jitpack.io</id>
-        <url>https://jitpack.io</url>
+      <id>evinced-artifactory</id>
+      <url>https://evinced.jfrog.io/artifactory/restricted-maven</url>
     </repository>
   </repositories>
 
