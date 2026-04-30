@@ -13,7 +13,7 @@ export EVINCED_SERVICE_ID=your_service_account_id
 export EVINCED_API_KEY=your_api_key
 ```
 
-If you use the offline token, please reach out to support [support@evinced.com](mailto:support@evinced.com).
+If you use the offline token, please reach out to support [support@evinced.com](mailto:support@evinced.com) if you require help obtaining the token or have questions.
 
 You can obtain these from your [Evinced account](https://app.evinced.com). If you don't have an account yet, contact [support@evinced.com](mailto:support@evinced.com).
 
