@@ -11,8 +11,8 @@ test('Testing evStart and evStop', async t => {
     const evinced = new EvincedSDK(t);
     await evinced.evStart();
 
-    // Storing evReports in a unique directory by test name and date
-    const evReport = `./evinced/reports/${t.test.name}/${Date()}/evincedReport.html`;
+    const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
+    const evReport = `tests/results/evinced/${t.test.name}/${timestamp}.html`;
 
     const BASE_FORM_SELECTOR =
     "#gatsby-focus-wrapper > main > div.wrapper-banner > div.filter-container";

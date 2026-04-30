@@ -5,11 +5,6 @@ on:
     branches: [sdk-examples-pub-v2, main]
     paths:
       - 'unit/**'
-      - 'lit-unit-tester/**'
-      - 'vitest-react-unit-tester/**'
-      - 'vitest-browser-unit-tester/**'
-      - 'wtr-unit-tester/**'
-      - 'playwright-bdd/**'
       - '.github/workflows/unit-js.yml'
   schedule:
     - cron: "0 6 * * 1"
@@ -27,11 +22,9 @@ jobs:
           - unit/nextjs
           - unit/angular/testbed
           - unit/angular/testing-library
-          - lit-unit-tester
-          - vitest-react-unit-tester
-          - vitest-browser-unit-tester
-          - wtr-unit-tester
-          - playwright-bdd
+          - unit/vitest-react-unit-tester
+          - unit/vitest-browser-unit-tester
+          - unit/wtr-unit-tester
 
     steps:
       - uses: actions/checkout@v4
@@ -47,11 +40,6 @@ jobs:
       - name: Install dependencies
         working-directory: ${{ matrix.example }}
         run: npm install
-
-      - name: Install Playwright browsers
-        if: matrix.example == 'playwright-bdd'
-        working-directory: ${{ matrix.example }}
-        run: npx playwright install --with-deps chromium
 
       - name: Run tests
         working-directory: ${{ matrix.example }}

@@ -23,7 +23,8 @@ test("Testing skipValidations", async (t) => {
 
     // Use evAnalyze to generate a unique local report 
     const issues = await evinced.evAnalyze({ skipValidations: [skipSelector] });
-    await evinced.evSaveFile(issues, 'html', `tests/results/evinced/${t.test.name}/${Date()}.html`); 
+    const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
+    await evinced.evSaveFile(issues, 'html', `tests/results/evinced/${t.test.name}/${timestamp}.html`);
 
     // Example action to verify we are on the correct page
     await t
