@@ -1,0 +1,16 @@
+apiVersion: v1alpha
+kind: xcuitest
+sauce:
+  region: us-west-1
+xcuitest:
+  app: ./DerivedData/Build/Products/Debug-iphonesimulator/EvincedXCUIExamplesApp.app
+  testApp: ./DerivedData/Build/Products/Debug-iphonesimulator/EvincedXCUIExamplesUITests-Runner.app
+suites:
+  - name: Evinced XCUITest Tests
+    env:
+      EVINCED_SERVICE_ID: $EVINCED_SERVICE_ID
+      EVINCED_API_KEY: $EVINCED_API_KEY
+    simulators:
+      - name: iPhone 15 Simulator
+        platformVersions:
+          - "17.0"

@@ -1,0 +1,59 @@
+name: Mobile SDK Tests — XCUITest (Sauce Labs)
+
+on:
+  push:
+    branches: [sdk-examples-pub-v2, main]
+    paths:
+      - 'mobile/xcui/**'
+      - '.github/workflows/mobile-xcui.yml'
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Generate Xcode project
+        working-directory: mobile/xcui
+        run: xcodegen generate
+
+      - name: Build for testing
+        working-directory: mobile/xcui
+        run: |
+          xcodebuild build-for-testing \
+            -project EvincedXCUIExamples.xcodeproj \
+            -scheme EvincedXCUIExamplesApp \
+            -sdk iphonesimulator \
+            -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath DerivedData
+
+      - name: Install saucectl
+        run: |
+          curl -fsSL https://saucelabs.github.io/saucectl/install | bash
+          saucectl --version
+
+      - name: Run XCUITests on Sauce Labs
+        working-directory: mobile/xcui
+        env:
+          SAUCE_USERNAME: ${{ secrets.SAUCE_USER }}
+          SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
+          EVINCED_SERVICE_ID: ${{ secrets.EVINCED_SERVICE_ID }}
+          EVINCED_API_KEY: ${{ secrets.EVINCED_API_KEY }}
+        run: saucectl run
+
+      - name: Notify Slack
+        if: always()
+        uses: act10ns/slack@v2
+        with:
+          status: ${{ job.status }}
+          channel: "#workflows"
+          message: "mobile/xcui — ${{ job.status }}"
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
