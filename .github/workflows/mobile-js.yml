@@ -36,7 +36,7 @@ jobs:
           EVINCED_API_KEY: ${{ secrets.EVINCED_API_KEY }}
           SAUCE_USER: ${{ secrets.SAUCE_USER }}
           SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
-        run: npm run wdio
+        run: npm run wdio:sauce
 
       - name: Upload reports
         if: always()

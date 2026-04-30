@@ -11,7 +11,8 @@
     "appium-uiautomator2-driver": "^3.8.1"
   },
   "scripts": {
-    "wdio": "wdio run ./wdio.conf.js"
+    "wdio": "wdio run ./wdio.conf.js",
+    "wdio:sauce": "wdio run ./wdio.sauce.conf.js"
   },
   "dependencies": {
     "@evinced/wdio-mobile-sdk": "1.26.0"
