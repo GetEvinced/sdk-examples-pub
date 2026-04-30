@@ -15,11 +15,22 @@ module.exports = defineConfig({
         return launchOptions;
       });
     },
-    pageLoadTimeout: 60000,
+    pageLoadTimeout: 90000,
     retries: {
       runMode: 2,
       openMode: 0,
     },
+    // Block third-party analytics/font domains that don't affect test behaviour
+    // but can prevent the page load event from firing in CI environments
+    blockHosts: [
+      "*google-analytics.com",
+      "*googletagmanager.com",
+      "*hotjar.com",
+      "*segment.io",
+      "*segment.com",
+      "*fonts.googleapis.com",
+      "*fonts.gstatic.com",
+    ],
   },
   env: {
     serviceId: process.env.EVINCED_SERVICE_ID,
