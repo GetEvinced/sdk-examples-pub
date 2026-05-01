@@ -85,13 +85,13 @@ Examples for accessibility testing at the component level, integrated directly i
 
 | Directory | SDK | Framework | Run command |
 |-----------|-----|-----------|-------------|
-| `unit/react` | React Unit Tester | React + Jest | `npm test` |
-| `unit/nextjs` | React Unit Tester | Next.js + Jest | `npm test` |
-| `unit/angular/testbed` | Angular Unit Tester | Angular Testbed | `npm test` |
-| `unit/angular/testing-library` | Angular Unit Tester | Testing Library | `npm test` |
-| `unit/vitest-react-unit-tester` | React Unit Tester | Vitest | `npm test` |
-| `unit/vitest-browser-unit-tester` | Browser Unit Tester | Vitest Browser | `npm test` |
-| `unit/wtr-unit-tester` | Browser Unit Tester | Web Test Runner | `npm test` |
+| `unit-tester/react` | React Unit Tester | React + Jest | `npm test` |
+| `unit-tester/nextjs` | React Unit Tester | Next.js + Jest | `npm test` |
+| `unit-tester/angular/testbed` | Angular Unit Tester | Angular Testbed | `npm test` |
+| `unit-tester/angular/testing-library` | Angular Unit Tester | Testing Library | `npm test` |
+| `unit-tester/vitest-react-unit-tester` | React Unit Tester | Vitest | `npm test` |
+| `unit-tester/vitest-browser-unit-tester` | Browser Unit Tester | Vitest Browser | `npm test` |
+| `unit-tester/wtr-unit-tester` | Browser Unit Tester | Web Test Runner | `npm test` |
 
 ---
 
