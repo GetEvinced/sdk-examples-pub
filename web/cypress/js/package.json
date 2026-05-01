@@ -1,0 +1,13 @@
+{
+  "devDependencies": {
+    "cypress": "^14.0.1"
+  },
+  "scripts": {
+    "test": "npx cypress run --browser chrome --headless",
+    "cy:open": "cypress run --browser chrome --headless",
+    "cy-local-test": "npx cypress run --browser chrome"
+  },
+  "dependencies": {
+    "@evinced/cypress-sdk": "^5.7.2"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "name": "ts-selenium-web",
+  "version": "1.0.0",
+  "scripts": {
+    "postinstall": "rm -f node_modules/.bin/chromedriver && mkdir -p test-results",
+    "test": "mocha --require ts-node/register --timeout 60000 'test/**/*.ts'"
+  },
+  "dependencies": {
+    "@evinced/js-selenium-sdk": "2.6.0",
+    "mocha": "^11.1.0",
+    "selenium-webdriver": "^4.29.0"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.0",
+    "@types/node": "^22.0.0",
+    "@types/selenium-webdriver": "^4.1.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.0.0"
+  }
+}

@@ -1,0 +1,53 @@
+name: EvincedXCUIExamples
+options:
+  bundleIdPrefix: com.evinced.examples
+  deploymentTarget:
+    iOS: "15.0"
+
+packages:
+  EvincedXCUISDK:
+    url: https://github.com/GetEvinced/public-ios-xcuisdk
+    from: "1.0.0"
+
+targets:
+  EvincedXCUIExamplesApp:
+    type: application
+    platform: iOS
+    sources: App/
+    info:
+      path: App/Info.plist
+      properties:
+        CFBundleDisplayName: Evinced Examples
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: false
+    settings:
+      base:
+        SWIFT_VERSION: "5.9"
+        PRODUCT_BUNDLE_IDENTIFIER: com.evinced.examples.app
+
+  EvincedXCUIExamplesUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources: UITests/
+    dependencies:
+      - package: EvincedXCUISDK
+        product: EvincedXCUISDK
+    settings:
+      base:
+        SWIFT_VERSION: "5.9"
+        PRODUCT_BUNDLE_IDENTIFIER: com.evinced.examples.uitests
+        TEST_TARGET_NAME: EvincedXCUIExamplesApp
+
+schemes:
+  EvincedXCUIExamplesApp:
+    build:
+      targets:
+        EvincedXCUIExamplesApp: all
+        EvincedXCUIExamplesUITests: [test]
+    test:
+      targets:
+        - EvincedXCUIExamplesUITests
+    run:
+      config: Debug
+    archive:
+      config: Release

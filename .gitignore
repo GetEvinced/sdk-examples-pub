@@ -1,22 +1,55 @@
+# Dependencies
 **/node_modules/
+.npm
 package-lock.json
 **/.npmrc/
 **/.cache/
 **/userToken
 .npmrc
-.DS_Store
-react-unit-tester/.cache
-js-wdio-mobile/evinced-reports
-evinced-dot-net/sdk
-evinced-dot-net/bin
-playwright-bdd/evinced-reports
-js-selenium-web/logs
 
-# For Java projects
+# Evinced generated reports
+evinced-reports/
+evinced_reports/
+js-wdio-mobile/evinced-reports
+playwright-bdd/evinced-reports
+
+# Java build output
 target/
 build/
 *.class
 *.jar
 *.war
 *.ear
+
+# .NET build output
+evinced-dot-net/sdk
+evinced-dot-net/bin
+bin/
+obj/
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Test artifacts (generated at runtime)
+test-results/
+playwright-report/
+
+# macOS
+.DS_Store
+
+# Project-specific
+react-unit-tester/.cache
+js-selenium-web/logs
 tmp
+
+# IDE / tooling
+.vscode/
+.claude/
+docs
+
+# Dated/rotated log files
+**/EvincedLogs/evincedAllLogs-*.log
+**/EvincedLogs/evincedErrorsLogs-*.log
+**/*.log.-*.gz
