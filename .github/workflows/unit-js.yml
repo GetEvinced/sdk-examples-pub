@@ -4,7 +4,7 @@ on:
   push:
     branches: [sdk-examples-pub-v2, main]
     paths:
-      - 'unit/**'
+      - 'unit-tester/**'
       - '.github/workflows/unit-js.yml'
   schedule:
     - cron: "0 6 * * 1"
@@ -18,13 +18,13 @@ jobs:
       fail-fast: false
       matrix:
         example:
-          - unit/react
-          - unit/nextjs
-          - unit/angular/testbed
-          - unit/angular/testing-library
-          - unit/vitest-react-unit-tester
-          - unit/vitest-browser-unit-tester
-          - unit/wtr-unit-tester
+          - unit-tester/react
+          - unit-tester/nextjs
+          - unit-tester/angular/testbed
+          - unit-tester/angular/testing-library
+          - unit-tester/vitest-react-unit-tester
+          - unit-tester/vitest-browser-unit-tester
+          - unit-tester/wtr-unit-tester
 
     steps:
       - uses: actions/checkout@v4
@@ -42,7 +42,7 @@ jobs:
         run: npm install
 
       - name: Install Playwright browsers
-        if: matrix.example == 'unit/vitest-browser-unit-tester' || matrix.example == 'unit/wtr-unit-tester'
+        if: matrix.example == 'unit-tester/vitest-browser-unit-tester' || matrix.example == 'unit-tester/wtr-unit-tester'
         working-directory: ${{ matrix.example }}
         run: npx playwright install --with-deps chromium
 
