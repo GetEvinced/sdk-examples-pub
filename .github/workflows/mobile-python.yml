@@ -6,6 +6,11 @@ on:
     paths:
       - 'mobile/appium/python/**'
       - '.github/workflows/mobile-python.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'mobile/appium/python/**'
+      - '.github/workflows/mobile-python.yml'
   schedule:
     - cron: "0 6 * * 1"
   workflow_dispatch:

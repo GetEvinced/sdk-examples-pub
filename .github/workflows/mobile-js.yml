@@ -6,6 +6,11 @@ on:
     paths:
       - 'mobile/wdio/**'
       - '.github/workflows/mobile-js.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'mobile/wdio/**'
+      - '.github/workflows/mobile-js.yml'
   schedule:
     - cron: "0 6 * * 1"
   workflow_dispatch:

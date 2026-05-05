@@ -1,11 +1,12 @@
 {
-    "uploadToPlatformOptions": {
-        "enableUploadToPlatform": true,
-        "setUploadToPlatformDefault": true
-    },
-    "enableScreenshots": true,
-    "logging": {
-        "LOGGING_LEVEL": "debug",
-        "ADD_LOGGING_CONTEXT": true
-    }
+  "uploadToPlatformOptions": {
+    "enableUploadToPlatform": true,
+    "setUploadToPlatformDefault": true
+  },
+  "enableScreenshots": true,
+  "logging": {
+    "LOGGING_LEVEL": "debug",
+    "ADD_LOGGING_CONTEXT": true
+  },
+  "USE_INTERACTIVE_ELEMENTS_MODEL_VALIDATIONS": true
 }
