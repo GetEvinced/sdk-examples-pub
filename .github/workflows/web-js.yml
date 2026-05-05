@@ -13,6 +13,18 @@ on:
       - 'web/selenium/js/**'
       - 'web/testcafe/**'
       - '.github/workflows/web-js.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'web/playwright/js/**'
+      - 'web/playwright/ts/**'
+      - 'web/cypress/js/**'
+      - 'web/cypress/ts/**'
+      - 'web/wdio/js/**'
+      - 'web/wdio/ts/**'
+      - 'web/selenium/js/**'
+      - 'web/testcafe/**'
+      - '.github/workflows/web-js.yml'
   schedule:
     - cron: "0 6 * * 1"
   workflow_dispatch:

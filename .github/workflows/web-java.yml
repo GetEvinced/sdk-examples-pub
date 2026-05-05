@@ -7,6 +7,12 @@ on:
       - 'web/playwright-java/**'
       - 'web/selenium/java/**'
       - '.github/workflows/web-java.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'web/playwright-java/**'
+      - 'web/selenium/java/**'
+      - '.github/workflows/web-java.yml'
   schedule:
     - cron: "0 6 * * 1"
   workflow_dispatch:
