@@ -21,6 +21,7 @@
   "sdk_options": {
     "useDefaultScreenshotsCapturing": true
   },
+  "USE_INTERACTIVE_ELEMENTS_MODEL_VALIDATIONS": true,
   "recordingService": {
     "ENABLE_DEBOUNCE_NEW_SELECTORS": false,
     "DEBOUNCE_NEW_SELECTORS_MS": 500,
