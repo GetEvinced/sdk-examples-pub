@@ -31,6 +31,19 @@ export EVINCED_API_KEY=your_api_key
 | `EvincedContinuousTest.java` | Continuous / multi-screen | Calls `startAnalyze()`, navigates across multiple screens with `analyze()` per screen, then `stopAnalyze()` to collect one `Report` per screen. |
 | `EvincedConfiguredTest.java` | Config + metadata | Uses `EvincedConfig` + `IssueFilter` to exclude Minor-severity issues, and `addTestCaseMetadata()` to attach custom key/value labels to the report. |
 | `EvincedPlatformUploadTest.java` | Platform upload | Shows two upload approaches: `ENABLED_BY_DEFAULT` (all scans upload automatically) and per-call upload via `report(PlatformUpload.ENABLED)`. |
+| `EvincedAppScannerTest.java` | App Scanner (local only) | Uses `EvincedAppScanner` to autonomously explore the app, clicking through screens and scanning each one without manual navigation. Requires a local Appium server — excluded from CI. |
+
+### Running EvincedAppScannerTest locally
+
+This test connects to a local Appium server instead of Sauce Labs. Before running:
+
+1. Start Appium: `appium`
+2. Start your emulator: `~/Library/Android/sdk/emulator/emulator -avd Pixel_9_Pro_XL_API_35`
+3. Run the test:
+
+```bash
+mvn test -Dtest=EvincedAppScannerTest -DfailIfNoTests=false
+```
 
 ## SDK API summary
 
