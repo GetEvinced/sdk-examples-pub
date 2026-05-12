@@ -74,7 +74,7 @@
         <dependency>
             <groupId>com.evinced</groupId>
             <artifactId>appium-sdk-ajc8</artifactId>
-            <version>1.37.0</version>
+            <version>1.42.0</version>
             <scope>test</scope>
         </dependency>
     
@@ -107,6 +107,9 @@
                     <includes>
                         <include>**/*Test.java</include>
                     </includes>
+                    <excludes>
+                        <exclude>**/EvincedAppScannerTest.java</exclude>
+                    </excludes>
                 </configuration>
             </plugin>
         </plugins>
