@@ -29,7 +29,7 @@ Use `Read` on `$CONFIG_PATH`. Remember: `target.owner`, `target.repo`, `target.b
 
 ## Step 2 — Get issue details via the Evinced MCP
 
-Call `mcp__evinced__evinced_get_webpage_issue_details` with `issueSignature="__SIGNATURE__"` and `model="claude-opus-4-7"`. Capture from the response: rule title, severity, WCAG ref, URL, selector, DOM snippet, screenshot URL/id, AND the remediation instructions field. **Evinced's remediation text is your PRIMARY guide for the patch.**
+Call `mcp__evinced-web-mcp__evinced_get_webpage_issue_details` with `issueSignature="__SIGNATURE__"` and `model="claude-opus-4-7"`. Capture from the response: rule title, severity, WCAG ref, URL, selector, DOM snippet, screenshot URL/id, AND the remediation instructions field. **Evinced's remediation text is your PRIMARY guide for the patch.**
 
 If the MCP call fails or returns nothing for this signature: fall back. Use `Read` on `$REPORT_PATH`, find the entry where the `signature` field equals `"__SIGNATURE__"` (recursive search — the entry may be at the top level or nested under `issues`, `pages[*].issues`, etc.), and use that entry's data instead. Log "fell back to direct JSON read for __SIGNATURE__" in your reasoning so the operator knows the MCP isn't working.
 
