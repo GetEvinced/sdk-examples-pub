@@ -143,6 +143,19 @@ jobs:
       - name: Configure .npmrc for Evinced private registry
         run: echo "${{ secrets.EVINCED_NPM_TOKEN }}" > ~/.npmrc
 
+      - name: Install Evinced MCP server (pre-fetch + cache)
+        run: |
+          npm install -g @evinced/mcp-server-web
+          which evinced-mcp-server-web || true
+          npx @evinced/mcp-server-web --version || true
+
+      - name: Authenticate Evinced MCP server
+        env:
+          EVINCED_SERVICE_ID: ${{ secrets.EVINCED_SERVICE_ID }}
+          EVINCED_API_KEY: ${{ secrets.EVINCED_API_KEY }}
+        run: |
+          npx @evinced/mcp-server-web --login
+
       - name: Load agent prompt for this signature
         id: load_prompt
         env:
