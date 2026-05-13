@@ -1,0 +1,121 @@
+name: A11y Auto-Fix — Cross-Repo
+
+on:
+  workflow_run:
+    workflows: ["Web SDK Tests — JavaScript/TypeScript"]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Skip git push / gh pr create / gh pr comment; log no-ops instead"
+        type: boolean
+        default: false
+  schedule:
+    - cron: "0 7 * * 1"  # 1h after web-js.yml's Monday cron
+
+concurrency:
+  group: a11y-autofix-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  autofix:
+    runs-on: ubuntu-latest
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Read pipeline config
+        id: cfg
+        run: |
+          echo "target_owner=$(jq -r .target.owner a11y-autofix.config.json)" >> $GITHUB_OUTPUT
+          echo "target_repo=$(jq -r .target.repo a11y-autofix.config.json)" >> $GITHUB_OUTPUT
+          echo "target_branch=$(jq -r .target.baseBranch a11y-autofix.config.json)" >> $GITHUB_OUTPUT
+          echo "report_artifact=$(jq -r .reportArtifactName a11y-autofix.config.json)" >> $GITHUB_OUTPUT
+
+      - name: Download issues artifact (from triggering workflow run)
+        if: github.event_name == 'workflow_run'
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ steps.cfg.outputs.report_artifact }}
+          path: ./_autofix_input
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: ${{ github.event.workflow_run.id }}
+
+      - name: Download latest issues artifact (schedule / manual dispatch)
+        if: github.event_name != 'workflow_run'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mkdir -p ./_autofix_input
+          gh run download -R ${{ github.repository }} \
+            --name "${{ steps.cfg.outputs.report_artifact }}" \
+            --dir ./_autofix_input
+
+      - name: Verify issues file present
+        run: |
+          if [ ! -f ./_autofix_input/evMcpDemo.json ]; then
+            echo "::error::evMcpDemo.json missing — upstream test workflow may not have produced it"
+            ls -la ./_autofix_input || true
+            exit 1
+          fi
+          echo "Found $(jq length ./_autofix_input/evMcpDemo.json) issues"
+
+      - name: Clone target FE repo
+        env:
+          GH_TOKEN: ${{ secrets.DEMO_FE_PAT }}
+        run: |
+          gh repo clone "${{ steps.cfg.outputs.target_owner }}/${{ steps.cfg.outputs.target_repo }}" ./_autofix_target -- \
+            --branch "${{ steps.cfg.outputs.target_branch }}" --depth 50
+          cd ./_autofix_target
+          git config user.email "a11y-autofix@evinced.com"
+          git config user.name  "Evinced A11y Autofix"
+
+      - name: Write runtime .mcp.json
+        env:
+          EVINCED_API_KEY: ${{ secrets.EVINCED_API_KEY }}
+        run: |
+          cat > .mcp.json <<JSON
+          {
+            "mcpServers": {
+              "evinced": {
+                "command": "npx",
+                "args": ["-y", "@evinced/web-mcp"],
+                "env": { "EVINCED_API_KEY": "${EVINCED_API_KEY}" }
+              }
+            }
+          }
+          JSON
+
+      - name: Run Claude agent
+        uses: anthropics/claude-code-action@beta
+        env:
+          REPORT_PATH: ${{ github.workspace }}/_autofix_input/evMcpDemo.json
+          TARGET_REPO_PATH: ${{ github.workspace }}/_autofix_target
+          CONFIG_PATH: ${{ github.workspace }}/a11y-autofix.config.json
+          DRY_RUN: ${{ inputs.dry_run || 'false' }}
+          GH_TOKEN: ${{ secrets.DEMO_FE_PAT }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        with:
+          prompt_file: prompts/a11y-autofix.md
+          mcp_config: .mcp.json
+
+      - name: Notify Slack
+        if: always()
+        uses: act10ns/slack@v2
+        with:
+          status: ${{ job.status }}
+          channel: "#workflows"
+          message: "a11y autofix run — ${{ job.status }}"
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
