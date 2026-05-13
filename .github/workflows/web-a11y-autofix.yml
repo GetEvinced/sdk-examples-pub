@@ -143,6 +143,33 @@ jobs:
       - name: Configure .npmrc for Evinced private registry
         run: echo "${{ secrets.EVINCED_NPM_TOKEN }}" > ~/.npmrc
 
+      - name: Diagnose Evinced MCP package availability
+        continue-on-error: true
+        env:
+          EVINCED_SERVICE_ID: ${{ secrets.EVINCED_SERVICE_ID }}
+          EVINCED_API_KEY: ${{ secrets.EVINCED_API_KEY }}
+        run: |
+          echo "=== .npmrc presence + sanitized content ==="
+          if [ -f ~/.npmrc ]; then
+            echo "~/.npmrc exists ($(wc -l < ~/.npmrc) lines, $(wc -c < ~/.npmrc) bytes)"
+            sed -E 's/(_authToken=).+/\1***REDACTED***/' ~/.npmrc
+          else
+            echo "::error::~/.npmrc MISSING"
+          fi
+
+          echo ""
+          echo "=== npm view (auth + package-exists check) ==="
+          npm view @evinced/mcp-server-web version 2>&1 || echo "npm view FAILED (exit $?)"
+
+          echo ""
+          echo "=== direct server start (capture stderr) ==="
+          # Try to start the server with a 30s timeout; record any output.
+          # The server speaks stdio MCP; we don't pipe stdin so it should exit when stdin closes.
+          timeout 30 npx -y @evinced/mcp-server-web --headless 2>&1 < /dev/null \
+            | tee /tmp/mcp-server.log \
+            || echo "server-start exited with $?"
+          echo "--- end of server-start output ---"
+
       - name: Load agent prompt for this signature
         id: load_prompt
         env:
