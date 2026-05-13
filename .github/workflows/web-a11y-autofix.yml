@@ -140,6 +140,9 @@ jobs:
           git config user.email "a11y-autofix@evinced.com"
           git config user.name  "Evinced A11y Autofix"
 
+      - name: Configure .npmrc for Evinced private registry
+        run: echo "${{ secrets.EVINCED_NPM_TOKEN }}" > ~/.npmrc
+
       - name: Load agent prompt for this signature
         id: load_prompt
         env:
@@ -173,8 +176,12 @@ jobs:
               "mcpServers": {
                 "evinced": {
                   "command": "npx",
-                  "args": ["-y", "@evinced/web-mcp"],
-                  "env": { "EVINCED_API_KEY": "${{ secrets.EVINCED_API_KEY }}" }
+                  "args": ["-y", "@evinced/mcp-server-web"],
+                  "type": "stdio",
+                  "env": {
+                    "EVINCED_SERVICE_ID": "${{ secrets.EVINCED_SERVICE_ID }}",
+                    "EVINCED_API_KEY": "${{ secrets.EVINCED_API_KEY }}"
+                  }
                 }
               }
             }
