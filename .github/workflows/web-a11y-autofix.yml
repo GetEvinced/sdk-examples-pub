@@ -114,6 +114,7 @@ jobs:
           direct_prompt: ${{ steps.load_prompt.outputs.content }}
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           github_token: ${{ secrets.DEMO_FE_PAT }}
+          allowed_tools: "Bash,Edit,MultiEdit,Glob,Grep,LS,Read,Write,mcp__evinced__evinced_get_webpage_issue_details,mcp__evinced__evinced_analyze_webpage,mcp__evinced__evinced_import_report"
           claude_env: |
             REPORT_PATH: ${{ github.workspace }}/_autofix_input/${{ steps.cfg.outputs.report_basename }}
             TARGET_REPO_PATH: ${{ github.workspace }}/_autofix_target
