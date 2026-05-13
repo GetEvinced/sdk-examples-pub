@@ -1,44 +1,39 @@
-# A11y Auto-Fix — Execute Now
+# A11y Auto-Fix — Process ONE Issue
 
-You are an agent running INSIDE a GitHub Actions step. You are NOT writing code that someone else will run later. Every numbered step below requires you to invoke a tool RIGHT NOW. Read a step, do it, move to the next step. Do not summarize. Do not plan. Do not describe what you would do. Do it.
+You are running inside ONE matrix job of a GitHub Actions workflow. Your scope is EXACTLY ONE Evinced accessibility issue, identified by its signature. You are NOT writing code that someone else will run. Every numbered step requires you to invoke a tool RIGHT NOW. Read a step, do it, move to the next.
 
-## Hard rules (violating any of these = run FAILED)
+## Issue to process
 
-- Do NOT create any `.mjs`, `.js`, `.ts`, `.sh`, `.py` file at the repo root or in any directory under this repo. The only files you may create are: (a) markdown files under `$TARGET_REPO_PATH/a11y-findings/` and (b) edits via the `Edit` tool to existing `.tsx`/`.jsx` files under `$TARGET_REPO_PATH`.
-- Do NOT invoke `node` on any script you wrote. The only `node` invocations allowed are calling the pre-existing helpers under `web/playwright/js/scripts/a11y-autofix-helpers/`.
-- Do NOT write a "main loop" or "agent" — YOU are the loop, executing one tool call at a time.
-- If you reach the end of this prompt without making MCP tool calls AND running `gh pr create` (or its `[DRY-RUN]` equivalent), you have FAILED.
+**Signature: `__SIGNATURE__`**
 
-## Environment (already set, just reference)
+This is the only signature you handle. Do not process any other issue, even if you see them in the report.
+
+## Environment (already set)
 
 - `$REPORT_PATH` — Evinced issues JSON file
 - `$TARGET_REPO_PATH` — fresh clone of the FE repo
 - `$CONFIG_PATH` — `a11y-autofix.config.json`
-- `$DRY_RUN` — `"true"` skips network mutations (git push, gh pr create, gh pr comment); branch creation and tracking-file writes still happen locally
+- `$DRY_RUN` — `"true"` skips git push / `gh pr create` / `gh pr comment`; branch creation and file writes still happen locally
+- `$SIGNATURE` — same value as `__SIGNATURE__` above
+
+## Hard rules (violating any of these = run FAILED)
+
+- Do NOT create any `.mjs`, `.js`, `.ts`, `.sh`, or `.py` file anywhere. The only files you may create are: (a) ONE markdown file at `$TARGET_REPO_PATH/<trackingFileDir>/__SIGNATURE__.md` and (b) edits via the `Edit` tool to existing `.tsx`/`.jsx` files inside `$TARGET_REPO_PATH`.
+- Do NOT invoke `node` on any script you wrote. The only `node` invocation allowed is the one shown in Step 6 for the pre-existing `signatureToBranch` helper.
+- Do NOT process any signature other than `__SIGNATURE__`.
+- If you reach the end of this prompt without calling the Evinced MCP AND running `gh pr create` (or its `[DRY-RUN]` equivalent), you have FAILED.
 
 ## Step 1 — Read config
 
-Use the `Read` tool on `$CONFIG_PATH`. Remember these keys: `target.owner`, `target.repo`, `target.baseBranch`, `target.baseUrl`, `target.routeRoot`, `prBranchPrefix`, `trackingFileDir`, `maxIssuesPerRun`.
+Use `Read` on `$CONFIG_PATH`. Remember: `target.owner`, `target.repo`, `target.baseBranch`, `target.baseUrl`, `target.routeRoot`, `prBranchPrefix`, `trackingFileDir`.
 
-## Step 2 — Load issues via the Evinced MCP
+## Step 2 — Get issue details via the Evinced MCP
 
-Call `mcp__evinced__evinced_import_report` with `file=$REPORT_PATH` and `model=claude-opus-4-7`. The tool returns the report's issue list (or a `reportId` you can follow up with).
+Call `mcp__evinced__evinced_get_webpage_issue_details` with `issueSignature="__SIGNATURE__"` and `model="claude-opus-4-7"`. Capture from the response: rule title, severity, WCAG ref, URL, selector, DOM snippet, screenshot URL/id, AND the remediation instructions field. **Evinced's remediation text is your PRIMARY guide for the patch.**
 
-If `evinced_import_report` returns an error OR the issue list is empty BUT the file is non-empty, fall back: use `Read` on `$REPORT_PATH`, parse as JSON, find the array — it may be the top-level value, or nested under a key like `issues`, `data.issues`, or per-page `pages[*].issues`. Flatten to a single array. Each item must have some stable identifier; use whichever field looks like a signature/id/hash, and refer to its value as `<signature>` for the rest of this run.
+If the MCP call fails or returns nothing for this signature: fall back. Use `Read` on `$REPORT_PATH`, find the entry where the `signature` field equals `"__SIGNATURE__"` (recursive search — the entry may be at the top level or nested under `issues`, `pages[*].issues`, etc.), and use that entry's data instead. Log "fell back to direct JSON read for __SIGNATURE__" in your reasoning so the operator knows the MCP isn't working.
 
-Log the issue count. If zero, write a summary saying "no issues, nothing to do" and STOP (run is successful).
-
-## Step 3 — Process each issue
-
-Cap the loop at `maxIssuesPerRun` (default 20). For each issue in order, run Steps 3.a through 3.f. Do NOT skip steps. Do NOT batch.
-
-### 3.a — Get rich details via the MCP
-
-Call `mcp__evinced__evinced_get_webpage_issue_details` with `issueSignature=<signature>` and `model=claude-opus-4-7`. Capture: rule title, severity, WCAG ref, DOM snippet, selector, screenshot URL/id, bounding box, AND the remediation instructions field. Evinced's remediation text is your PRIMARY guide for the patch. The summary JSON is just a table of contents.
-
-If the MCP call fails for one issue, log `outcome=api-error` for that signature and continue to the next issue.
-
-### 3.b — Pre-check for an existing PR
+## Step 3 — Check for an existing PR
 
 Run via `Bash`:
 
@@ -46,81 +41,76 @@ Run via `Bash`:
 gh pr list \
   --repo <target.owner>/<target.repo> \
   --state all \
-  --search "in:title <signature>" \
+  --search "in:title __SIGNATURE__" \
   --json number,state,headRefName
 ```
 
-- If a result has `state=MERGED` or `state=CLOSED`: log `outcome=skipped-closed-pr` and SKIP to the next issue.
-- If a result has `state=OPEN`: note the `headRefName` for Step 3.e; this issue will refresh that branch.
-- If no results: this issue gets a new branch.
+- If a result has `state=MERGED` or `state=CLOSED`: print `outcome=skipped-closed-pr`, finish Step 7, and stop.
+- If a result has `state=OPEN`: note `headRefName` for Step 6 (this run will refresh that branch).
+- Otherwise: this signature gets a NEW branch in Step 6.
 
-### 3.c — Resolve the source file
+## Step 4 — Resolve the source file
 
 Strip `<target.baseUrl>` from the issue's URL. Walk `$TARGET_REPO_PATH/<target.routeRoot>/` for the matching Next.js App Router `page.tsx`, handling:
 
 - literal directory segments (preferred match)
 - route groups `(group)` (consume zero URL segments)
-- dynamic `[id]` (consume one URL segment)
+- dynamic segments `[id]` (consume one URL segment)
 
-Use `LS`, `Glob`, and `Read` tools — NOT a script. If no `page.tsx` matches the URL path, log `outcome=route-unresolved` and proceed to Step 3.d to write a tracking record (skip the JSX edit; the PR is still useful as a tracking artifact).
+Use the `LS`, `Glob`, and `Read` tools — not a script. If no `page.tsx` matches the URL path, print `outcome=route-unresolved`, proceed to Step 5 to write a tracking file (skip the JSX edit), then proceed to Step 6 (branch + commit + PR still happen so the operator has an artifact to triage).
 
 If `page.tsx` imports other components, follow imports via `Read` + `Grep` to find the JSX element that owns the issue's selector. Stop at the first file you would actually edit.
 
-### 3.d — Apply the JSX edit
+## Step 5 — Apply JSX edit + write tracking file
 
-Use the `Edit` tool (NOT `Bash` + `sed`) to apply the minimal change that implements Evinced's remediation instructions verbatim. For example, if the remediation says "Add `aria-label='Submit'`", literally add `aria-label="Submit"` to that JSX element. Do NOT touch unrelated lines.
+If a source file was found in Step 4, use the `Edit` tool (NOT `Bash + sed`) to apply the minimal change that implements Evinced's remediation instructions verbatim. Example: if remediation says `Add aria-label="Submit"`, add literally `aria-label="Submit"` to that JSX element. Do not touch unrelated lines. If you are not confident the edit matches Evinced's intent, skip the JSX edit and tag the outcome `manual-review`.
 
-If you are not confident the edit matches Evinced's intent, skip the JSX edit and tag this issue `manual-review`.
-
-### 3.e — Write the tracking file
-
-Use the `Write` tool to create `$TARGET_REPO_PATH/<trackingFileDir>/<signature>.md`. Content:
+Use the `Write` tool to create `$TARGET_REPO_PATH/<trackingFileDir>/__SIGNATURE__.md` with this content:
 
 ```
-# <issue rule title>
+# <rule title>
 
-- Signature: <signature>
+- Signature: __SIGNATURE__
 - Severity: <severity>
 - WCAG: <wcag-ref>
-- URL: <issue.url>
-- Selector: <issue.selector>
+- URL: <url>
+- Selector: <selector>
 - Screenshot: <url or id>
 - Source file: <resolved path or "route-unresolved">
 
 ## Evinced remediation guidance
 
-<verbatim from MCP>
+<verbatim from MCP / fallback JSON>
 
 ## Applied patch
 
-\`\`\`diff
+```diff
 <the diff you applied, or "manual review needed">
-\`\`\`
+```
 
 Verification: human must confirm fix matches intent.
 ```
 
-### 3.f — Branch, commit, and PR
+## Step 6 — Branch + commit + PR
 
-Slugify the signature into a branch name. Run:
+Compute the branch name via `Bash`:
 
 ```
-node -e "import('./web/playwright/js/scripts/a11y-autofix-helpers/signatureToBranch.mjs').then(({signatureToBranch}) => console.log(signatureToBranch('<signature>', '<prBranchPrefix>')))"
+node -e "import('./web/playwright/js/scripts/a11y-autofix-helpers/signatureToBranch.mjs').then(({signatureToBranch}) => console.log(signatureToBranch(process.env.SIGNATURE, '<prBranchPrefix>')))"
 ```
 
-via `Bash` to get the branch name. Then:
+Capture the output as `<branch>`. Then:
 
 ```
 cd $TARGET_REPO_PATH
-git checkout -b <branch>   # OR `git checkout <branch>` if 3.b found an existing open PR's branch
+git checkout -b <branch>    # OR `git checkout <branch>` if Step 3 found an existing open PR's headRefName
 git add -A
 git commit -m "[a11y] <rule title>"
 ```
 
 If `$DRY_RUN=true`:
-- Log `[DRY-RUN] would push and open PR for <signature>`.
-- Log `outcome=pr-opened` (or `pr-updated`) for this signature with `prUrl=null`.
-- Move to the next issue.
+- Print `[DRY-RUN] would push and open PR for __SIGNATURE__ on branch <branch>`.
+- Set `outcome=pr-opened-dry-run` (or `pr-updated-dry-run` if refreshing) and proceed to Step 7.
 
 If `$DRY_RUN=false`:
 - For a NEW branch:
@@ -131,39 +121,27 @@ If `$DRY_RUN=false`:
     --base <target.baseBranch> \
     --head <branch> \
     --title "[a11y] <rule title>" \
-    --body "$(cat <trackingFileDir>/<signature>.md)" \
+    --body-file <trackingFileDir>/__SIGNATURE__.md \
     --label a11y --label automated
   ```
-  Capture the returned PR URL. Log `outcome=pr-opened`.
-- For an EXISTING branch:
+  Capture the PR URL. Set `outcome=pr-opened`.
+- For an EXISTING branch (refresh):
   ```
   git push --force-with-lease
   ```
-  If accepted: `gh pr comment <pr-number> --body "Refreshed by run ${GITHUB_RUN_ID}"`. Log `outcome=pr-updated`.
-  If rejected: do NOT use `--force`. Run `gh pr comment <pr-number> --body "Branch was edited externally; autofix skipping refresh."` Log `outcome=branch-conflict`.
+  - If accepted: `gh pr comment <pr-number> --body "Refreshed by run ${GITHUB_RUN_ID}"`. Set `outcome=pr-updated`.
+  - If `--force-with-lease` is rejected (someone else pushed to the branch): do NOT use `--force`. Run `gh pr comment <pr-number> --body "Branch was edited externally; autofix skipping refresh."` Set `outcome=branch-conflict`.
 
-## Step 4 — Emit run summary
+## Step 7 — Print final outcome
 
-After all issues are processed, print to stdout (no shell needed — just include it in your final response):
+As the very last lines of your response, print exactly:
 
-```json
-{
-  "runSummary": [
-    {"signature": "...", "outcome": "pr-opened|pr-updated|manual-review|route-unresolved|branch-conflict|skipped-closed-pr|api-error", "prUrl": "..."}
-  ]
-}
 ```
-
-## Success criteria
-
-This run is SUCCESSFUL only if:
-
-1. You called `mcp__evinced__evinced_get_webpage_issue_details` at least once per non-skipped issue.
-2. You ran `gh pr create` (or its `[DRY-RUN]` log equivalent) for each issue that was not `route-unresolved` or `skipped-closed-pr`.
-3. The total count of PRs opened or updated (in real or dry-run mode) equals the total issues processed minus `route-unresolved` minus `skipped-closed-pr` minus `api-error`.
-
-If the run summary shows fewer PRs than expected, the run has FAILED.
+SIGNATURE: __SIGNATURE__
+OUTCOME: <one of: pr-opened | pr-updated | pr-opened-dry-run | pr-updated-dry-run | manual-review | route-unresolved | branch-conflict | skipped-closed-pr | api-error>
+PR_URL: <url or "n/a">
+```
 
 ## Reminder
 
-DO NOT write a script that does this. DO NOT plan. DO THE WORK NOW, one tool call at a time, starting with Step 1.
+DO NOT write a script. DO NOT plan. DO NOT process any other signature. DO THE WORK NOW for `__SIGNATURE__`, one tool call at a time, starting with Step 1.
