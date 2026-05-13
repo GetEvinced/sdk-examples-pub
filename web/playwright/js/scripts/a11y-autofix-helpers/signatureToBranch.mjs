@@ -5,5 +5,8 @@ export function signatureToBranch(signature, prefix) {
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
+  if (!slug) {
+    throw new Error(`signatureToBranch: signature "${signature}" slugified to empty (no alphanumeric characters)`);
+  }
   return `${prefix}${slug}`;
 }

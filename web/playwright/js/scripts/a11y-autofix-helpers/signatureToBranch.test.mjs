@@ -24,3 +24,10 @@ test("throws on empty signature", () => {
 test("throws on missing prefix", () => {
   assert.throws(() => signatureToBranch("abc", ""), /prefix/);
 });
+
+test("throws when signature contains no alphanumeric characters", () => {
+  assert.throws(
+    () => signatureToBranch("///", "a11y/fix-"),
+    /slugified to empty/
+  );
+});
