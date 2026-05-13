@@ -199,8 +199,8 @@ jobs:
             {
               "mcpServers": {
                 "evinced": {
-                  "command": "npx",
-                  "args": ["-y", "@evinced/mcp-server-web", "--headless"],
+                  "command": "evinced-mcp-server",
+                  "args": ["--headless"],
                   "type": "stdio",
                   "env": {
                     "EVINCED_SERVICE_ID": "${{ secrets.EVINCED_SERVICE_ID }}",
