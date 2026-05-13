@@ -102,9 +102,9 @@ Single source of truth a forker edits. Deliberately thin — the only "mapping" 
 
 ```json
 {
-  "sourceSpec": "web/playwright/js/tests/evStartStop.spec.js",
+  "sourceSpec": "web/playwright/js/tests/evMcpDemo.spec.js",
   "reportArtifactName": "report-web-playwright-js-issues",
-  "reportGlob": "**/evinced-reports/**/issues.json",
+  "reportPath": "web/playwright/js/test-results/evMcpDemo.json",
   "target": {
     "owner": "EvincedShane",
     "repo": "demo-fe",
@@ -117,6 +117,8 @@ Single source of truth a forker edits. Deliberately thin — the only "mapping" 
   "maxIssuesPerRun": 20
 }
 ```
+
+The source test (`evMcpDemo.spec.js`) calls `evincedService.evSaveFile(issues, "json", "./test-results/evMcpDemo.json")` directly. The autofix workflow consumes that JSON unchanged — no aggregation step needed.
 
 ### 4.3 `.mcp.json` (generated at job runtime)
 
@@ -204,10 +206,8 @@ Branch protection on `main` of `demo-fe` requires CODEOWNERS review, which makes
 ### Phase A — Tests run (existing `web-js.yml`, lightly extended)
 
 1. Trigger fires (push / PR / schedule / dispatch). Matrix entry `web-playwright-js` starts.
-2. Playwright spec named in `a11y-autofix.config.json` runs against the SUT. Evinced SDK captures issues and writes:
-   - `web/playwright/js/evinced-reports/tmp/0_evincedIssues/*.json` — per-issue records (what the autofix consumes)
-   - `web/playwright/js/evincedAggReports/aggregatedReportForRun.html` — human-readable
-3. The existing `Upload HTML reports` step (`.github/workflows/web-js.yml:97`) keeps working. A new sibling step uploads the issues JSON tree as a stable, separately named artifact (`report-web-playwright-js-issues`). The autofix consumes this artifact, not a glob over the HTML one — that makes the autofix's input a contract.
+2. The configured `sourceSpec` (`evMcpDemo.spec.js`) runs against `target.baseUrl`. `evincedService.evSaveFile(issues, "json", "./test-results/evMcpDemo.json")` writes the JSON directly; the same call with `"html"` writes the human-readable report.
+3. The existing `Upload HTML reports` step (`.github/workflows/web-js.yml:97`) keeps working. A new sibling step uploads `test-results/evMcpDemo.json` as a stable artifact (`report-web-playwright-js-issues`). The autofix consumes this single-file artifact — that makes the autofix's input a contract.
 
 ### Phase B — Autofix workflow starts
 
@@ -287,19 +287,20 @@ Each gets a tiny `*.test.mjs` alongside it using `node --test`. Three or four te
 
 ### 7.2 Dry-run mode
 
-`web-a11y-autofix.yml` accepts two `workflow_dispatch` inputs (declared in §4.1):
+`web-a11y-autofix.yml` accepts one `workflow_dispatch` input (declared in §4.1):
 
 - `dry_run` (bool, default false) — agent runs end-to-end but `gh pr create`, `git push`, and `gh pr comment` are replaced with logged no-ops. Branch creation still happens in the local clone so the diff is inspectable in the run log. Run summary prefixes every outcome with `[DRY-RUN]`.
-- `fixture_report` (string, default empty) — when set, skip artifact download and use the checked-in fixture at the given path (e.g., `web/playwright/js/fixtures/a11y/sample-issues.json`). Lets the prompt be iterated on without re-running the live tests.
+
+There is no separate fixture path. The artifact produced by the most recent successful `web-js.yml` run is the only source of issues. To iterate on the prompt without re-running the live tests, dispatch `web-a11y-autofix.yml` with `dry_run=true` against the latest artifact — it downloads what's already there.
 
 ### 7.3 Manual smoke checklist (in README)
 
 1. Fork both repos. Set `DEMO_FE_PAT`, `ANTHROPIC_API_KEY`, `EVINCED_API_KEY`, `EVINCED_SERVICE_ID` secrets.
-2. Trigger `web-a11y-autofix.yml` with `dry_run=true` + `fixture_report=...`. Verify run summary shows expected actions, no PRs opened.
-3. Trigger with `dry_run=false` + same fixture. Verify exactly one PR per fixture issue.
-4. Trigger again immediately. Verify no new PRs; existing PRs get a refresh comment.
-5. Close one PR. Trigger again. Verify the closed PR is not reopened.
-6. Trigger the full pipeline (no fixture). Verify it runs against a live Evinced report and produces the same shape of result.
+2. Trigger `web-js.yml` once so an issues artifact exists for the autofix to consume.
+3. Dispatch `web-a11y-autofix.yml` with `dry_run=true`. Verify run summary shows expected actions, no PRs opened.
+4. Dispatch with `dry_run=false`. Verify exactly one PR per issue in the report.
+5. Dispatch again immediately. Verify no new PRs; existing PRs get a refresh comment.
+6. Close one PR. Dispatch again. Verify the closed PR is not reopened.
 
 ### 7.4 Not tested
 
