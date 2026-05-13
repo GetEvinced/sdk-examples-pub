@@ -143,18 +143,29 @@ jobs:
       - name: Configure .npmrc for Evinced private registry
         run: echo "${{ secrets.EVINCED_NPM_TOKEN }}" > ~/.npmrc
 
-      - name: Install Evinced MCP server (pre-fetch + cache)
+      - name: Install Evinced MCP server (skip broken postinstall scripts)
         run: |
-          npm install -g @evinced/mcp-server-web
-          which evinced-mcp-server-web || true
-          npx @evinced/mcp-server-web --version || true
+          # @evinced/mcp-server-web@1.0.28's postinstall tries to run
+          # `vite build` (devDep, not present after `npm install`) and pulls
+          # `keytar` which fails to prebuild on a fresh runner. We use token
+          # auth (env vars), not the OS-keychain login flow, so keytar isn't
+          # needed at runtime. Skip both with --ignore-scripts and
+          # --omit=optional.
+          npm install -g @evinced/mcp-server-web --ignore-scripts --omit=optional
 
-      - name: Authenticate Evinced MCP server
-        env:
-          EVINCED_SERVICE_ID: ${{ secrets.EVINCED_SERVICE_ID }}
-          EVINCED_API_KEY: ${{ secrets.EVINCED_API_KEY }}
-        run: |
-          npx @evinced/mcp-server-web --login
+          echo "--- discovering binary name ---"
+          NODE_BIN_DIR="$(dirname $(which node))"
+          ls -la "$NODE_BIN_DIR" | grep -i evinced || echo "no evinced binary on PATH"
+          ls -la "$NODE_BIN_DIR" | grep -i mcp || echo "no mcp binary on PATH"
+
+          echo "--- package directory ---"
+          PKG_DIR="$NODE_BIN_DIR/../lib/node_modules/@evinced/mcp-server-web"
+          if [ -d "$PKG_DIR" ]; then
+            echo "package installed at $PKG_DIR"
+            cat "$PKG_DIR/package.json" | jq '.bin, .main' || true
+          else
+            echo "::error::package not found at $PKG_DIR"
+          fi
 
       - name: Load agent prompt for this signature
         id: load_prompt
