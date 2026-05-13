@@ -165,3 +165,9 @@ See `MCPREPO.md` at the repo root for the full design spec.
 - One tracking file: `a11y-findings/<signature>.md` summarizing what the agent saw and proposed.
 
 Merging a PR requires CODEOWNERS approval on the tracking file — this is the human verification gate.
+
+### Known limitations
+
+- **Next.js catch-all routes (`[...slug]`, `[[...slug]]`) are not resolved.** The `resolveRoute` helper handles static segments, dynamic single-segments (`[id]`), and route groups (`(group)`). Catch-all variants will tag the issue `route-unresolved` and skip; no crash, but the agent will not open a PR for those pages until the helper is extended.
+- **Signature stability is assumed, not verified.** Branch idempotency depends on Evinced issue signatures being stable across runs. If the Evinced engine changes signature formatting between runs, the next scan will open a parallel set of PRs rather than updating existing ones — close stale ones manually until the signature-stability self-check (spec §6) is implemented.
+- **Additional repo-wide secret:** `EVINCED_NPM_TOKEN` is required by `web-js.yml` to install the Evinced SDK from a private npm registry. It is not listed in the secrets checklist above because it is shared across all workflows in this repo, but a fresh fork needs to set it.

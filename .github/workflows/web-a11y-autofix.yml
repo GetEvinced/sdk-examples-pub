@@ -43,6 +43,7 @@ jobs:
           echo "target_repo=$(jq -r .target.repo a11y-autofix.config.json)" >> $GITHUB_OUTPUT
           echo "target_branch=$(jq -r .target.baseBranch a11y-autofix.config.json)" >> $GITHUB_OUTPUT
           echo "report_artifact=$(jq -r .reportArtifactName a11y-autofix.config.json)" >> $GITHUB_OUTPUT
+          echo "report_basename=$(basename $(jq -r .reportPath a11y-autofix.config.json))" >> $GITHUB_OUTPUT
 
       - name: Download issues artifact (from triggering workflow run)
         if: github.event_name == 'workflow_run'
@@ -62,7 +63,7 @@ jobs:
           RUN_ID=$(gh run list \
             -R ${{ github.repository }} \
             --workflow "Web SDK Tests — JavaScript/TypeScript" \
-            --branch main \
+            --branch ${{ github.ref_name }} \
             --status success \
             --limit 1 \
             --json databaseId \
@@ -79,12 +80,12 @@ jobs:
 
       - name: Verify issues file present
         run: |
-          if [ ! -f ./_autofix_input/evMcpDemo.json ]; then
+          if [ ! -f ./_autofix_input/${{ steps.cfg.outputs.report_basename }} ]; then
             echo "::error::evMcpDemo.json missing — upstream test workflow may not have produced it"
             ls -la ./_autofix_input || true
             exit 1
           fi
-          echo "Found $(jq length ./_autofix_input/evMcpDemo.json) issues"
+          echo "Found $(jq length ./_autofix_input/${{ steps.cfg.outputs.report_basename }}) issues"
 
       - name: Clone target FE repo
         env:
@@ -112,10 +113,13 @@ jobs:
           }
           JSON
 
+      # NOTE: anthropics/claude-code-action@beta input names below (`prompt_file`, `mcp_config`)
+      # may differ from the current action API. If this step fails with "unexpected input", check
+      # https://github.com/anthropics/claude-code-action and swap to the documented input names.
       - name: Run Claude agent
         uses: anthropics/claude-code-action@beta
         env:
-          REPORT_PATH: ${{ github.workspace }}/_autofix_input/evMcpDemo.json
+          REPORT_PATH: ${{ github.workspace }}/_autofix_input/${{ steps.cfg.outputs.report_basename }}
           TARGET_REPO_PATH: ${{ github.workspace }}/_autofix_target
           CONFIG_PATH: ${{ github.workspace }}/a11y-autofix.config.json
           DRY_RUN: ${{ inputs.dry_run || 'false' }}
