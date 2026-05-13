@@ -143,29 +143,41 @@ jobs:
       - name: Configure .npmrc for Evinced private registry
         run: echo "${{ secrets.EVINCED_NPM_TOKEN }}" > ~/.npmrc
 
-      - name: Install Evinced MCP server (skip broken postinstall scripts)
+      - name: Install Evinced MCP server (docs Step 1)
+        # @evinced/mcp-server-web@1.0.28's postinstall fails on a fresh
+        # runner: keytar's prebuild-install isn't on PATH, and the
+        # package's own `vite build` script needs a devDep that isn't
+        # installed by `npm install`. Token auth (env vars) doesn't need
+        # keytar at runtime, so skip both with --ignore-scripts and
+        # --omit=optional. The published tarball already ships
+        # dist/cli.js, so the binary works without running build scripts.
         run: |
-          # @evinced/mcp-server-web@1.0.28's postinstall tries to run
-          # `vite build` (devDep, not present after `npm install`) and pulls
-          # `keytar` which fails to prebuild on a fresh runner. We use token
-          # auth (env vars), not the OS-keychain login flow, so keytar isn't
-          # needed at runtime. Skip both with --ignore-scripts and
-          # --omit=optional.
           npm install -g @evinced/mcp-server-web --ignore-scripts --omit=optional
+          which evinced-mcp-server
 
-          echo "--- discovering binary name ---"
-          NODE_BIN_DIR="$(dirname $(which node))"
-          ls -la "$NODE_BIN_DIR" | grep -i evinced || echo "no evinced binary on PATH"
-          ls -la "$NODE_BIN_DIR" | grep -i mcp || echo "no mcp binary on PATH"
+      - name: Install Chromium for MCP server (docs Troubleshooting)
+        # Per developer.evinced.com troubleshooting: "Browser launch
+        # failures in headless mode → Run `npx playwright install` to
+        # ensure Chromium is installed."
+        run: npx playwright install --with-deps chromium
 
-          echo "--- package directory ---"
-          PKG_DIR="$NODE_BIN_DIR/../lib/node_modules/@evinced/mcp-server-web"
-          if [ -d "$PKG_DIR" ]; then
-            echo "package installed at $PKG_DIR"
-            cat "$PKG_DIR/package.json" | jq '.bin, .main' || true
-          else
-            echo "::error::package not found at $PKG_DIR"
-          fi
+      - name: Verify MCP server starts standalone (docs Step 3 analog)
+        # The docs' Step 3 ("Verify installation") happens by asking the
+        # AI to call evinced_analyze_webpage. In CI we can't do that
+        # interactively, so the closest equivalent is starting the
+        # server directly with token-auth env vars set and capturing
+        # whatever it prints. continue-on-error so this never blocks the
+        # agent step.
+        continue-on-error: true
+        env:
+          EVINCED_SERVICE_ID: ${{ secrets.EVINCED_SERVICE_ID }}
+          EVINCED_API_KEY: ${{ secrets.EVINCED_API_KEY }}
+        run: |
+          echo "--- evinced-mcp-server --headless (30s window) ---"
+          timeout 30 evinced-mcp-server --headless 2>&1 < /dev/null \
+            | tee /tmp/mcp-startup.log \
+            || echo "server exit code: $?"
+          echo "--- end of standalone startup ---"
 
       - name: Load agent prompt for this signature
         id: load_prompt
@@ -187,7 +199,7 @@ jobs:
           direct_prompt: ${{ steps.load_prompt.outputs.content }}
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           github_token: ${{ secrets.DEMO_FE_PAT }}
-          allowed_tools: "Bash,Edit,MultiEdit,Glob,Grep,LS,Read,Write,mcp__evinced__evinced_get_webpage_issue_details,mcp__evinced__evinced_analyze_webpage,mcp__evinced__evinced_import_report"
+          allowed_tools: "Bash,Edit,MultiEdit,Glob,Grep,LS,Read,Write,mcp__evinced-web-mcp__evinced_get_webpage_issue_details,mcp__evinced-web-mcp__evinced_analyze_webpage,mcp__evinced-web-mcp__evinced_import_report,mcp__evinced-web-mcp__evinced_fix_webpage_issues"
           claude_env: |
             REPORT_PATH: ${{ github.workspace }}/_autofix_input/${{ needs.extract.outputs.report_basename }}
             TARGET_REPO_PATH: ${{ github.workspace }}/_autofix_target
@@ -198,7 +210,7 @@ jobs:
           mcp_config: |
             {
               "mcpServers": {
-                "evinced": {
+                "evinced-web-mcp": {
                   "command": "evinced-mcp-server",
                   "args": ["--headless"],
                   "type": "stdio",
