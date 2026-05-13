@@ -112,7 +112,7 @@ jobs:
         with:
           mode: agent
           direct_prompt: ${{ steps.load_prompt.outputs.content }}
-          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          claude_code_oauth_token: ${{ secrets.ANTHROPIC_AI_GITHUB }}
           github_token: ${{ secrets.DEMO_FE_PAT }}
           claude_env: |
             REPORT_PATH: ${{ github.workspace }}/_autofix_input/${{ steps.cfg.outputs.report_basename }}
