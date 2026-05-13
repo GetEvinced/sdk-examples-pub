@@ -25,6 +25,7 @@ permissions:
 jobs:
   autofix:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
 
     steps:
@@ -58,7 +59,21 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           mkdir -p ./_autofix_input
-          gh run download -R ${{ github.repository }} \
+          RUN_ID=$(gh run list \
+            -R ${{ github.repository }} \
+            --workflow "Web SDK Tests — JavaScript/TypeScript" \
+            --branch main \
+            --status success \
+            --limit 1 \
+            --json databaseId \
+            --jq '.[0].databaseId')
+          if [ -z "$RUN_ID" ] || [ "$RUN_ID" = "null" ]; then
+            echo "::error::No successful web-js.yml run found on main"
+            exit 1
+          fi
+          echo "Downloading from run-id=$RUN_ID"
+          gh run download "$RUN_ID" \
+            -R ${{ github.repository }} \
             --name "${{ steps.cfg.outputs.report_artifact }}" \
             --dir ./_autofix_input
 
