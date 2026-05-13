@@ -153,19 +153,31 @@ jobs:
           # --omit=optional.
           npm install -g @evinced/mcp-server-web --ignore-scripts --omit=optional
 
-          echo "--- discovering binary name ---"
-          NODE_BIN_DIR="$(dirname $(which node))"
-          ls -la "$NODE_BIN_DIR" | grep -i evinced || echo "no evinced binary on PATH"
-          ls -la "$NODE_BIN_DIR" | grep -i mcp || echo "no mcp binary on PATH"
+      - name: Install Chromium for Evinced MCP server
+        # The MCP server is browser-driven (per developer.evinced.com docs
+        # even --headless mode launches Chromium). Install Playwright's
+        # bundled Chromium with system deps so the server doesn't try to
+        # download or build a browser at startup (which would time out
+        # the action's MCP-handshake window).
+        run: npx playwright install --with-deps chromium
 
-          echo "--- package directory ---"
-          PKG_DIR="$NODE_BIN_DIR/../lib/node_modules/@evinced/mcp-server-web"
-          if [ -d "$PKG_DIR" ]; then
-            echo "package installed at $PKG_DIR"
-            cat "$PKG_DIR/package.json" | jq '.bin, .main' || true
-          else
-            echo "::error::package not found at $PKG_DIR"
-          fi
+      - name: Smoke-test MCP server startup directly
+        continue-on-error: true
+        env:
+          EVINCED_SERVICE_ID: ${{ secrets.EVINCED_SERVICE_ID }}
+          EVINCED_API_KEY: ${{ secrets.EVINCED_API_KEY }}
+        run: |
+          echo "--- evinced-mcp-server binary location ---"
+          which evinced-mcp-server || { echo "::error::binary not on PATH"; exit 0; }
+
+          echo "--- start server with 30s timeout, capture stderr ---"
+          # The server speaks MCP over stdio. Close stdin so it exits cleanly
+          # once we've captured enough output. If it crashes before the
+          # timeout, stderr will tell us why.
+          timeout 30 evinced-mcp-server --headless 2>&1 < /dev/null \
+            | tee /tmp/mcp-startup.log \
+            || echo "server exit code: $?"
+          echo "--- end of server-startup output ---"
 
       - name: Load agent prompt for this signature
         id: load_prompt
