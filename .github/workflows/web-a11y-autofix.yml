@@ -152,7 +152,13 @@ jobs:
         # --omit=optional. The published tarball already ships
         # dist/cli.js, so the binary works without running build scripts.
         run: |
-          npm install -g @evinced/mcp-server-web --ignore-scripts --omit=optional
+          # IMPORTANT: do not pass --omit=optional. @evinced/auth's
+          # device-flow.js statically imports `open`, which is an optional
+          # dep — skipping optionals causes ERR_MODULE_NOT_FOUND at server
+          # startup even when using token auth. --ignore-scripts alone is
+          # enough to bypass keytar's prebuild-install and the package's
+          # own vite-build postinstall.
+          npm install -g @evinced/mcp-server-web --ignore-scripts
           which evinced-mcp-server
 
       - name: Install Chromium for MCP server (docs Troubleshooting)
