@@ -4,7 +4,12 @@ const REQUIRED = ["signature", "url", "selector", "ruleId", "severity"];
 
 export function loadIssues(filePath) {
   const raw = readFileSync(filePath, "utf8");
-  const parsed = JSON.parse(raw);
+  let parsed;
+  try {
+    parsed = JSON.parse(raw);
+  } catch (e) {
+    throw new Error(`loadIssues: ${filePath} is not valid JSON: ${e.message}`);
+  }
   if (!Array.isArray(parsed)) {
     throw new Error(`loadIssues: top-level value in ${filePath} is not an array`);
   }

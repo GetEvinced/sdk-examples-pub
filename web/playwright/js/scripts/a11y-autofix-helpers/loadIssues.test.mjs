@@ -53,3 +53,15 @@ test("throws when an issue is missing required fields", () => {
 test("throws when file does not exist", () => {
   assert.throws(() => loadIssues("/nonexistent.json"), /ENOENT|not found/i);
 });
+
+test("throws with filePath context when JSON is malformed", () => {
+  const dir = mkdtempSync(join(tmpdir(), "load-"));
+  const file = join(dir, "bad.json");
+  writeFileSync(file, "{not json");
+  try {
+    assert.throws(
+      () => loadIssues(file),
+      /loadIssues: .* is not valid JSON/
+    );
+  } finally { rmSync(dir, { recursive: true, force: true }); }
+});
