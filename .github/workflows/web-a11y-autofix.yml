@@ -176,7 +176,7 @@ jobs:
               "mcpServers": {
                 "evinced": {
                   "command": "npx",
-                  "args": ["-y", "@evinced/mcp-server-web"],
+                  "args": ["-y", "@evinced/mcp-server-web", "--headless"],
                   "type": "stdio",
                   "env": {
                     "EVINCED_SERVICE_ID": "${{ secrets.EVINCED_SERVICE_ID }}",
