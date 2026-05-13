@@ -1,0 +1,15 @@
+{
+  "sourceSpec": "web/playwright/js/tests/evMcpDemo.spec.js",
+  "reportArtifactName": "report-web-playwright-js-issues",
+  "reportPath": "web/playwright/js/test-results/evMcpDemo.json",
+  "target": {
+    "owner": "EvincedShane",
+    "repo": "demo-fe",
+    "baseBranch": "main",
+    "baseUrl": "https://demo-fe-orpin.vercel.app",
+    "routeRoot": "src/app"
+  },
+  "prBranchPrefix": "a11y/fix-",
+  "trackingFileDir": "a11y-findings",
+  "maxIssuesPerRun": 20
+}
