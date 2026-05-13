@@ -143,23 +143,14 @@ jobs:
       - name: Configure .npmrc for Evinced private registry
         run: echo "${{ secrets.EVINCED_NPM_TOKEN }}" > ~/.npmrc
 
-      - name: Install Evinced MCP server (docs Step 1)
-        # @evinced/mcp-server-web@1.0.28's postinstall fails on a fresh
-        # runner: keytar's prebuild-install isn't on PATH, and the
-        # package's own `vite build` script needs a devDep that isn't
-        # installed by `npm install`. Token auth (env vars) doesn't need
-        # keytar at runtime, so skip both with --ignore-scripts and
-        # --omit=optional. The published tarball already ships
-        # dist/cli.js, so the binary works without running build scripts.
+      - name: Install system libs for native modules (keytar / libsecret)
+        # keytar (transitive dep) is a native module that needs libsecret
+        # on Linux. Without it, `npx -y`'s postinstall fails. Same idea
+        # as the docs' Troubleshooting note about Chromium — install the
+        # platform prerequisites so the package can install cleanly.
         run: |
-          # IMPORTANT: do not pass --omit=optional. @evinced/auth's
-          # device-flow.js statically imports `open`, which is an optional
-          # dep — skipping optionals causes ERR_MODULE_NOT_FOUND at server
-          # startup even when using token auth. --ignore-scripts alone is
-          # enough to bypass keytar's prebuild-install and the package's
-          # own vite-build postinstall.
-          npm install -g @evinced/mcp-server-web --ignore-scripts
-          which evinced-mcp-server
+          sudo apt-get update
+          sudo apt-get install -y libsecret-1-dev
 
       - name: Install Chromium for MCP server (docs Troubleshooting)
         # Per developer.evinced.com troubleshooting: "Browser launch
@@ -167,21 +158,21 @@ jobs:
         # ensure Chromium is installed."
         run: npx playwright install --with-deps chromium
 
-      - name: Verify MCP server starts standalone (docs Step 3 analog)
-        # The docs' Step 3 ("Verify installation") happens by asking the
-        # AI to call evinced_analyze_webpage. In CI we can't do that
-        # interactively, so the closest equivalent is starting the
-        # server directly with token-auth env vars set and capturing
-        # whatever it prints. continue-on-error so this never blocks the
-        # agent step.
+      - name: Verify MCP server starts standalone via npx (docs Step 3 analog)
+        # Use the SAME spawn syntax as the docs' mcp_config — npx -y. If
+        # this hangs (waiting for stdio MCP input) within 30s, the
+        # server is healthy. If it crashes, stderr lands in the log so
+        # we can see what's wrong. continue-on-error so this never
+        # blocks the agent step.
         continue-on-error: true
         env:
           EVINCED_SERVICE_ID: ${{ secrets.EVINCED_SERVICE_ID }}
           EVINCED_API_KEY: ${{ secrets.EVINCED_API_KEY }}
         run: |
-          echo "--- evinced-mcp-server --headless (30s window) ---"
-          timeout 30 evinced-mcp-server --headless 2>&1 < /dev/null \
+          echo "--- npx -y @evinced/mcp-server-web --headless (30s window) ---"
+          timeout 30 npx -y @evinced/mcp-server-web --headless 2>&1 < /dev/null \
             | tee /tmp/mcp-startup.log \
+            | head -200 \
             || echo "server exit code: $?"
           echo "--- end of standalone startup ---"
 
@@ -217,8 +208,8 @@ jobs:
             {
               "mcpServers": {
                 "evinced-web-mcp": {
-                  "command": "evinced-mcp-server",
-                  "args": ["--headless"],
+                  "command": "npx",
+                  "args": ["-y", "@evinced/mcp-server-web", "--headless"],
                   "type": "stdio",
                   "env": {
                     "EVINCED_SERVICE_ID": "${{ secrets.EVINCED_SERVICE_ID }}",
