@@ -27,11 +27,19 @@ This is the only signature you handle. Do not process any other issue, even if y
 
 Use `Read` on `$CONFIG_PATH`. Remember: `target.owner`, `target.repo`, `target.baseBranch`, `target.baseUrl`, `target.routeRoot`, `prBranchPrefix`, `trackingFileDir`.
 
-## Step 2 — Get issue details via the Evinced MCP
+## Step 2a — Import the report into the Evinced MCP
+
+The MCP server has its own internal report store. Before you can look up an issue by signature, the report must be imported once per MCP-server instance. Each matrix job is a fresh server, so you MUST do this every run.
+
+Call `mcp__evinced-web-mcp__evinced_import_report` with `file="$REPORT_PATH"` and `model="claude-opus-4-7"`. This loads all issues from the JSON report into the server's store. Expect a success response.
+
+If the import call fails (server returns an error), fall back: use `Read` on `$REPORT_PATH` directly and locate the entry by signature as described in Step 2b below.
+
+## Step 2b — Get issue details via the Evinced MCP
 
 Call `mcp__evinced-web-mcp__evinced_get_webpage_issue_details` with `issueSignature="__SIGNATURE__"` and `model="claude-opus-4-7"`. Capture from the response: rule title, severity, WCAG ref, URL, selector, DOM snippet, screenshot URL/id, AND the remediation instructions field. **Evinced's remediation text is your PRIMARY guide for the patch.**
 
-If the MCP call fails or returns nothing for this signature: fall back. Use `Read` on `$REPORT_PATH`, find the entry where the `signature` field equals `"__SIGNATURE__"` (recursive search — the entry may be at the top level or nested under `issues`, `pages[*].issues`, etc.), and use that entry's data instead. Log "fell back to direct JSON read for __SIGNATURE__" in your reasoning so the operator knows the MCP isn't working.
+If this call fails or returns "not found" (e.g. import failed in 2a), fall back: use `Read` on `$REPORT_PATH`, find the entry where the `signature` field equals `"__SIGNATURE__"` (recursive search — the entry may be at the top level or nested under `issues`, `pages[*].issues`, etc.), and use that entry's data instead. Log "fell back to direct JSON read for __SIGNATURE__" in your reasoning so the operator knows the MCP isn't returning data.
 
 ## Step 3 — Check for an existing PR
 
