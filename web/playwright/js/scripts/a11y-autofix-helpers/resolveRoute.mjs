@@ -2,13 +2,23 @@ import { existsSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 
 export function resolveRoute(url, { baseUrl, routeRoot, repoPath }) {
-  if (!url.startsWith(baseUrl)) {
+  let target, base;
+  try {
+    target = new URL(url);
+    base = new URL(baseUrl);
+  } catch {
+    throw new Error(`resolveRoute: invalid URL "${url}" or baseUrl "${baseUrl}"`);
+  }
+  if (target.origin !== base.origin) {
     throw new Error(`resolveRoute: URL "${url}" does not match baseUrl "${baseUrl}"`);
   }
-  let path = url.slice(baseUrl.length).split("?")[0].split("#")[0];
-  if (path.startsWith("/")) path = path.slice(1);
-  if (path.endsWith("/")) path = path.slice(0, -1);
-  const segments = path === "" ? [] : path.split("/");
+  const basePathTrimmed = base.pathname.replace(/\/$/, "");
+  const targetPathTrimmed = target.pathname.replace(/\/$/, "");
+  if (basePathTrimmed && !targetPathTrimmed.startsWith(basePathTrimmed + "/") && targetPathTrimmed !== basePathTrimmed) {
+    throw new Error(`resolveRoute: URL "${url}" does not match baseUrl path "${base.pathname}"`);
+  }
+  const relPath = targetPathTrimmed.slice(basePathTrimmed.length).replace(/^\//, "");
+  const segments = relPath === "" ? [] : relPath.split("/");
 
   const rootAbs = join(repoPath, routeRoot);
   if (!existsSync(rootAbs)) return null;

@@ -86,3 +86,33 @@ test("throws when URL does not match baseUrl", () => {
     );
   } finally { rmSync(root, { recursive: true, force: true }); }
 });
+
+test("rejects a URL whose host looks like a prefix of baseUrl host", () => {
+  const root = makeTree(["src/app/page.tsx"]);
+  try {
+    assert.throws(
+      () => resolveRoute("https://example.com.evil/foo", { ...cfg, repoPath: root }),
+      /baseUrl/
+    );
+  } finally { rmSync(root, { recursive: true, force: true }); }
+});
+
+test("handles baseUrl with trailing slash for root URL", () => {
+  const root = makeTree(["src/app/page.tsx"]);
+  try {
+    assert.equal(
+      resolveRoute("https://example.com/", { baseUrl: "https://example.com/", routeRoot: "src/app", repoPath: root }),
+      "src/app/page.tsx"
+    );
+  } finally { rmSync(root, { recursive: true, force: true }); }
+});
+
+test("handles baseUrl with trailing slash for nested URL", () => {
+  const root = makeTree(["src/app/about/team/page.tsx"]);
+  try {
+    assert.equal(
+      resolveRoute("https://example.com/about/team", { baseUrl: "https://example.com/", routeRoot: "src/app", repoPath: root }),
+      "src/app/about/team/page.tsx"
+    );
+  } finally { rmSync(root, { recursive: true, force: true }); }
+});
