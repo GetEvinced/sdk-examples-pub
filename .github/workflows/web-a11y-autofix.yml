@@ -12,7 +12,7 @@ on:
         type: boolean
         default: false
   schedule:
-    - cron: "0 7 * * 1"  # 1h after web-js.yml's Monday cron
+    - cron: "0 7 * * 1"
 
 concurrency:
   group: a11y-autofix-${{ github.ref }}
@@ -24,27 +24,29 @@ permissions:
   id-token: write
 
 jobs:
-  autofix:
+  extract:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 5
     if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
-
+    outputs:
+      matrix: ${{ steps.list.outputs.matrix }}
+      issue_count: ${{ steps.list.outputs.count }}
+      target_owner: ${{ steps.cfg.outputs.target_owner }}
+      target_repo: ${{ steps.cfg.outputs.target_repo }}
+      target_branch: ${{ steps.cfg.outputs.target_branch }}
+      report_basename: ${{ steps.cfg.outputs.report_basename }}
+      report_artifact: ${{ steps.cfg.outputs.report_artifact }}
     steps:
       - uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
 
       - name: Read pipeline config
         id: cfg
         run: |
-          echo "target_owner=$(jq -r .target.owner a11y-autofix.config.json)" >> $GITHUB_OUTPUT
-          echo "target_repo=$(jq -r .target.repo a11y-autofix.config.json)" >> $GITHUB_OUTPUT
-          echo "target_branch=$(jq -r .target.baseBranch a11y-autofix.config.json)" >> $GITHUB_OUTPUT
-          echo "report_artifact=$(jq -r .reportArtifactName a11y-autofix.config.json)" >> $GITHUB_OUTPUT
-          echo "report_basename=$(basename $(jq -r .reportPath a11y-autofix.config.json))" >> $GITHUB_OUTPUT
+          echo "target_owner=$(jq -r .target.owner a11y-autofix.config.json)" >> "$GITHUB_OUTPUT"
+          echo "target_repo=$(jq -r .target.repo a11y-autofix.config.json)" >> "$GITHUB_OUTPUT"
+          echo "target_branch=$(jq -r .target.baseBranch a11y-autofix.config.json)" >> "$GITHUB_OUTPUT"
+          echo "report_artifact=$(jq -r .reportArtifactName a11y-autofix.config.json)" >> "$GITHUB_OUTPUT"
+          echo "report_basename=$(basename $(jq -r .reportPath a11y-autofix.config.json))" >> "$GITHUB_OUTPUT"
 
       - name: Download issues artifact (from triggering workflow run)
         if: github.event_name == 'workflow_run'
@@ -70,7 +72,7 @@ jobs:
             --json databaseId \
             --jq '.[0].databaseId')
           if [ -z "$RUN_ID" ] || [ "$RUN_ID" = "null" ]; then
-            echo "::error::No successful web-js.yml run found on main"
+            echo "::error::No successful web-js.yml run found on ${{ github.ref_name }}"
             exit 1
           fi
           echo "Downloading from run-id=$RUN_ID"
@@ -79,35 +81,79 @@ jobs:
             --name "${{ steps.cfg.outputs.report_artifact }}" \
             --dir ./_autofix_input
 
-      - name: Verify issues file present
+      - name: Re-upload issues artifact for matrix jobs
+        uses: actions/upload-artifact@v4
+        with:
+          name: a11y-issues-staged
+          path: ./_autofix_input/${{ steps.cfg.outputs.report_basename }}
+          retention-days: 1
+
+      - name: Build matrix from issue signatures
+        id: list
         run: |
-          if [ ! -f ./_autofix_input/${{ steps.cfg.outputs.report_basename }} ]; then
-            echo "::error::evMcpDemo.json missing — upstream test workflow may not have produced it"
-            ls -la ./_autofix_input || true
+          FILE="./_autofix_input/${{ steps.cfg.outputs.report_basename }}"
+          if [ ! -f "$FILE" ]; then
+            echo "::error::Issues file not found at $FILE"
             exit 1
           fi
-          echo "Found $(jq length ./_autofix_input/${{ steps.cfg.outputs.report_basename }}) issues"
+          # Recursive scan for `signature` fields anywhere in the JSON structure.
+          SIGNATURES=$(jq -c '[.. | objects | select(has("signature")) | .signature] | unique' "$FILE")
+          COUNT=$(echo "$SIGNATURES" | jq 'length')
+          if [ "$COUNT" = "0" ]; then
+            echo "::warning::No issue signatures found in $FILE"
+          fi
+          MATRIX=$(jq -nc --argjson sigs "$SIGNATURES" '{signature: $sigs}')
+          echo "count=$COUNT" >> "$GITHUB_OUTPUT"
+          echo "matrix=$MATRIX" >> "$GITHUB_OUTPUT"
+          echo "Found $COUNT issue signatures"
+
+  fix:
+    needs: extract
+    if: needs.extract.outputs.issue_count != '0'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix: ${{ fromJson(needs.extract.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Download staged issues artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: a11y-issues-staged
+          path: ./_autofix_input
 
       - name: Clone target FE repo
         env:
           GH_TOKEN: ${{ secrets.DEMO_FE_PAT }}
         run: |
-          gh repo clone "${{ steps.cfg.outputs.target_owner }}/${{ steps.cfg.outputs.target_repo }}" ./_autofix_target -- \
-            --branch "${{ steps.cfg.outputs.target_branch }}" --depth 50
+          gh repo clone "${{ needs.extract.outputs.target_owner }}/${{ needs.extract.outputs.target_repo }}" ./_autofix_target -- \
+            --branch "${{ needs.extract.outputs.target_branch }}" --depth 50
           cd ./_autofix_target
           git config user.email "a11y-autofix@evinced.com"
           git config user.name  "Evinced A11y Autofix"
 
-      - name: Load agent prompt
+      - name: Load agent prompt for this signature
         id: load_prompt
+        env:
+          SIGNATURE: ${{ matrix.signature }}
         run: |
+          # Substitute __SIGNATURE__ placeholder in the prompt template
+          PROMPT=$(sed "s|__SIGNATURE__|$SIGNATURE|g" prompts/a11y-autofix.md)
           {
             echo 'content<<PROMPT_EOF'
-            cat prompts/a11y-autofix.md
+            echo "$PROMPT"
             echo 'PROMPT_EOF'
           } >> "$GITHUB_OUTPUT"
 
-      - name: Run Claude agent
+      - name: Run Claude agent for signature ${{ matrix.signature }}
         uses: anthropics/claude-code-action@beta
         with:
           mode: agent
@@ -116,10 +162,11 @@ jobs:
           github_token: ${{ secrets.DEMO_FE_PAT }}
           allowed_tools: "Bash,Edit,MultiEdit,Glob,Grep,LS,Read,Write,mcp__evinced__evinced_get_webpage_issue_details,mcp__evinced__evinced_analyze_webpage,mcp__evinced__evinced_import_report"
           claude_env: |
-            REPORT_PATH: ${{ github.workspace }}/_autofix_input/${{ steps.cfg.outputs.report_basename }}
+            REPORT_PATH: ${{ github.workspace }}/_autofix_input/${{ needs.extract.outputs.report_basename }}
             TARGET_REPO_PATH: ${{ github.workspace }}/_autofix_target
             CONFIG_PATH: ${{ github.workspace }}/a11y-autofix.config.json
             DRY_RUN: ${{ inputs.dry_run || 'false' }}
+            SIGNATURE: ${{ matrix.signature }}
             GH_TOKEN: ${{ secrets.DEMO_FE_PAT }}
           mcp_config: |
             {
@@ -132,12 +179,17 @@ jobs:
               }
             }
 
+  summary:
+    needs: [extract, fix]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
       - name: Notify Slack
-        if: always()
         uses: act10ns/slack@v2
         with:
-          status: ${{ job.status }}
+          status: ${{ needs.fix.result || 'skipped' }}
           channel: "#workflows"
-          message: "a11y autofix run — ${{ job.status }}"
+          message: |
+            a11y autofix — ${{ needs.fix.result || 'skipped' }} (${{ needs.extract.outputs.issue_count || 0 }} issues processed)
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
