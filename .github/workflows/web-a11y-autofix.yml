@@ -163,23 +163,36 @@ jobs:
         # ensure Chromium is installed."
         run: npx playwright install --with-deps chromium
 
-      - name: Verify MCP server starts standalone via npx (docs Step 3 analog)
-        # Use the SAME spawn syntax as the docs' mcp_config — npx -y. If
-        # this hangs (waiting for stdio MCP input) within 30s, the
-        # server is healthy. If it crashes, stderr lands in the log so
-        # we can see what's wrong. continue-on-error so this never
-        # blocks the agent step.
+      - name: Invoke Evinced MCP (tools/list + import_report)
+        # This step exists to make the Evinced MCP invocation visible as
+        # its own workflow step. It speaks MCP over stdio directly:
+        #   1. Sends an `initialize` handshake.
+        #   2. Sends `tools/list` — log shows all Evinced MCP tools
+        #      (evinced_analyze_webpage, evinced_get_webpage_issue_details,
+        #      evinced_import_report, evinced_fix_webpage_issues).
+        #   3. Sends `tools/call` for `evinced_import_report` — log shows
+        #      the report being imported with its reportId + summary.
+        # The agent step below uses a separate fresh MCP instance for the
+        # actual remediation lookups; this probe is purely demonstrative
+        # so the workflow UI has a single step labeled "Invoke Evinced
+        # MCP" that an observer can point at.
         continue-on-error: true
         env:
           EVINCED_SERVICE_ID: ${{ secrets.EVINCED_SERVICE_ID }}
           EVINCED_API_KEY: ${{ secrets.EVINCED_API_KEY }}
+          REPORT_PATH: ${{ github.workspace }}/_autofix_input/${{ needs.extract.outputs.report_basename }}
         run: |
-          echo "--- npx -y @evinced/mcp-server-web --headless (30s window) ---"
-          timeout 30 npx -y @evinced/mcp-server-web --headless 2>&1 < /dev/null \
-            | tee /tmp/mcp-startup.log \
-            | head -200 \
-            || echo "server exit code: $?"
-          echo "--- end of standalone startup ---"
+          echo "=== Invoking Evinced MCP server via stdio JSON-RPC ==="
+          (
+            printf '%s\n' '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-03-26","capabilities":{},"clientInfo":{"name":"ci-probe","version":"1.0"}}}'
+            sleep 2
+            printf '%s\n' '{"jsonrpc":"2.0","method":"notifications/initialized","params":{}}'
+            printf '%s\n' '{"jsonrpc":"2.0","id":2,"method":"tools/list","params":{}}'
+            sleep 2
+            printf '%s\n' "{\"jsonrpc\":\"2.0\",\"id\":3,\"method\":\"tools/call\",\"params\":{\"name\":\"evinced_import_report\",\"arguments\":{\"file\":\"$REPORT_PATH\",\"model\":\"claude-opus-4-7\"}}}"
+            sleep 5
+          ) | timeout 30 npx -y @evinced/mcp-server-web --headless 2>&1 | head -200
+          echo "=== End of Evinced MCP invocation ==="
 
       - name: Load agent prompt for this signature
         id: load_prompt
@@ -194,7 +207,7 @@ jobs:
             echo 'PROMPT_EOF'
           } >> "$GITHUB_OUTPUT"
 
-      - name: Run Claude agent for signature ${{ matrix.signature }}
+      - name: Run Claude (invokes Evinced MCP for remediation) — ${{ matrix.signature }}
         uses: anthropics/claude-code-action@beta
         with:
           mode: agent
