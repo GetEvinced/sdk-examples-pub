@@ -137,6 +137,11 @@ jobs:
           gh repo clone "${{ needs.extract.outputs.target_owner }}/${{ needs.extract.outputs.target_repo }}" ./_autofix_target -- \
             --branch "${{ needs.extract.outputs.target_branch }}" --depth 50
           cd ./_autofix_target
+          # Embed the PAT in the remote URL so `git push` from the agent's
+          # Bash subshell authenticates non-interactively. `gh repo clone`
+          # leaves the remote as plain https://github.com/... which fails
+          # with "could not read Username" when git tries to push.
+          git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${{ needs.extract.outputs.target_owner }}/${{ needs.extract.outputs.target_repo }}.git"
           git config user.email "a11y-autofix@evinced.com"
           git config user.name  "Evinced A11y Autofix"
 
