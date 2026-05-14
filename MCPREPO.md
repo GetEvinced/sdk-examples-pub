@@ -33,7 +33,7 @@ The pipeline is the example. A forker should be able to read one workflow file, 
 
 ```
 ┌────────────────────────────────────────────────────────────────────────────┐
-│ support-golden-examples (this repo)                                        │
+│ sdk-examples-pub (this repo)                                        │
 │                                                                            │
 │  .github/workflows/web-js.yml                                              │
 │    └── matrix entry: web-playwright-js                                     │
