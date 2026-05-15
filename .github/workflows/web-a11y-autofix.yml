@@ -97,7 +97,12 @@ jobs:
             exit 1
           fi
           # Recursive scan for `signature` fields anywhere in the JSON structure.
-          SIGNATURES=$(jq -c '[.. | objects | select(has("signature")) | .signature] | unique' "$FILE")
+          # `select(type == "string")` filters out non-string signature values
+          # (the Evinced report has at least one nested object whose own
+          # `signature` field is itself an object — picking it would inject
+          # a phantom matrix entry whose `${{ matrix.signature }}` interpolates
+          # as `[object Object]` and breaks the prompt-substitution step).
+          SIGNATURES=$(jq -c '[.. | objects | select(has("signature")) | .signature | select(type == "string")] | unique' "$FILE")
           COUNT=$(echo "$SIGNATURES" | jq 'length')
           if [ "$COUNT" = "0" ]; then
             echo "::warning::No issue signatures found in $FILE"
