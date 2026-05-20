@@ -1,0 +1,101 @@
+name: Web SDK Tests — Java
+
+on:
+  push:
+    branches: [sdk-examples-pub-v2, main]
+    paths:
+      - 'web/playwright-java/**'
+      - 'web/selenium/java/**'
+      - '.github/workflows/web-java.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'web/playwright-java/**'
+      - 'web/selenium/java/**'
+      - '.github/workflows/web-java.yml'
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        example:
+          - { folder: "web/playwright-java/maven",  build: "maven",  name: "web-playwright-java-maven" }
+          - { folder: "web/playwright-java/gradle", build: "gradle", name: "web-playwright-java-gradle" }
+          - { folder: "web/selenium/java",          build: "maven",  name: "web-selenium-java" }
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: temurin
+          # Generates ~/.m2/settings.xml that authenticates the evinced-artifactory server.
+          # server-username / server-password are env var *names* Maven interpolates at build time.
+          server-id: evinced-artifactory
+          server-username: EVINCED_ARTIFACTORY_USER
+          server-password: EVINCED_ARTIFACTORY_TOKEN
+
+      - name: Install Chrome
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y google-chrome-stable
+
+      - name: Run tests (Maven)
+        if: matrix.example.build == 'maven'
+        working-directory: ${{ matrix.example.folder }}
+        env:
+          EVINCED_SERVICE_ID: ${{ secrets.EVINCED_SERVICE_ID }}
+          EVINCED_API_KEY: ${{ secrets.EVINCED_API_KEY }}
+          EVINCED_WEB_OFFLINE_TOKEN: ${{ secrets.EVINCED_WEB_OFFLINE_TOKEN }}
+          EVINCED_ARTIFACTORY_USER: ${{ secrets.EVINCED_ARTIFACTORY_USER }}
+          EVINCED_ARTIFACTORY_TOKEN: ${{ secrets.EVINCED_ARTIFACTORY_TOKEN }}
+          SAUCE_USER: ${{ secrets.SAUCE_USER }}
+          SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
+        run: |
+          mkdir -p tmp
+          mvn test -B
+
+      - name: Make gradlew executable
+        if: matrix.example.build == 'gradle'
+        working-directory: ${{ matrix.example.folder }}
+        run: chmod +x gradlew
+
+      - name: Run tests (Gradle)
+        if: matrix.example.build == 'gradle'
+        working-directory: ${{ matrix.example.folder }}
+        env:
+          EVINCED_SERVICE_ID: ${{ secrets.EVINCED_SERVICE_ID }}
+          EVINCED_API_KEY: ${{ secrets.EVINCED_API_KEY }}
+          EVINCED_ARTIFACTORY_USER: ${{ secrets.EVINCED_ARTIFACTORY_USER }}
+          EVINCED_ARTIFACTORY_TOKEN: ${{ secrets.EVINCED_ARTIFACTORY_TOKEN }}
+        run: |
+          mkdir -p tmp
+          ./gradlew test
+
+      - name: Upload reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: report-${{ matrix.example.name }}
+          path: |
+            ${{ matrix.example.folder }}/target/surefire-reports/
+            ${{ matrix.example.folder }}/build/reports/
+          retention-days: 14
+
+      - name: Notify Slack
+        if: always()
+        uses: act10ns/slack@v2
+        with:
+          status: ${{ job.status }}
+          channel: "#workflows"
+          message: "${{ matrix.example.folder }} — ${{ job.status }}"
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}

@@ -1,0 +1,122 @@
+name: Web SDK Tests — JavaScript/TypeScript
+
+on:
+  push:
+    branches: [sdk-examples-pub-v2, main]
+    paths:
+      - 'web/playwright/js/**'
+      - 'web/playwright/ts/**'
+      - 'web/cypress/js/**'
+      - 'web/cypress/ts/**'
+      - 'web/wdio/js/**'
+      - 'web/wdio/ts/**'
+      - 'web/selenium/js/**'
+      - 'web/testcafe/**'
+      - '.github/workflows/web-js.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'web/playwright/js/**'
+      - 'web/playwright/ts/**'
+      - 'web/cypress/js/**'
+      - 'web/cypress/ts/**'
+      - 'web/wdio/js/**'
+      - 'web/wdio/ts/**'
+      - 'web/selenium/js/**'
+      - 'web/testcafe/**'
+      - '.github/workflows/web-js.yml'
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        example:
+          - { folder: "web/playwright/js", runner: "playwright", name: "web-playwright-js" }
+          - { folder: "web/playwright/ts", runner: "playwright", name: "web-playwright-ts" }
+          # Cypress excluded from CI — tests against demo.evinced.com which is intermittently
+          # unreachable from GitHub Actions runners (ETIMEDOUT). Examples remain in web/cypress/.
+          # - { folder: "web/cypress/js",    runner: "cypress",    name: "web-cypress-js" }
+          # - { folder: "web/cypress/ts",    runner: "cypress",    name: "web-cypress-ts" }
+          - { folder: "web/wdio/js",       runner: "wdio",       name: "web-wdio-js" }
+          - { folder: "web/wdio/ts",       runner: "wdio",       name: "web-wdio-ts" }
+          - { folder: "web/selenium/js",   runner: "selenium",   name: "web-selenium-js" }
+          - { folder: "web/testcafe",      runner: "testcafe",   name: "web-testcafe" }
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Configure .npmrc
+        run: echo "${{ secrets.EVINCED_NPM_TOKEN }}" > ~/.npmrc
+
+      - name: Install Chrome
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y google-chrome-stable
+
+      - name: Install dependencies
+        working-directory: ${{ matrix.example.folder }}
+        run: npm install
+
+      - name: Install matching Chromedriver
+        if: matrix.example.runner == 'selenium'
+        working-directory: ${{ matrix.example.folder }}
+        run: |
+          CHROME_VERSION=$(google-chrome --version | grep -oP '\d+' | head -1)
+          npm install chromedriver@$CHROME_VERSION
+
+      - name: Install Playwright browsers
+        if: matrix.example.runner == 'playwright'
+        working-directory: ${{ matrix.example.folder }}
+        run: npx playwright install --with-deps chromium
+
+      - name: Run tests
+        working-directory: ${{ matrix.example.folder }}
+        env:
+          EVINCED_SERVICE_ID: ${{ secrets.EVINCED_SERVICE_ID }}
+          EVINCED_API_KEY: ${{ secrets.EVINCED_API_KEY }}
+        run: |
+          case "${{ matrix.example.runner }}" in
+            playwright) npx playwright test ;;
+            cypress)    npm run test ;;
+            wdio)       npm run wdio ;;
+            selenium)   npm test ;;
+            testcafe)   npm test ;;
+          esac
+
+      - name: Upload HTML reports
+        if: always() && matrix.example.runner != 'testcafe'
+        uses: actions/upload-artifact@v4
+        with:
+          name: report-${{ matrix.example.name }}
+          path: ${{ matrix.example.folder }}/**/*.html
+          retention-days: 14
+
+      - name: Upload Evinced issues JSON artifact
+        if: always() && matrix.example.name == 'web-playwright-js'
+        uses: actions/upload-artifact@v4
+        with:
+          name: report-web-playwright-js-issues
+          path: ${{ matrix.example.folder }}/test-results/evMcpDemo.json
+          retention-days: 14
+          if-no-files-found: warn
+
+      - name: Notify Slack
+        if: always()
+        uses: act10ns/slack@v2
+        with:
+          status: ${{ job.status }}
+          channel: "#workflows"
+          message: "${{ matrix.example.folder }} — ${{ job.status }}"
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}

@@ -1,0 +1,78 @@
+{
+  "switchOn": true,
+  "logging": {
+    "LOGGING_LEVEL": "error",
+    "ADD_LOGGING_CONTEXT": false
+  },
+  "sdkLogging": {
+    "enable": false,
+    "level": "error",
+    "directory": "./logs/evinced",
+    "browserLoggingEnabled": false,
+    "systemInformationLoggingEnabled": false,
+    "maxLogLength": 1000,
+    "performance": false,
+    "enableEngineLogs": false
+  },
+  "toggles": {
+    "USE_SCREEN_READER_VALIDATOR": true,
+    "USE_KEYBOARD_VALIDATOR": true,
+    "USE_EVINCED_BEST_PRACTICES": true,
+    "USE_LONG_ALT_TEXT_VALIDATOR": true,
+    "USE_LOCKED_TEXT_SPACING_VALIDATOR": true,
+    "USE_LANGUAGE_ATTRIBUTE_MISMATCH_VALIDATOR": true,
+    "USE_MEANINGLESS_ALT_TEXT_VALIDATOR": true,
+    "USE_PLACEHOLDER_AS_LABEL": true,
+    "USE_NON_INTERACTIVE_IN_FOCUS_SEQUENCE": true,
+    "USE_COMPOSITE_FOCUS_VALIDATOR": true,
+    "USE_INTERACTIVE_ELEMENTS_MODEL_VALIDATIONS": false,
+    "USE_AXE_VALIDATOR": true,
+    "USE_AXE_NEEDS_REVIEW": true,
+    "USE_AXE_BEST_PRACTICES": true,
+    "REDUCE_CONTAINED_NODES_FOR_AXE": true,
+    "ENABLE_AXE_HEAVY_NODES_FILTER": false,
+    "ENABLE_AXE_OPT_IN": true,
+    "RUN_VALIDATION_ON_IFRAMES": false,
+    "ENABLE_SCREENSHOTS": false,
+    "ALLOW_SCREENSHOTS_WHEN_IFRAMES_TOGGLE_IS_ON": false,
+    "ENABLE_SCAN_INSIGHTS": false,
+    "ENABLE_SENDING_ENGINE_MATRICES": true,
+    "SEND_USAGE_ANALYTICS": true,
+    "ENABLE_SENDING_ANALYTICS_DATA": true,
+    "WAIT_FOR_ANIMATIONS": true,
+    "CLEAN_HTML_REMOVE_TEXT_FORMAT_ELEMENTS": true,
+    "CLEAN_HTML_CONSIDER_TAG_ONLY_HTML_AS_TEMPLATE": false,
+    "SUPPORT_SHADOW_DOM": true,
+    "HIDE_NEEDS_REVIEW_IN_UI": false
+  },
+  "rootSelector": "",
+  "enableScreenshots": false,
+  "includeIframes": false,
+  "axeConfig": {
+    "rules": {},
+    "unwantedValidations": []
+  },
+  "skipValidations": [
+    {
+      "selector": "",
+      "urlRegex": "",
+      "validationTypes": []
+    }
+  ],
+  "issuesContentPerType": {
+    "WRONG_SEMANTIC_ROLE": { "knowledgeBaseLink": "" },
+    "NOT_FOCUSABLE": { "knowledgeBaseLink": "" },
+    "NO_DESCRIPTIVE_TEXT": { "knowledgeBaseLink": "" }
+  },
+  "axeIssuesContentPerType": {
+    "AXE-COLOR-CONTRAST": { "knowledgeBaseLink": "" }
+  },
+  "uploadToPlatformOptions": {
+    "enableUploadToPlatform": false,
+    "setUploadToPlatformDefault": false,
+    "platformURL": "",
+    "useGzip": true
+  },
+  "mockEngine": false,
+  "axePassed": false
+}

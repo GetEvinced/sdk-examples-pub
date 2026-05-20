@@ -1,0 +1,7 @@
+{
+  "sdkLogging": {
+    "enable": "true",
+    "level": "debug"
+  },
+  "USE_INTERACTIVE_ELEMENTS_MODEL_VALIDATIONS": true
+}

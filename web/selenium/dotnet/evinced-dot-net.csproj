@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>evinced_dot_net</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    <RestoreSources>
+      https://api.nuget.org/v3/index.json;
+      $(MSBuildProjectDirectory)/sdk
+    </RestoreSources>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.7.1" />
+    <PackageReference Include="MSTest.TestAdapter" Version="3.8.2" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.8.2" />
+    <PackageReference Include="coverlet.collector" Version="3.2.0" />
+    <PackageReference Include="NUnit" Version="4.3.2" />
+    <PackageReference Include="NUnit3TestAdapter" Version="5.0.0" />
+    <PackageReference Include="Selenium.CS.SDK" Version="2.19.1" />
+    <PackageReference Include="Selenium.Support" Version="4.31.0" />
+    <PackageReference Include="Selenium.WebDriver" Version="4.31.0" />
+  </ItemGroup>
+
+</Project>

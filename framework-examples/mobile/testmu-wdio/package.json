@@ -1,0 +1,32 @@
+{
+  "name": "testmu-wdio",
+  "version": "1.0.0",
+  "description": "Evinced accessibility testing with WebdriverIO on TestMu",
+  "main": "index.js",
+  "scripts": {
+    "upload:apps": "node scripts/upload-apps.js",
+    "test:android:local": "wdio run config/wdio.android.local.conf.js",
+    "test:ios:local": "wdio run config/wdio.ios.local.conf.js",
+    "test:ios:real": "wdio run config/wdio.ios.real.conf.js",
+    "test:ios:virtual": "wdio run config/wdio.ios.virtual.conf.js",
+    "test:android:real": "wdio run config/wdio.android.real.conf.js",
+    "test:android:virtual": "wdio run config/wdio.android.virtual.conf.js",
+    "test:upload:ios": "wdio run config/wdio.ios.real.conf.js --spec tests/evinced.upload.test.js",
+    "test:upload:android": "wdio run config/wdio.android.real.conf.js --spec tests/evinced.upload.test.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@evinced/wdio-mobile-sdk": "^1.29.0"
+  },
+  "devDependencies": {
+    "@wdio/appium-service": "^9.27.0",
+    "@wdio/cli": "^9.27.0",
+    "@wdio/local-runner": "^9.27.0",
+    "@wdio/mocha-framework": "^9.27.0",
+    "@wdio/spec-reporter": "^9.27.0",
+    "dotenv": "^16.6.1"
+  }
+}

@@ -1,0 +1,80 @@
+name: Mobile SDK Tests — Python/Appium (Sauce Labs)
+
+on:
+  push:
+    branches: [sdk-examples-pub-v2, main]
+    paths:
+      - 'mobile/appium/python/**'
+      - '.github/workflows/mobile-python.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'mobile/appium/python/**'
+      - '.github/workflows/mobile-python.yml'
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Upload APK to Sauce Labs storage
+        env:
+          SAUCE_USER: ${{ secrets.SAUCE_USER }}
+          SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
+        run: |
+          COUNT=$(curl -sf -u "$SAUCE_USER:$SAUCE_ACCESS_KEY" \
+            "https://api.us-west-1.saucelabs.com/v1/storage/files?q=com.evinced.demoapp-MK.apk" | \
+            jq '.totalItems // 0')
+          if [ "$COUNT" -eq "0" ]; then
+            echo "APK not found in Sauce Labs storage, uploading..."
+            curl -u "$SAUCE_USER:$SAUCE_ACCESS_KEY" \
+              -X POST "https://api.us-west-1.saucelabs.com/v1/storage/upload" \
+              -H "Content-Type: multipart/form-data" \
+              -F "payload=@mobile/wdio/com.evinced.demoapp-MK.apk" \
+              -F "name=com.evinced.demoapp-MK.apk"
+          else
+            echo "APK already in Sauce Labs storage (${COUNT} file(s)), skipping upload."
+          fi
+
+      - name: Install dependencies
+        working-directory: mobile/appium/python
+        env:
+          PIP_EXTRA_INDEX_URL: https://${{ secrets.EVINCED_ARTIFACTORY_USER }}:${{ secrets.EVINCED_ARTIFACTORY_TOKEN }}@evinced.jfrog.io/artifactory/api/pypi/private-python-local/simple
+        run: pip install -r requirements.txt
+
+      - name: Run tests on Sauce Labs
+        working-directory: mobile/appium/python
+        env:
+          EVINCED_SERVICE_ID: ${{ secrets.EVINCED_SERVICE_ID }}
+          EVINCED_API_KEY: ${{ secrets.EVINCED_API_KEY }}
+          SAUCE_USER: ${{ secrets.SAUCE_USER }}
+          SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
+        run: pytest
+
+      - name: Upload reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: report-mobile-appium-python
+          path: mobile/appium/python/evinced-reports/**/*.html
+          retention-days: 14
+
+      - name: Notify Slack
+        if: always()
+        uses: act10ns/slack@v2
+        with:
+          status: ${{ job.status }}
+          channel: "#workflows"
+          message: "mobile/appium/python — ${{ job.status }}"
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
