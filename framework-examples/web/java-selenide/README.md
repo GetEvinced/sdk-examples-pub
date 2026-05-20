@@ -8,7 +8,7 @@ Accessibility testing examples that combine the [Evinced Selenium Java SDK](http
 - Chrome installed
 - Evinced service account credentials:
   - `EVINCED_SERVICE_ID` — your service account ID
-  - `EVINCED_WEB_OFFLINE_TOKEN` — your offline token
+  - `EVINCED_API_KEY` — your API key
 
 ## How Selenide and the Evinced SDK fit together
 
@@ -47,7 +47,7 @@ Set environment variables before running:
 
 ```bash
 export EVINCED_SERVICE_ID=your_service_id
-export EVINCED_WEB_OFFLINE_TOKEN=your_offline_token
+export EVINCED_API_KEY=your_api_key
 ```
 
 ## Running the tests
@@ -84,7 +84,7 @@ mvn test -Dtest=EvStartStop -Dheaded=true
 
 | Method | Description |
 |--------|-------------|
-| `EvincedSDK.setOfflineCredentials(serviceId, token)` | Authenticate with offline token |
+| `EvincedSDK.setCredentials(serviceId, apiKey)` | Authenticate with API key (online) |
 | `new EvincedWebDriver(driver, config)` | Wrap a Selenium WebDriver with the Evinced driver |
 | `WebDriverRunner.setWebDriver(driver)` | Register the wrapped driver with Selenide |
 | `driver.evAnalyze()` | Single-page scan; returns `Report` |

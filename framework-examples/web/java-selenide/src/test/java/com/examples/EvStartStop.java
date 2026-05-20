@@ -47,9 +47,9 @@ public class EvStartStop {
         }
         ChromeDriver baseDriver = new ChromeDriver(options);
 
-        EvincedSDK.setOfflineCredentials(
+        EvincedSDK.setCredentials(
                 System.getenv("EVINCED_SERVICE_ID"),
-                System.getenv("EVINCED_WEB_OFFLINE_TOKEN")
+                System.getenv("EVINCED_API_KEY")
         );
 
         EvincedConfiguration config = new EvincedConfiguration();
