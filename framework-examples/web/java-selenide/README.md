@@ -26,6 +26,8 @@ If you let Selenide auto-create the driver, the Evinced wrapper is never in the 
 
 ### Install the Evinced SDK jar
 
+Note: this assumes you are installing a version of the SDK locally through a JAR file, you can also do this through our artifactory and the version will vary depending on what version you are using, please adjust accordingly to match the file you have.
+
 The Evinced selenium-sdk jar is bundled in this directory (`selenium-sdk-4.28.1.jar`). Install it into your local Maven repo once before running the tests:
 
 ```bash
@@ -75,8 +77,8 @@ mvn test -Dtest=EvStartStop -Dheaded=true
 
 | Class | Pattern | Description |
 |-------|---------|-------------|
-| `EvAnalyze` | Single scan | Opens the demo site with Selenide's `open()`, calls `driver.evAnalyze()`, saves an HTML report |
-| `EvStartStop` | Continuous scan | Drives the demo site's dropdowns through Selenide's `$x` locators between `driver.evStart()` and `driver.evStop()`; saves an HTML report |
+| `EvAnalyze` | Single scan | Opens the demo site with Selenide's `open()`, calls `driver.evAnalyze()`, saves a HTML and JSON report |
+| `EvStartStop` | Continuous scan | Drives the demo site's dropdowns through Selenide's `$x` locators between `driver.evStart()` and `driver.evStop()`; saves a HTML and JSON report |
 
 ## SDK API summary
 
@@ -93,7 +95,7 @@ mvn test -Dtest=EvStartStop -Dheaded=true
 
 ## Selenide version
 
-These examples use Selenide `7.6.1` (requires Java 17+). Selenide 6.x cannot be used here: it registers `SelenideNettyClientFactory` via SPI, which extends Selenium's `NettyClient.Factory` — a class Selenium removed in 4.10+. Loading the SPI fails at `new ChromeDriver(...)`. Selenide 7.x switched to the JDK HTTP client and works cleanly with Selenium 4.19.0.
+These examples use Selenide `7.6.1` (requires Java 17+). 
 
 ## Docs
 
