@@ -26,5 +26,5 @@ describe("Carousel Accessibility Test", () => {
     );
 
     // expect(results).toHaveNoFailures();
-  }, 30000);
+  });
 });

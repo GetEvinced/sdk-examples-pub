@@ -7,6 +7,8 @@ import "@testing-library/jest-dom";
 import { webcrypto } from "crypto";
 global.crypto = webcrypto;
 
+jest.setTimeout(30000);
+
 import * as React from "react";
 import { act } from "react-dom/test-utils";
 import { configure } from "@evinced/unit-tester";
