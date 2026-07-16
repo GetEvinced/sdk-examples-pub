@@ -34,6 +34,7 @@ Examples for testing web applications. Each example demonstrates the same set of
 | `web/selenium/ts` | Selenium Web | TypeScript | `npm test` |
 | `web/selenium/java` | Selenium Web | Java (Maven) | `mvn test` |
 | `web/selenium/dotnet` | Selenium Web | C# (.NET) | `dotnet test` |
+| `web/selenium/python` | Selenium Web | Python (pytest) | `pytest` |
 | `web/wdio/js` | WebdriverIO Web | JavaScript | `npm run wdio` |
 | `web/wdio/ts` | WebdriverIO Web | TypeScript | `npm run wdio` |
 | `web/testcafe` | TestCafe Web | JavaScript | `npm test` |
