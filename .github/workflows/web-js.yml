@@ -13,6 +13,18 @@ on:
       - 'web/selenium/js/**'
       - 'web/testcafe/**'
       - '.github/workflows/web-js.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'web/playwright/js/**'
+      - 'web/playwright/ts/**'
+      - 'web/cypress/js/**'
+      - 'web/cypress/ts/**'
+      - 'web/wdio/js/**'
+      - 'web/wdio/ts/**'
+      - 'web/selenium/js/**'
+      - 'web/testcafe/**'
+      - '.github/workflows/web-js.yml'
   schedule:
     - cron: "0 6 * * 1"
   workflow_dispatch:
@@ -40,7 +52,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 20
 
@@ -84,11 +96,20 @@ jobs:
 
       - name: Upload HTML reports
         if: always() && matrix.example.runner != 'testcafe'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: report-${{ matrix.example.name }}
           path: ${{ matrix.example.folder }}/**/*.html
           retention-days: 14
+
+      - name: Upload Evinced issues JSON artifact
+        if: always() && matrix.example.name == 'web-playwright-js'
+        uses: actions/upload-artifact@v4
+        with:
+          name: report-web-playwright-js-issues
+          path: ${{ matrix.example.folder }}/test-results/evMcpDemo.json
+          retention-days: 14
+          if-no-files-found: warn
 
       - name: Notify Slack
         if: always()

@@ -3,5 +3,6 @@
     "enableUploadToPlatform": true,
     "setUploadToPlatformDefault": false
   },
+  "USE_INTERACTIVE_ELEMENTS_MODEL_VALIDATIONS": true,
   "enableScreenshots": false
 }

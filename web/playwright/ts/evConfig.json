@@ -10,6 +10,7 @@
     "LOGGING_LEVEL": "trace",
     "ADD_LOGGING_CONTEXT": true
   },
+  "USE_INTERACTIVE_ELEMENTS_MODEL_VALIDATIONS": true,
   "sdkLogging": {
     "enable": false,
     "performance": true,
