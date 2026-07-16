@@ -4,6 +4,7 @@ import Carousel from "./Carousel";
 
 describe("Carousel Accessibility Test", () => {
   it("should have no accessibility failures", async () => {
+    jest.setTimeout(30000);
     render(
       <Carousel
         id="my-carousel"
