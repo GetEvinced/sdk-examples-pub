@@ -3,7 +3,7 @@
     "test": "testcafe chrome:headless tests"
   },
   "devDependencies": {
-    "@evinced/js-testcafe-sdk": "1.9.0",
-    "testcafe": "^3.7.2"
+    "@evinced/js-testcafe-sdk": "2.14.1",
+    "testcafe": "^3.7.6"
   }
 }
