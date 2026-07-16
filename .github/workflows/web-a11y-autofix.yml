@@ -1,0 +1,284 @@
+name: A11y Auto-Fix — Cross-Repo
+
+on:
+  workflow_run:
+    workflows: ["Web SDK Tests — JavaScript/TypeScript"]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Skip git push / gh pr create / gh pr comment; log no-ops instead"
+        type: boolean
+        default: false
+  schedule:
+    - cron: "0 7 * * 1"
+
+concurrency:
+  group: a11y-autofix-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  actions: write       # `write` so the re-dispatch job can call createWorkflowDispatch
+  id-token: write
+
+jobs:
+  # claude-code-action@beta rejects `workflow_run` as an event type
+  # ("Unsupported event type: workflow_run"). When this workflow is
+  # triggered by web-js.yml completing, we self-dispatch via the API so
+  # the real work runs in a workflow_dispatch context, which the action
+  # does support.
+  re-dispatch:
+    if: github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Re-dispatch this workflow as workflow_dispatch
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'web-a11y-autofix.yml',
+              ref: 'main',
+              inputs: { dry_run: 'false' }
+            });
+            core.info('Dispatched web-a11y-autofix.yml as workflow_dispatch on main (dry_run=false).');
+
+  extract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    # Skip when triggered by workflow_run — the re-dispatch job above will
+    # fire a fresh workflow_dispatch invocation that runs this job in a
+    # supported event context.
+    if: github.event_name != 'workflow_run'
+    outputs:
+      matrix: ${{ steps.list.outputs.matrix }}
+      issue_count: ${{ steps.list.outputs.count }}
+      target_owner: ${{ steps.cfg.outputs.target_owner }}
+      target_repo: ${{ steps.cfg.outputs.target_repo }}
+      target_branch: ${{ steps.cfg.outputs.target_branch }}
+      report_basename: ${{ steps.cfg.outputs.report_basename }}
+      report_artifact: ${{ steps.cfg.outputs.report_artifact }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Read pipeline config
+        id: cfg
+        run: |
+          echo "target_owner=$(jq -r .target.owner a11y-autofix.config.json)" >> "$GITHUB_OUTPUT"
+          echo "target_repo=$(jq -r .target.repo a11y-autofix.config.json)" >> "$GITHUB_OUTPUT"
+          echo "target_branch=$(jq -r .target.baseBranch a11y-autofix.config.json)" >> "$GITHUB_OUTPUT"
+          echo "report_artifact=$(jq -r .reportArtifactName a11y-autofix.config.json)" >> "$GITHUB_OUTPUT"
+          echo "report_basename=$(basename $(jq -r .reportPath a11y-autofix.config.json))" >> "$GITHUB_OUTPUT"
+
+      - name: Download issues artifact (from triggering workflow run)
+        if: github.event_name == 'workflow_run'
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ steps.cfg.outputs.report_artifact }}
+          path: ./_autofix_input
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: ${{ github.event.workflow_run.id }}
+
+      - name: Download latest issues artifact (schedule / manual dispatch)
+        if: github.event_name != 'workflow_run'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mkdir -p ./_autofix_input
+          RUN_ID=$(gh run list \
+            -R ${{ github.repository }} \
+            --workflow "Web SDK Tests — JavaScript/TypeScript" \
+            --branch ${{ github.ref_name }} \
+            --status success \
+            --limit 1 \
+            --json databaseId \
+            --jq '.[0].databaseId')
+          if [ -z "$RUN_ID" ] || [ "$RUN_ID" = "null" ]; then
+            echo "::error::No successful web-js.yml run found on ${{ github.ref_name }}"
+            exit 1
+          fi
+          echo "Downloading from run-id=$RUN_ID"
+          gh run download "$RUN_ID" \
+            -R ${{ github.repository }} \
+            --name "${{ steps.cfg.outputs.report_artifact }}" \
+            --dir ./_autofix_input
+
+      - name: Re-upload issues artifact for matrix jobs
+        uses: actions/upload-artifact@v4
+        with:
+          name: a11y-issues-staged
+          path: ./_autofix_input/${{ steps.cfg.outputs.report_basename }}
+          retention-days: 1
+
+      - name: Build matrix from issue signatures
+        id: list
+        run: |
+          FILE="./_autofix_input/${{ steps.cfg.outputs.report_basename }}"
+          if [ ! -f "$FILE" ]; then
+            echo "::error::Issues file not found at $FILE"
+            exit 1
+          fi
+          # Recursive scan for `signature` fields anywhere in the JSON structure.
+          # `select(type == "string")` filters out non-string signature values
+          # (the Evinced report has at least one nested object whose own
+          # `signature` field is itself an object — picking it would inject
+          # a phantom matrix entry whose `${{ matrix.signature }}` interpolates
+          # as `[object Object]` and breaks the prompt-substitution step).
+          SIGNATURES=$(jq -c '[.. | objects | select(has("signature")) | .signature | select(type == "string")] | unique' "$FILE")
+          COUNT=$(echo "$SIGNATURES" | jq 'length')
+          if [ "$COUNT" = "0" ]; then
+            echo "::warning::No issue signatures found in $FILE"
+          fi
+          MATRIX=$(jq -nc --argjson sigs "$SIGNATURES" '{signature: $sigs}')
+          echo "count=$COUNT" >> "$GITHUB_OUTPUT"
+          echo "matrix=$MATRIX" >> "$GITHUB_OUTPUT"
+          echo "Found $COUNT issue signatures"
+
+  fix:
+    needs: extract
+    if: github.event_name != 'workflow_run' && needs.extract.outputs.issue_count != '0'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix: ${{ fromJson(needs.extract.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Download staged issues artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: a11y-issues-staged
+          path: ./_autofix_input
+
+      - name: Clone target FE repo
+        env:
+          GH_TOKEN: ${{ secrets.DEMO_FE_PAT }}
+        run: |
+          gh repo clone "${{ needs.extract.outputs.target_owner }}/${{ needs.extract.outputs.target_repo }}" ./_autofix_target -- \
+            --branch "${{ needs.extract.outputs.target_branch }}" --depth 50
+          cd ./_autofix_target
+          # Embed the PAT in the remote URL so `git push` from the agent's
+          # Bash subshell authenticates non-interactively. `gh repo clone`
+          # leaves the remote as plain https://github.com/... which fails
+          # with "could not read Username" when git tries to push.
+          git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${{ needs.extract.outputs.target_owner }}/${{ needs.extract.outputs.target_repo }}.git"
+          git config user.email "a11y-autofix@evinced.com"
+          git config user.name  "Evinced A11y Autofix"
+
+      - name: Configure .npmrc for Evinced private registry
+        run: echo "${{ secrets.EVINCED_NPM_TOKEN }}" > ~/.npmrc
+
+      - name: Install system libs for native modules (keytar / libsecret)
+        # keytar (transitive dep) is a native module that needs libsecret
+        # on Linux. Without it, `npx -y`'s postinstall fails. Same idea
+        # as the docs' Troubleshooting note about Chromium — install the
+        # platform prerequisites so the package can install cleanly.
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libsecret-1-dev
+
+      - name: Install Chromium for MCP server (docs Troubleshooting)
+        # Per developer.evinced.com troubleshooting: "Browser launch
+        # failures in headless mode → Run `npx playwright install` to
+        # ensure Chromium is installed."
+        run: npx playwright install --with-deps chromium
+
+      - name: Invoke Evinced MCP (tools/list + import_report)
+        # This step exists to make the Evinced MCP invocation visible as
+        # its own workflow step. It speaks MCP over stdio directly:
+        #   1. Sends an `initialize` handshake.
+        #   2. Sends `tools/list` — log shows all Evinced MCP tools
+        #      (evinced_analyze_webpage, evinced_get_webpage_issue_details,
+        #      evinced_import_report, evinced_fix_webpage_issues).
+        #   3. Sends `tools/call` for `evinced_import_report` — log shows
+        #      the report being imported with its reportId + summary.
+        # The agent step below uses a separate fresh MCP instance for the
+        # actual remediation lookups; this probe is purely demonstrative
+        # so the workflow UI has a single step labeled "Invoke Evinced
+        # MCP" that an observer can point at.
+        continue-on-error: true
+        env:
+          EVINCED_SERVICE_ID: ${{ secrets.EVINCED_SERVICE_ID }}
+          EVINCED_API_KEY: ${{ secrets.EVINCED_API_KEY }}
+          REPORT_PATH: ${{ github.workspace }}/_autofix_input/${{ needs.extract.outputs.report_basename }}
+        run: |
+          echo "=== Invoking Evinced MCP server via stdio JSON-RPC ==="
+          (
+            printf '%s\n' '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-03-26","capabilities":{},"clientInfo":{"name":"ci-probe","version":"1.0"}}}'
+            sleep 2
+            printf '%s\n' '{"jsonrpc":"2.0","method":"notifications/initialized","params":{}}'
+            printf '%s\n' '{"jsonrpc":"2.0","id":2,"method":"tools/list","params":{}}'
+            sleep 2
+            printf '%s\n' "{\"jsonrpc\":\"2.0\",\"id\":3,\"method\":\"tools/call\",\"params\":{\"name\":\"evinced_import_report\",\"arguments\":{\"file\":\"$REPORT_PATH\",\"model\":\"claude-opus-4-7\"}}}"
+            sleep 5
+          ) | timeout 30 npx -y @evinced/mcp-server-web --headless 2>&1 | head -200
+          echo "=== End of Evinced MCP invocation ==="
+
+      - name: Load agent prompt for this signature
+        id: load_prompt
+        env:
+          SIGNATURE: ${{ matrix.signature }}
+        run: |
+          # Substitute __SIGNATURE__ placeholder in the prompt template
+          PROMPT=$(sed "s|__SIGNATURE__|$SIGNATURE|g" prompts/a11y-autofix.md)
+          {
+            echo 'content<<PROMPT_EOF'
+            echo "$PROMPT"
+            echo 'PROMPT_EOF'
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Run Claude (invokes Evinced MCP for remediation) — ${{ matrix.signature }}
+        uses: anthropics/claude-code-action@beta
+        with:
+          mode: agent
+          direct_prompt: ${{ steps.load_prompt.outputs.content }}
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          github_token: ${{ secrets.DEMO_FE_PAT }}
+          allowed_tools: "Bash,Edit,MultiEdit,Glob,Grep,LS,Read,Write,mcp__evinced-web-mcp__evinced_get_webpage_issue_details,mcp__evinced-web-mcp__evinced_analyze_webpage,mcp__evinced-web-mcp__evinced_import_report,mcp__evinced-web-mcp__evinced_fix_webpage_issues"
+          claude_env: |
+            REPORT_PATH: ${{ github.workspace }}/_autofix_input/${{ needs.extract.outputs.report_basename }}
+            TARGET_REPO_PATH: ${{ github.workspace }}/_autofix_target
+            CONFIG_PATH: ${{ github.workspace }}/a11y-autofix.config.json
+            DRY_RUN: ${{ inputs.dry_run || 'false' }}
+            SIGNATURE: ${{ matrix.signature }}
+            GH_TOKEN: ${{ secrets.DEMO_FE_PAT }}
+          mcp_config: |
+            {
+              "mcpServers": {
+                "evinced-web-mcp": {
+                  "command": "npx",
+                  "args": ["-y", "@evinced/mcp-server-web", "--headless"],
+                  "type": "stdio",
+                  "env": {
+                    "EVINCED_SERVICE_ID": "${{ secrets.EVINCED_SERVICE_ID }}",
+                    "EVINCED_API_KEY": "${{ secrets.EVINCED_API_KEY }}"
+                  }
+                }
+              }
+            }
+
+  summary:
+    needs: [extract, fix]
+    if: always() && github.event_name != 'workflow_run'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify Slack
+        uses: act10ns/slack@v2
+        with:
+          status: ${{ needs.fix.result || 'skipped' }}
+          channel: "#workflows"
+          message: |
+            a11y autofix — ${{ needs.fix.result || 'skipped' }} (${{ needs.extract.outputs.issue_count || 0 }} issues processed)
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}

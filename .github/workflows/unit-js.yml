@@ -6,6 +6,11 @@ on:
     paths:
       - 'unit-tester/**'
       - '.github/workflows/unit-js.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'unit-tester/**'
+      - '.github/workflows/unit-js.yml'
   schedule:
     - cron: "0 6 * * 1"
   workflow_dispatch:
