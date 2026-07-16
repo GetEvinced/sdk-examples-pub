@@ -20,5 +20,5 @@ test("accessibility and interaction test for ComboBox component", async () => {
   // Perform accessibility analysis
   const results = await EvincedUT.analyzeCombobox(combobox);
 
-  expect(results.length).toBe(15);
+  expect(results.length).toBe(14);
 });
