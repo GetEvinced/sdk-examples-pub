@@ -125,3 +125,49 @@ Every example in this repository covers the same core patterns regardless of SDK
 ## Questions and support
 
 Contact the Evinced support team at [support@evinced.com](mailto:support@evinced.com).
+
+## Demo: MCP-Driven Cross-Repo A11y Auto-Fix
+
+This repo includes a demo pipeline that:
+
+1. Runs `web/playwright/js/tests/evMcpDemo.spec.js` against `https://demo-fe-orpin.vercel.app/`.
+2. Saves the Evinced findings to `test-results/evMcpDemo.json` and uploads them as a CI artifact.
+3. Triggers `web-a11y-autofix.yml`, which clones the target Next.js FE repo and invokes Claude (via `claude-code-action` + the Evinced MCP) to open one PR per accessibility finding.
+
+### Architecture
+
+See `MCPREPO.md` at the repo root for the full design spec.
+
+### One-time setup for forkers
+
+1. Fork this repo and a target Next.js FE repo (e.g., `EvincedShane/demo-fe`).
+2. Edit `a11y-autofix.config.json` so `target.owner`, `target.repo`, `target.baseUrl` point to your fork.
+3. Set the following GitHub Actions secrets in this fork:
+   - `EVINCED_SERVICE_ID`, `EVINCED_API_KEY` — your Evinced platform credentials.
+   - `ANTHROPIC_API_KEY` — for `claude-code-action`.
+   - `DEMO_FE_PAT` — a [fine-grained PAT](https://github.com/settings/personal-access-tokens) scoped to your target FE repo, with `Contents: write` and `Pull requests: write`.
+   - `SLACK_WEBHOOK_URL` — optional, for the Slack notification.
+4. In the target FE repo, add a `.github/CODEOWNERS` line:
+   ```
+   /a11y-findings/  @your-github-username
+   ```
+   and enable branch protection on `main` requiring CODEOWNERS review.
+
+### Running the demo
+
+- **Live**: push to `main`, or wait for the Monday cron. `web-js.yml` runs the test → uploads `evMcpDemo.json` → `web-a11y-autofix.yml` fires automatically.
+- **Dry-run** (no PRs opened): trigger `web-js.yml` first so an artifact exists, then dispatch `web-a11y-autofix.yml` with `dry_run = true`. The agent runs end-to-end and logs `[DRY-RUN]` in place of every PR mutation.
+
+### What gets created in the target repo
+
+- One branch per finding: `a11y/fix-<signature>` (idempotent on re-runs).
+- One PR per finding, labelled `a11y,automated`.
+- One tracking file: `a11y-findings/<signature>.md` summarizing what the agent saw and proposed.
+
+Merging a PR requires CODEOWNERS approval on the tracking file — this is the human verification gate.
+
+### Known limitations
+
+- **Next.js catch-all routes (`[...slug]`, `[[...slug]]`) are not resolved.** The `resolveRoute` helper handles static segments, dynamic single-segments (`[id]`), and route groups (`(group)`). Catch-all variants will tag the issue `route-unresolved` and skip; no crash, but the agent will not open a PR for those pages until the helper is extended.
+- **Signature stability is assumed, not verified.** Branch idempotency depends on Evinced issue signatures being stable across runs. If the Evinced engine changes signature formatting between runs, the next scan will open a parallel set of PRs rather than updating existing ones — close stale ones manually until the signature-stability self-check (spec §6) is implemented.
+- **Additional repo-wide secret:** `EVINCED_NPM_TOKEN` is required by `web-js.yml` to install the Evinced SDK from a private npm registry. It is not listed in the secrets checklist above because it is shared across all workflows in this repo, but a fresh fork needs to set it.
