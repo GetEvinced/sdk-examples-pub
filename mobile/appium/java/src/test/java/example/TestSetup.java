@@ -45,6 +45,19 @@ class TestSetup {
                 new URL("https://ondemand.us-west-1.saucelabs.com/wd/hub"), caps);
     }
 
+    static EvincedAppiumAndroidDriver createLocalDriver() throws Exception {
+        DesiredCapabilities caps = new DesiredCapabilities();
+        caps.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
+        caps.setCapability(MobileCapabilityType.AUTOMATION_NAME, "UIAutomator2");
+        caps.setCapability(MobileCapabilityType.DEVICE_NAME, "Android Emulator");
+        caps.setCapability("app", System.getProperty("user.dir") + "/../../../wdio/com.evinced.demoapp-MK.apk");
+        caps.setCapability("appium:hideKeyboard", true);
+        caps.setCapability("autoGrantPermissions", true);
+
+        return new EvincedAppiumAndroidDriver(
+                new URL("http://127.0.0.1:4723"), caps);
+    }
+
     static void setupCredentials(EvincedAppiumSdk sdk) {
         sdk.setupCredentials(
                 System.getenv("EVINCED_SERVICE_ID"),

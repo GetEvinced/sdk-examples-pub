@@ -29,6 +29,7 @@ test.describe("Evinced - Asserting on issue severity", () => {
     const criticalIssues = issues.filter(
       (issue) => issue.severity.name === "Critical"
     );
+    console.log("Critical issues =", criticalIssues);
     console.log("Critical issues found:", criticalIssues.length);
 
     // Use this pattern to fail the test if critical issues are found:
