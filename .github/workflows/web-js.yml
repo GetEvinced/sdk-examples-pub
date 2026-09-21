@@ -104,7 +104,7 @@ jobs:
 
       - name: Upload Evinced issues JSON artifact
         if: always() && matrix.example.name == 'web-playwright-js'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: report-web-playwright-js-issues
           path: ${{ matrix.example.folder }}/test-results/evMcpDemo.json
