@@ -1,18 +1,12 @@
 name: A11y Auto-Fix — Cross-Repo
 
 on:
-  workflow_run:
-    workflows: ["Web SDK Tests — JavaScript/TypeScript"]
-    types: [completed]
-    branches: [main]
   workflow_dispatch:
     inputs:
       dry_run:
         description: "Skip git push / gh pr create / gh pr comment; log no-ops instead"
         type: boolean
         default: false
-  schedule:
-    - cron: "0 7 * * 1"
 
 concurrency:
   group: a11y-autofix-${{ github.ref }}
