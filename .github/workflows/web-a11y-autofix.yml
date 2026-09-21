@@ -1,18 +1,12 @@
 name: A11y Auto-Fix — Cross-Repo
 
 on:
-  workflow_run:
-    workflows: ["Web SDK Tests — JavaScript/TypeScript"]
-    types: [completed]
-    branches: [main]
   workflow_dispatch:
     inputs:
       dry_run:
         description: "Skip git push / gh pr create / gh pr comment; log no-ops instead"
         type: boolean
         default: false
-  schedule:
-    - cron: "0 7 * * 1"
 
 concurrency:
   group: a11y-autofix-${{ github.ref }}
@@ -76,7 +70,7 @@ jobs:
 
       - name: Download issues artifact (from triggering workflow run)
         if: github.event_name == 'workflow_run'
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: ${{ steps.cfg.outputs.report_artifact }}
           path: ./_autofix_input
@@ -151,12 +145,12 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 20
 
       - name: Download staged issues artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: a11y-issues-staged
           path: ./_autofix_input
