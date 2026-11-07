@@ -1,0 +1,64 @@
+name: Web SDK Tests — Python/Selenium
+
+on:
+  push:
+    branches: [sdk-examples-pub-v2, main]
+    paths:
+      - 'web/selenium/python/**'
+      - '.github/workflows/web-python.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'web/selenium/python/**'
+      - '.github/workflows/web-python.yml'
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Install Chrome
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y google-chrome-stable
+
+      - name: Install dependencies
+        working-directory: web/selenium/python
+        env:
+          PIP_EXTRA_INDEX_URL: https://${{ secrets.EVINCED_ARTIFACTORY_USER }}:${{ secrets.EVINCED_ARTIFACTORY_TOKEN }}@evinced.jfrog.io/artifactory/api/pypi/private-python-local/simple
+        run: pip install -r requirements.txt
+
+      - name: Run tests
+        working-directory: web/selenium/python
+        env:
+          EVINCED_SERVICE_ID: ${{ secrets.EVINCED_SERVICE_ID }}
+          EVINCED_WEB_OFFLINE_TOKEN: ${{ secrets.EVINCED_WEB_OFFLINE_TOKEN }}
+        run: pytest
+
+      - name: Upload reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: report-web-selenium-python
+          path: web/selenium/python/reports/**/*.html
+          retention-days: 14
+
+      - name: Notify Slack
+        if: always()
+        uses: act10ns/slack@v2
+        with:
+          status: ${{ job.status }}
+          channel: "#workflows"
+          message: "web/selenium/python — ${{ job.status }}"
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
