@@ -29,7 +29,7 @@ jobs:
     timeout-minutes: 2
     steps:
       - name: Re-dispatch this workflow as workflow_dispatch
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           script: |
             await github.rest.actions.createWorkflowDispatch({
